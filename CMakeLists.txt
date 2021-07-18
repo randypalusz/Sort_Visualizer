@@ -1,0 +1,27 @@
+cmake_minimum_required(VERSION 3.0)
+cmake_policy(SET CMP0048 NEW)
+
+project(Sort_Visualizer VERSION 0.01)
+
+set(CMAKE_PROJECT_VERSION 0.1a)
+set(CMAKE_C_STANDARD 99)
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_POSITION_INDEPENDENT_CODE ON)
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O3")
+
+set(LIB_DIR ${CMAKE_CURRENT_SOURCE_DIR}/lib)
+set(SRC_DIR ${CMAKE_CURRENT_SOURCE_DIR}/src)
+set(RES_DIR ${CMAKE_CURRENT_SOURCE_DIR}/res)
+
+set(SOURCES
+  ${SRC_DIR}/main.cc
+)
+
+set(HEADERS 
+)
+
+# adding executable, changing executable suffix for windows
+set(CMAKE_EXECUTABLE_SUFFIX ".cc")
+set(${PROJECT_NAME} ${PROJECT_NAME}.cc)
+add_executable(${PROJECT_NAME} ${SOURCES} ${HEADERS})
+target_include_directories(${PROJECT_NAME} PRIVATE "${SRC_DIR}")
