@@ -24,4 +24,8 @@ int main() {
   SortAlgorithm* sorter = AlgorithmFactory::generateSorter(Algorithm::BUBBLE);
   std::vector<int> v = VectorGenerator::generateGivenSize(20);
   sorter->sort(nullptr, v);
+
+  sorter = AlgorithmFactory::generateSorter(Algorithm::BOGO);
+  v = VectorGenerator::generateGivenSize(6);
+  sorter->sort(nullptr, v);
 }

@@ -19,4 +19,9 @@ class BubbleSort : public SortAlgorithm {
   void sort(void* sfml_context, std::vector<int>& in) override;
 };
 
+class BogoSort : public SortAlgorithm {
+ public:
+  void sort(void* sfml_context, std::vector<int>& in) override;
+};
+
 #endif
