@@ -20,8 +20,20 @@ set(SOURCES
 set(HEADERS 
 )
 
+
 # adding executable, changing executable suffix for windows
-set(CMAKE_EXECUTABLE_SUFFIX ".cc")
 set(${PROJECT_NAME} ${PROJECT_NAME}.cc)
 add_executable(${PROJECT_NAME} ${SOURCES} ${HEADERS})
 target_include_directories(${PROJECT_NAME} PRIVATE "${SRC_DIR}")
+
+
+# SFML
+set(SFML_DIR "${LIB_DIR}/SFML")
+set(BUILD_SHARED_LIBS FALSE)
+set(SFML_USE_STATIC_STD_LIBS TRUE)
+set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake_modules" ${CMAKE_MODULE_PATH})
+add_subdirectory(${SFML_DIR})
+target_include_directories(${PROJECT_NAME} PRIVATE "${SFML_DIR}/include")
+target_link_libraries(${PROJECT_NAME} sfml-system sfml-graphics sfml-audio sfml-window)
+
+set(CMAKE_EXECUTABLE_SUFFIX ".cc")
