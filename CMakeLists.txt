@@ -18,6 +18,7 @@ set(SOURCES
   ${SRC_DIR}/BubbleSort.cpp
   ${SRC_DIR}/AlgorithmFactory.cpp
   ${SRC_DIR}/SortAlgorithm.cpp
+  ${SRC_DIR}/util/VectorGenerator.cpp
 )
 
 set(HEADERS 

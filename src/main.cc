@@ -4,6 +4,7 @@
 #include "AlgorithmEnums.hpp"
 #include "AlgorithmFactory.hpp"
 #include "SortAlgorithm.hpp"
+#include "util/Utility.hpp"
 
 int main() {
   sf::Window window(sf::VideoMode(800, 600), "My window");
@@ -21,6 +22,6 @@ int main() {
   }
 
   SortAlgorithm* sorter = AlgorithmFactory::generateSorter(Algorithm::BUBBLE);
-  std::vector<int> v{1, 6, 5, 3, 8, 0};
+  std::vector<int> v = VectorGenerator::generateGivenSize(20);
   sorter->sort(nullptr, v);
 }
