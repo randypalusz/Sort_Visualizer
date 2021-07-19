@@ -1,6 +1,5 @@
 #include "AlgorithmFactory.hpp"
 #include "AlgorithmEnums.hpp"
-#include "BubbleSort.hpp"
 #include "SortAlgorithm.hpp"
 
 SortAlgorithm* AlgorithmFactory::generateSorter(Algorithm a) {

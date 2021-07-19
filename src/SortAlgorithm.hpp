@@ -14,4 +14,9 @@ class SortAlgorithm {
   void print(const std::vector<int>& in);
 };
 
+class BubbleSort : public SortAlgorithm {
+ public:
+  void sort(void* sfml_context, std::vector<int>& in) override;
+};
+
 #endif

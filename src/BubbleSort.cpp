@@ -1,5 +1,5 @@
-#include "BubbleSort.hpp"
 #include <vector>
+#include "SortAlgorithm.hpp"
 
 void BubbleSort::sort(void* sfml_context, std::vector<int>& in) {
   bool swapOccurred = false;
