@@ -1,6 +1,10 @@
 #include <iostream>
 #include <SFML/Window.hpp>
 
+#include "AlgorithmEnums.hpp"
+#include "AlgorithmFactory.hpp"
+#include "SortAlgorithm.hpp"
+
 int main() {
   sf::Window window(sf::VideoMode(800, 600), "My window");
 
@@ -15,5 +19,8 @@ int main() {
       if (event.type == sf::Event::Closed) window.close();
     }
   }
-  std::cout << "hello" << std::endl;
+
+  SortAlgorithm* sorter = AlgorithmFactory::generateSorter(Algorithm::BUBBLE);
+  std::vector<int> v{1, 6, 5, 3, 8, 0};
+  sorter->sort(nullptr, v);
 }

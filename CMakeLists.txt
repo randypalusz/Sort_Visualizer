@@ -15,6 +15,9 @@ set(RES_DIR ${CMAKE_CURRENT_SOURCE_DIR}/res)
 
 set(SOURCES
   ${SRC_DIR}/main.cc
+  ${SRC_DIR}/BubbleSort.cpp
+  ${SRC_DIR}/AlgorithmFactory.cpp
+  ${SRC_DIR}/SortAlgorithm.cpp
 )
 
 set(HEADERS 
