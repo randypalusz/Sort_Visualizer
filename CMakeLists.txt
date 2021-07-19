@@ -21,13 +21,10 @@ set(SOURCES
   ${SRC_DIR}/util/VectorGenerator.cpp
 )
 
-set(HEADERS 
-)
-
 
 # adding executable, changing executable suffix for windows
 set(${PROJECT_NAME} ${PROJECT_NAME}.cc)
-add_executable(${PROJECT_NAME} ${SOURCES} ${HEADERS})
+add_executable(${PROJECT_NAME} ${SOURCES})
 target_include_directories(${PROJECT_NAME} PRIVATE "${SRC_DIR}")
 
 
