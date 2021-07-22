@@ -6,8 +6,7 @@
 #include <iostream>
 
 GraphDisplay::GraphDisplay(sf::RenderWindow& window) : m_window(window) {
-  // possibly update window size parameters here
-  // just an empty slate for now
+  // updating here as it should be a one-time update - SFML handles stretching
   m_size = window.getSize();
 }
 
