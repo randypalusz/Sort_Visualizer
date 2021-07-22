@@ -19,6 +19,7 @@ set(SOURCES
   ${SRC_DIR}/BogoSort.cpp
   ${SRC_DIR}/AlgorithmFactory.cpp
   ${SRC_DIR}/SortAlgorithm.cpp
+  ${SRC_DIR}/GraphDisplay.cpp
   ${SRC_DIR}/util/VectorGenerator.cpp
 )
 
