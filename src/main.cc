@@ -12,7 +12,8 @@ int main() {
   sf::RenderWindow window(sf::VideoMode(800, 600), "My window");
 
   GraphDisplay g = GraphDisplay{window};
-  std::vector<int> vectorForDisplayTest = VectorGenerator::generateGivenSize(5);
+  std::vector<int> vectorForDisplayTest =
+      VectorGenerator::generateGivenSize(20);
 
   // run the program as long as the window is open
   while (window.isOpen()) {
