@@ -8,10 +8,11 @@
 // element
 class GraphDisplay {
  public:
-  GraphDisplay(sf::RenderWindow& window);
+  GraphDisplay(sf::RenderWindow& window, int waitTimeInMillis);
   void update(const std::vector<int>& in);
 
  private:
   sf::RenderWindow& m_window;
   sf::Vector2u m_size;
+  int m_waitTimeInMillis;
 };

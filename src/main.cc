@@ -1,4 +1,5 @@
 #include <iostream>
+#include <functional>
 #include <SFML/Window.hpp>
 #include <SFML/Graphics.hpp>
 
@@ -10,10 +11,12 @@
 
 int main() {
   sf::RenderWindow window(sf::VideoMode(800, 600), "My window");
+  window.setFramerateLimit(60);
 
-  GraphDisplay g = GraphDisplay{window};
-  std::vector<int> vectorForDisplayTest =
-      VectorGenerator::generateGivenSize(20);
+  GraphDisplay g = GraphDisplay{window, 1};
+
+  SortAlgorithm* sorter = AlgorithmFactory::generateSorter(Algorithm::BUBBLE);
+  std::vector<int> v = VectorGenerator::generateGivenSize(50);
 
   // run the program as long as the window is open
   while (window.isOpen()) {
@@ -25,14 +28,8 @@ int main() {
       if (event.type == sf::Event::KeyPressed) window.close();
       if (event.type == sf::Event::Closed) window.close();
     }
-    window.clear(sf::Color::Blue);
-    g.update(vectorForDisplayTest);
-    window.display();
+    sorter->sort(&g, v);
   }
-
-  SortAlgorithm* sorter = AlgorithmFactory::generateSorter(Algorithm::BUBBLE);
-  std::vector<int> v = VectorGenerator::generateGivenSize(20);
-  sorter->sort(nullptr, v);
 
   sorter = AlgorithmFactory::generateSorter(Algorithm::BOGO);
   v = VectorGenerator::generateGivenSize(6);

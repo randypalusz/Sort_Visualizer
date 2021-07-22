@@ -3,14 +3,18 @@
 #include <SFML/Graphics.hpp>
 
 #include <algorithm>
+#include <chrono>
 #include <iostream>
+#include <thread>
 
-GraphDisplay::GraphDisplay(sf::RenderWindow& window) : m_window(window) {
+GraphDisplay::GraphDisplay(sf::RenderWindow& window, int waitTimeInMillis)
+    : m_window(window), m_waitTimeInMillis(waitTimeInMillis) {
   // updating here as it should be a one-time update - SFML handles stretching
   m_size = window.getSize();
 }
 
 void GraphDisplay::update(const std::vector<int>& in) {
+  m_window.clear(sf::Color::Blue);
   int numBars = in.size();
   int widthPerBar = m_size.x / numBars;
   float min = *(std::min_element(in.begin(), in.end()));
@@ -33,4 +37,5 @@ void GraphDisplay::update(const std::vector<int>& in) {
     m_window.draw(bar);
     currentBarX += widthPerBar;
   }
+  m_window.display();
 }
