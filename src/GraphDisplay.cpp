@@ -9,6 +9,8 @@ GraphDisplay::GraphDisplay(sf::RenderWindow& window) : m_window(window) {
   m_size = window.getSize();
 }
 
+// TODO: normalize height of bars from 1 -> some value lower than the height of
+// the window based off magnitude of values in vector
 void GraphDisplay::update(const std::vector<int>& in) {
   int numBars = in.size();
   int windowWidth = m_size.x;
