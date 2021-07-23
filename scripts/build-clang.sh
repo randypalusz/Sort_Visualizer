@@ -31,7 +31,7 @@ rm -rf build
 mkdir -p build/clang
 mkdir -p build/exe
 cd build/clang
-cmake -DCMAKE_C_COMPILER=clang -DCMAKE_CXX_COMPILER=clang++ ../..
+cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_C_COMPILER=clang -DCMAKE_CXX_COMPILER=clang++ ../..
 make -j 16
 
 # go to build/, make symlinks to executables in build/exe/*.cc
