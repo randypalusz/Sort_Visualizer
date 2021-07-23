@@ -14,9 +14,11 @@ GraphDisplay::GraphDisplay(sf::RenderWindow& window, int waitTimeInMillis)
 }
 
 void GraphDisplay::update(const std::vector<int>& in) {
-  // HACK: polling for event here so app doesn't hang
   sf::Event event;
   m_window.pollEvent(event);
+  if (event.type == sf::Event::KeyPressed) m_window.close();
+  if (event.type == sf::Event::Closed) m_window.close();
+
   m_window.clear(sf::Color::Blue);
   int numBars = in.size();
   int widthPerBar = m_size.x / numBars;

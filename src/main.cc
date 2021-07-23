@@ -29,10 +29,8 @@ int main() {
       // "close requested" event: we close the window
       if (event.type == sf::Event::KeyPressed) window.close();
       if (event.type == sf::Event::Closed) window.close();
+      sorter->sort(&g, v);
     }
-    // TODO: not polling for events causing a hang whenever clicking outside
-    // window
-    sorter->sort(&g, v);
   }
 
   sorter = AlgorithmFactory::generateSorter(Algorithm::BOGO);

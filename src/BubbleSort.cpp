@@ -10,6 +10,7 @@ void BubbleSort::sort(GraphDisplay* display, std::vector<int>& in) {
       if (in.at(i + 1) < in.at(i)) {
         std::swap(in.at(i), in.at(i + 1));
         if (display) {
+          // TODO: return bad status if exit condition, break from function
           display->update(in);
         }
         swapOccurred = true;
