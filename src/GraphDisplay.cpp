@@ -43,7 +43,8 @@ bool GraphDisplay::update(const std::vector<int>& in) {
   for (int i = 0; i < numBars; i++) {
     float normalizedHeight = normalize((float)in.at(i), min, max, newMin, newMax);
     // TODO: modulate width of the bar based on how many elements there are
-    sf::RectangleShape bar = sf::RectangleShape(sf::Vector2f(10, normalizedHeight));
+    sf::RectangleShape bar =
+        sf::RectangleShape(sf::Vector2f(widthPerBar - 5.0f, normalizedHeight));
     bar.setPosition(
         sf::Vector2f(currentBarX, (m_size.y - normalizedHeight) - topBottomBorder));
     m_window.draw(bar);
