@@ -10,6 +10,7 @@ SortAlgorithm* AlgorithmFactory::generateSorter(Algorithm a) {
       return new BogoSort();
     case Algorithm::SELECTION:
     case Algorithm::QUICK:
+      return new QuickSort();
       break;
   }
   return nullptr;

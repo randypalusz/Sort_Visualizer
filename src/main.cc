@@ -11,11 +11,11 @@
 
 int main(int argc, char** argv) {
   sf::RenderWindow window(sf::VideoMode(800, 600), "My window");
-  window.setFramerateLimit(165);
+  window.setFramerateLimit(0);
 
   GraphDisplay g = GraphDisplay{window, 1};
 
-  SortAlgorithm* sorter = AlgorithmFactory::generateSorter(Algorithm::BUBBLE);
+  SortAlgorithm* sorter = AlgorithmFactory::generateSorter(Algorithm::QUICK);
   const int numElements = atoi(argv[1]);
   std::vector<int> v = VectorGenerator::generateGivenSize(numElements);
 
@@ -28,8 +28,8 @@ int main(int argc, char** argv) {
       // "close requested" event: we close the window
       if (event.type == sf::Event::KeyPressed) window.close();
       if (event.type == sf::Event::Closed) window.close();
-      sorter->sort(&g, v);
     }
+    sorter->sort(&g, v);
   }
 
   sorter = AlgorithmFactory::generateSorter(Algorithm::BOGO);
