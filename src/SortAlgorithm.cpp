@@ -14,3 +14,13 @@ void SortAlgorithm::print(const std::vector<int>& in) {
   }
   std::cout << "}" << std::endl;
 }
+
+bool SortAlgorithm::updateDisplay(GraphDisplay* display,
+                                  const std::vector<int>& in) {
+  if (display) {
+    if (!display->update(in)) {
+      return false;
+    }
+  }
+  return true;
+}
