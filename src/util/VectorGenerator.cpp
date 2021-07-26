@@ -20,11 +20,15 @@ std::vector<int> VectorGenerator::generateGivenSize(size_t size,
   return out;
 }
 
+// TODO: make this so the same shuffle won't happen every time the program is
+// run
 std::vector<int> VectorGenerator::generateContinuousGivenSize(size_t size) {
   std::vector<int> out{};
   for (int i = 0; i < size; i++) {
     out.push_back(i);
   }
-  std::shuffle(out.begin(), out.end(), std::default_random_engine());
+  std::random_device rd;
+  std::mt19937 g{rd()};
+  std::shuffle(std::begin(out), std::end(out), g);
   return out;
 }
