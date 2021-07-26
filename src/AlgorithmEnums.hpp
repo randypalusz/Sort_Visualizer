@@ -1,4 +1,4 @@
 #ifndef ALGORITHM_ENUMS
 #define ALGORITHM_ENUMS
-enum class Algorithm { BUBBLE, SELECTION, QUICK, BOGO };
+enum class Algorithm { BUBBLE, SELECTION, QUICK_ITERATIVE, BOGO };
 #endif

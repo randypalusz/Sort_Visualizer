@@ -1,6 +1,6 @@
 #include "SortAlgorithm.hpp"
 
-void QuickSort::sort(GraphDisplay* display, std::vector<int>& in) {
+void QuickSort_Iterative::sort(GraphDisplay* display, std::vector<int>& in) {
 #define MAX_LEVELS 300
 
   int piv, beg[MAX_LEVELS], end[MAX_LEVELS], i = 0, L, R, swap;

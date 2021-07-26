@@ -14,7 +14,10 @@ T normalize(const T& val, const T& min, const T& max, const T& newMin,
 class VectorGenerator {
  public:
   static std::vector<int> loadFromFile(const std::string& fileName);
-  static std::vector<int> generateGivenSize(size_t size);
+  static std::vector<int> generateGivenSize(size_t size, bool continuous);
+
+ private:
+  static std::vector<int> generateContinuousGivenSize(size_t size);
 };
 
 #endif

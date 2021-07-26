@@ -31,7 +31,7 @@ class BogoSort : public SortAlgorithm {
   void sort(GraphDisplay* display, std::vector<int>& in) override;
 };
 
-class QuickSort : public SortAlgorithm {
+class QuickSort_Iterative : public SortAlgorithm {
  public:
   void sort(GraphDisplay* display, std::vector<int>& in) override;
 };

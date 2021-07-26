@@ -11,13 +11,14 @@
 
 int main(int argc, char** argv) {
   sf::RenderWindow window(sf::VideoMode(800, 600), "My window");
-  window.setFramerateLimit(0);
+  window.setFramerateLimit(500);
 
   GraphDisplay g = GraphDisplay{window, 1};
 
-  SortAlgorithm* sorter = AlgorithmFactory::generateSorter(Algorithm::QUICK);
+  SortAlgorithm* sorter =
+      AlgorithmFactory::generateSorter(Algorithm::QUICK_ITERATIVE);
   const int numElements = atoi(argv[1]);
-  std::vector<int> v = VectorGenerator::generateGivenSize(numElements);
+  std::vector<int> v = VectorGenerator::generateGivenSize(numElements, true);
 
   // run the program as long as the window is open
   while (window.isOpen()) {
@@ -33,6 +34,6 @@ int main(int argc, char** argv) {
   }
 
   sorter = AlgorithmFactory::generateSorter(Algorithm::BOGO);
-  v = VectorGenerator::generateGivenSize(6);
+  v = VectorGenerator::generateGivenSize(6, false);
   sorter->sort(nullptr, v);
 }
