@@ -1,24 +1,23 @@
-#include <iostream>
-#include <functional>
-#include <SFML/Window.hpp>
 #include <SFML/Graphics.hpp>
+#include <SFML/Window.hpp>
+#include <functional>
+#include <iostream>
 
 #include "AlgorithmEnums.hpp"
 #include "AlgorithmFactory.hpp"
+#include "GraphDisplay.hpp"
 #include "SortAlgorithm.hpp"
 #include "util/Utility.hpp"
-#include "GraphDisplay.hpp"
 
-// TODO: make an Application class that wraps polling for events and clear/draw
-
-int main() {
+int main(int argc, char** argv) {
   sf::RenderWindow window(sf::VideoMode(800, 600), "My window");
   window.setFramerateLimit(165);
 
   GraphDisplay g = GraphDisplay{window, 1};
 
   SortAlgorithm* sorter = AlgorithmFactory::generateSorter(Algorithm::BUBBLE);
-  std::vector<int> v = VectorGenerator::generateGivenSize(100);
+  const int numElements = atoi(argv[1]);
+  std::vector<int> v = VectorGenerator::generateGivenSize(numElements);
 
   // run the program as long as the window is open
   while (window.isOpen()) {

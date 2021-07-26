@@ -1,6 +1,7 @@
 #include <vector>
-#include "SortAlgorithm.hpp"
+
 #include "GraphDisplay.hpp"
+#include "SortAlgorithm.hpp"
 
 void BubbleSort::sort(GraphDisplay* display, std::vector<int>& in) {
   bool swapOccurred = false;
@@ -10,8 +11,9 @@ void BubbleSort::sort(GraphDisplay* display, std::vector<int>& in) {
       if (in.at(i + 1) < in.at(i)) {
         std::swap(in.at(i), in.at(i + 1));
         if (display) {
-          // TODO: return bad status if exit condition, break from function
-          display->update(in);
+          if (!(display->update(in))) {
+            return;
+          }
         }
         swapOccurred = true;
       }

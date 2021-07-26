@@ -1,8 +1,8 @@
-#include "SortAlgorithm.hpp"
-#include "GraphDisplay.hpp"
-
 #include <algorithm>
 #include <random>
+
+#include "GraphDisplay.hpp"
+#include "SortAlgorithm.hpp"
 
 void BogoSort::sort(GraphDisplay* display, std::vector<int>& in) {
   std::random_device rd;
@@ -10,7 +10,9 @@ void BogoSort::sort(GraphDisplay* display, std::vector<int>& in) {
   while (!std::is_sorted(in.begin(), in.end())) {
     std::shuffle(in.begin(), in.end(), g);
     if (display) {
-      display->update(in);
+      if (!(display->update(in))) {
+        return;
+      }
     }
     this->print(in);
   }
