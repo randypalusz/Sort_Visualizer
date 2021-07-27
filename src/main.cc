@@ -15,8 +15,7 @@ int main(int argc, char** argv) {
 
   GraphDisplay g = GraphDisplay{window, 1};
 
-  SortAlgorithm* sorter =
-      AlgorithmFactory::generateSorter(Algorithm::QUICK_ITERATIVE);
+  SortAlgorithm* sorter = AlgorithmFactory::generateSorter(Algorithm::QUICK);
   const int numElements = atoi(argv[1]);
   std::vector<int> v = VectorGenerator::generateGivenSize(numElements, true);
 

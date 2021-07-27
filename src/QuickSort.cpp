@@ -42,3 +42,38 @@ void QuickSort_Iterative::sort(GraphDisplay* display, std::vector<int>& in) {
     }
   }
 }
+
+void QuickSort::sort(GraphDisplay* display, std::vector<int>& in) {
+  if (!std::is_sorted(in.begin(), in.end())) {
+    this->quicksort(display, in, 0, in.size() - 1);
+  }
+}
+
+bool QuickSort::quicksort(GraphDisplay* display, std::vector<int>& in, int lo,
+                          int hi) {
+  if (lo < hi) {
+    int partitionIndex = this->partition(display, in, lo, hi);
+    // if updateDisplay returns false (close event found), keep returning false
+    // up the tree until back in main
+    if (partitionIndex == -1) return false;
+    if (!this->quicksort(display, in, lo, partitionIndex - 1)) return false;
+    if (!this->quicksort(display, in, partitionIndex + 1, hi)) return false;
+  }
+  return true;
+}
+
+int QuickSort::partition(GraphDisplay* display, std::vector<int>& in, int lo,
+                         int hi) {
+  int pivot = in.at(hi);
+  int leftPtr = lo;
+  for (int rightPtr = lo; rightPtr <= hi; rightPtr++) {
+    if (in.at(rightPtr) < pivot) {
+      std::swap(in.at(leftPtr), in.at(rightPtr));
+      if (!this->updateDisplay(display, in)) return -1;
+      leftPtr++;
+    }
+  }
+  std::swap(in.at(leftPtr), in.at(hi));
+  if (!this->updateDisplay(display, in)) return -1;
+  return leftPtr;
+}
