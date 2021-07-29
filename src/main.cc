@@ -11,13 +11,17 @@
 
 int main(int argc, char** argv) {
   sf::RenderWindow window(sf::VideoMode(800, 600), "My window");
-  window.setFramerateLimit(500);
+  window.setFramerateLimit(10);
 
   GraphDisplay g = GraphDisplay{window, 1};
 
-  SortAlgorithm* sorter = AlgorithmFactory::generateSorter(Algorithm::QUICK);
+  SortAlgorithm* sorter =
+      AlgorithmFactory::generateSorter(Algorithm::SELECTION);
   const int numElements = atoi(argv[1]);
   std::vector<int> v = VectorGenerator::generateGivenSize(numElements, true);
+
+  // TODO: make function pollEvents(window) to handle event polling
+  //    replace here and in GraphDisplay update functions
 
   // run the program as long as the window is open
   while (window.isOpen()) {

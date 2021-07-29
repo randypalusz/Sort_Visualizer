@@ -2,10 +2,11 @@
 #define SORT_ALGORITHM_HPP
 
 #include "AlgorithmEnums.hpp"
-#include "AlgorithmFactory.hpp"
 #include "GraphDisplay.hpp"
 #include <vector>
 #include <iostream>
+
+class GraphDisplay;
 
 class SortAlgorithm {
  public:
@@ -41,6 +42,11 @@ class QuickSort : public SortAlgorithm {
 };
 
 class QuickSort_Iterative : public SortAlgorithm {
+ public:
+  void sort(GraphDisplay* display, std::vector<int>& in) override;
+};
+
+class SelectionSort : public SortAlgorithm {
  public:
   void sort(GraphDisplay* display, std::vector<int>& in) override;
 };

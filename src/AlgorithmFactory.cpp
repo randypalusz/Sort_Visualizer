@@ -9,6 +9,7 @@ SortAlgorithm* AlgorithmFactory::generateSorter(Algorithm a) {
     case Algorithm::BOGO:
       return new BogoSort();
     case Algorithm::SELECTION:
+      return new SelectionSort();
     case Algorithm::QUICK:
       return new QuickSort();
     case Algorithm::QUICK_ITERATIVE:

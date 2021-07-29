@@ -1,4 +1,5 @@
 #include "SortAlgorithm.hpp"
+#include "GraphDisplay.hpp"
 
 void QuickSort_Iterative::sort(GraphDisplay* display, std::vector<int>& in) {
 #define MAX_LEVELS 300
@@ -44,6 +45,7 @@ void QuickSort_Iterative::sort(GraphDisplay* display, std::vector<int>& in) {
 }
 
 void QuickSort::sort(GraphDisplay* display, std::vector<int>& in) {
+  // HACK: checking if sorted here because of recursion below
   if (!std::is_sorted(in.begin(), in.end())) {
     this->quicksort(display, in, 0, in.size() - 1);
   }

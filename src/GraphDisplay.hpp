@@ -3,12 +3,19 @@
 #include <SFML/Graphics.hpp>
 #include <vector>
 
+#include "SortAlgorithm.hpp"
+
+class SortAlgorithm;
+
 // will take in a sf::renderwindow and a vector
-// display vertical bars based on the window size/number of elements/min and max
-// element
 class GraphDisplay {
+  // allows update() to be wrapped by superclass updateDisplay()
+  friend class SortAlgorithm;
+
  public:
   GraphDisplay(sf::RenderWindow& window, int waitTimeInMillis);
+
+ private:
   bool update(const std::vector<int>& in);
 
  private:

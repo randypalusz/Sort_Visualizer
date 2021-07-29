@@ -1,7 +1,7 @@
 #include <vector>
 
-#include "GraphDisplay.hpp"
 #include "SortAlgorithm.hpp"
+#include "GraphDisplay.hpp"
 
 void BubbleSort::sort(GraphDisplay* display, std::vector<int>& in) {
   bool swapOccurred = false;

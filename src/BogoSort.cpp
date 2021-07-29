@@ -1,8 +1,8 @@
 #include <algorithm>
 #include <random>
 
-#include "GraphDisplay.hpp"
 #include "SortAlgorithm.hpp"
+#include "GraphDisplay.hpp"
 
 void BogoSort::sort(GraphDisplay* display, std::vector<int>& in) {
   std::random_device rd;
