@@ -15,12 +15,7 @@ GraphDisplay::GraphDisplay(sf::RenderWindow& window, int waitTimeInMillis)
 }
 
 bool GraphDisplay::update(const std::vector<int>& in) {
-  sf::Event event;
-  // TODO: change return value of update() + pollForEvents() -> return status
-  //       based on key pressed
-  //       (e.g. if "R" is pressed, regenerate the vector and run the sort again
-  //       but if window is closed, return something different to reflect that)
-  //       ... So maybe something like <enum class WindowEventStatus>
+  // TODO: replace with event handler
   if (WindowManager::pollForEvents(m_window) == WindowEvent::CLOSE_WINDOW) {
     m_window.close();
     return false;
