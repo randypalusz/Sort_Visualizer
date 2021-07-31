@@ -19,6 +19,7 @@ class GraphDisplay {
   bool update(const std::vector<int>& in);
 
  private:
+  // TODO: add EventHandler object here to handle events on update call
   sf::RenderWindow& m_window;
   sf::Vector2u m_size;
   int m_waitTimeInMillis;

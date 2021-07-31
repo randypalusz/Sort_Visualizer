@@ -16,6 +16,7 @@ T normalize(const T& val, const T& min, const T& max, const T& newMin,
   return (newMax - newMin) * ((val - min) / (max - min)) + newMin;
 };
 
+// TODO: make this not static so random_device can be reused
 class VectorGenerator {
  public:
   static std::vector<int> loadFromFile(const std::string& fileName);
