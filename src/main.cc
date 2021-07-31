@@ -11,10 +11,11 @@
 
 int main(int argc, char** argv) {
   sf::RenderWindow window(sf::VideoMode(800, 600), "My window");
-  window.setFramerateLimit(10);
+  window.setFramerateLimit(500);
 
   GraphDisplay g = GraphDisplay{window, 1};
 
+  // TODO: convert to smart pointer to handle memory
   SortAlgorithm* sorter =
       AlgorithmFactory::generateSorter(Algorithm::SELECTION);
   const int numElements = atoi(argv[1]);
@@ -30,7 +31,9 @@ int main(int argc, char** argv) {
         window.close();
         break;
       case WindowEvent::NEXT_ALGORITHM:
-        sorter = AlgorithmFactory::generateSorter(Algorithm::BUBBLE);
+        // HACK: just using different sort from above for now to demonstrate
+        //       that event polling works
+        sorter = AlgorithmFactory::generateSorter(Algorithm::QUICK);
         break;
       case WindowEvent::REGENERATE_VECTOR:
         v = VectorGenerator::generateGivenSize(numElements, true);

@@ -4,6 +4,9 @@
 #include <vector>
 
 void SelectionSort::sort(GraphDisplay* display, std::vector<int>& in) {
+  if (std::is_sorted(in.begin(), in.end())) {
+    return;
+  }
   int minIndex = 0;
   for (int i = 0; i < (in.size() - 1); i++) {
     minIndex = in.at(i);

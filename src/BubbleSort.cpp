@@ -4,6 +4,9 @@
 #include "GraphDisplay.hpp"
 
 void BubbleSort::sort(GraphDisplay* display, std::vector<int>& in) {
+  if (std::is_sorted(in.begin(), in.end())) {
+    return;
+  }
   bool swapOccurred = false;
   do {
     swapOccurred = false;

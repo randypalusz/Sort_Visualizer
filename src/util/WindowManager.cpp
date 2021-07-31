@@ -10,6 +10,10 @@ WindowEvent WindowManager::pollForEvents(sf::RenderWindow& window) {
       switch (event.key.code) {
         case sf::Keyboard::Q:
           return WindowEvent::CLOSE_WINDOW;
+        case sf::Keyboard::S:
+          return WindowEvent::NEXT_ALGORITHM;
+        case sf::Keyboard::V:
+          return WindowEvent::REGENERATE_VECTOR;
         default:
           break;
       }

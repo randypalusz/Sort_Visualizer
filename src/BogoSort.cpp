@@ -5,6 +5,9 @@
 #include "GraphDisplay.hpp"
 
 void BogoSort::sort(GraphDisplay* display, std::vector<int>& in) {
+  if (std::is_sorted(in.begin(), in.end())) {
+    return;
+  }
   std::random_device rd;
   std::mt19937 g(rd());
   while (!std::is_sorted(in.begin(), in.end())) {
