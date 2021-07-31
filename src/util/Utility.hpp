@@ -5,6 +5,11 @@
 #include <vector>
 #include <string>
 
+#include <SFML/Graphics.hpp>
+#include <SFML/Window.hpp>
+
+#include "AlgorithmEnums.hpp"
+
 template <typename T>
 T normalize(const T& val, const T& min, const T& max, const T& newMin,
             const T& newMax) {
@@ -18,6 +23,11 @@ class VectorGenerator {
 
  private:
   static std::vector<int> generateContinuousGivenSize(size_t size);
+};
+
+class WindowManager {
+ public:
+  static WindowEvent pollForEvents(sf::RenderWindow& window);
 };
 
 #endif

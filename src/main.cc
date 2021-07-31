@@ -20,18 +20,24 @@ int main(int argc, char** argv) {
   const int numElements = atoi(argv[1]);
   std::vector<int> v = VectorGenerator::generateGivenSize(numElements, true);
 
-  // TODO: make function pollEvents(window) to handle event polling
-  //    replace here and in GraphDisplay update functions
-
-  // run the program as long as the window is open
   while (window.isOpen()) {
-    // check all the window's events that were triggered since the last
-    // iteration of the loop
-    sf::Event event;
-    while (window.pollEvent(event)) {
-      // "close requested" event: we close the window
-      if (event.type == sf::Event::KeyPressed) window.close();
-      if (event.type == sf::Event::Closed) window.close();
+    WindowEvent result = WindowManager::pollForEvents(window);
+    // TODO: make an event handler class (non-static) that will handle the
+    //       events that polling returns, replacing the switch below.
+    //       GraphDisplay should hold an instance of this as well.
+    switch (result) {
+      case WindowEvent::CLOSE_WINDOW:
+        window.close();
+        break;
+      case WindowEvent::NEXT_ALGORITHM:
+        sorter = AlgorithmFactory::generateSorter(Algorithm::BUBBLE);
+        break;
+      case WindowEvent::REGENERATE_VECTOR:
+        v = VectorGenerator::generateGivenSize(numElements, true);
+        break;
+      case WindowEvent::NO_EVENT:
+      default:
+        break;
     }
     sorter->sort(&g, v);
   }

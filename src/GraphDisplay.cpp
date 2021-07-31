@@ -16,21 +16,16 @@ GraphDisplay::GraphDisplay(sf::RenderWindow& window, int waitTimeInMillis)
 
 bool GraphDisplay::update(const std::vector<int>& in) {
   sf::Event event;
-  // TODO: change return value of update() -> return status based on key pressed
-  //      (e.g. if "R" is pressed, regenerate the vector and run the sort again
+  // TODO: change return value of update() + pollForEvents() -> return status
+  //       based on key pressed
+  //       (e.g. if "R" is pressed, regenerate the vector and run the sort again
   //       but if window is closed, return something different to reflect that)
-  //      ... So maybe something like <enum class WindowEventStatus>
-  while (m_window.pollEvent(event)) {
-    // "close requested" event: we close the window
-    if (event.type == sf::Event::KeyPressed) {
-      m_window.close();
-      return false;
-    }
-    if (event.type == sf::Event::Closed) {
-      m_window.close();
-      return false;
-    }
+  //       ... So maybe something like <enum class WindowEventStatus>
+  if (WindowManager::pollForEvents(m_window) == WindowEvent::CLOSE_WINDOW) {
+    m_window.close();
+    return false;
   }
+
   m_window.clear(sf::Color::Blue);
   int numBars = in.size();
   float widthPerBar = (float)m_size.x / (float)numBars;
