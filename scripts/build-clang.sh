@@ -27,7 +27,6 @@ else
   rm -rf build/clang/CMakeFiles/Example.dir
 fi
 
-rm -rf build
 mkdir -p build/clang
 mkdir -p build/exe
 cd build/clang
