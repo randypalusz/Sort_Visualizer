@@ -18,7 +18,8 @@ void Application::run(int numElements) {
   GraphDisplay g = GraphDisplay{m_window, 1};
 
   // TODO: convert to smart pointer to handle memory
-  SortAlgorithm* sorter = AlgorithmFactory::generateSorter(Algorithm::SELECTION);
+  std::shared_ptr<SortAlgorithm> sorter =
+      AlgorithmFactory::generateSorter(Algorithm::SELECTION);
   std::vector<int> v = VectorGenerator::generateGivenSize(numElements, true);
 
   while (m_window.isOpen()) {

@@ -1,19 +1,20 @@
 #include "AlgorithmFactory.hpp"
+
 #include "AlgorithmEnums.hpp"
 #include "SortAlgorithm.hpp"
 
-SortAlgorithm* AlgorithmFactory::generateSorter(Algorithm a) {
+std::shared_ptr<SortAlgorithm> AlgorithmFactory::generateSorter(Algorithm a) {
   switch (a) {
     case Algorithm::BUBBLE:
-      return new BubbleSort();
+      return std::make_shared<BubbleSort>();
     case Algorithm::BOGO:
-      return new BogoSort();
+      return std::make_shared<BogoSort>();
     case Algorithm::SELECTION:
-      return new SelectionSort();
+      return std::make_shared<SelectionSort>();
     case Algorithm::QUICK:
-      return new QuickSort();
+      return std::make_shared<QuickSort>();
     case Algorithm::QUICK_ITERATIVE:
-      return new QuickSort_Iterative();
+      return std::make_shared<QuickSort_Iterative>();
   }
   return nullptr;
 }

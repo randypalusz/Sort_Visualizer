@@ -8,7 +8,7 @@ class SortAlgorithm;
 
 class AlgorithmFactory {
  public:
-  static SortAlgorithm* generateSorter(Algorithm a);
+  static std::shared_ptr<SortAlgorithm> generateSorter(Algorithm a);
 };
 
 #endif
