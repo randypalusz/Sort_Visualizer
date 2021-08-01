@@ -17,6 +17,7 @@ set(RES_DIR ${CMAKE_CURRENT_SOURCE_DIR}/res)
 
 set(SOURCES
   ${SRC_DIR}/main.cc
+  ${SRC_DIR}/Application.cpp
   ${SRC_DIR}/BubbleSort.cpp
   ${SRC_DIR}/QuickSort.cpp
   ${SRC_DIR}/BogoSort.cpp
