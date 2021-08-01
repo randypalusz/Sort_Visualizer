@@ -17,9 +17,7 @@ void Application::run(int numElements) {
 
   GraphDisplay g = GraphDisplay{m_window, 1};
 
-  // TODO: convert to smart pointer to handle memory
-  std::shared_ptr<SortAlgorithm> sorter =
-      AlgorithmFactory::generateSorter(Algorithm::SELECTION);
+  m_sorter = AlgorithmFactory::generateSorter(Algorithm::SELECTION);
   std::vector<int> v = VectorGenerator::generateGivenSize(numElements, true);
 
   while (m_window.isOpen()) {
@@ -34,7 +32,7 @@ void Application::run(int numElements) {
       case WindowEvent::NEXT_ALGORITHM:
         // HACK: just using different sort from above for now to demonstrate
         //       that event polling works
-        sorter = AlgorithmFactory::generateSorter(Algorithm::QUICK);
+        m_sorter = AlgorithmFactory::generateSorter(Algorithm::QUICK);
         break;
       case WindowEvent::REGENERATE_VECTOR:
         v = VectorGenerator::generateGivenSize(numElements, true);
@@ -43,10 +41,10 @@ void Application::run(int numElements) {
       default:
         break;
     }
-    sorter->sort(&g, v);
+    m_sorter->sort(&g, v);
   }
 
-  sorter = AlgorithmFactory::generateSorter(Algorithm::BOGO);
+  m_sorter = AlgorithmFactory::generateSorter(Algorithm::BOGO);
   v = VectorGenerator::generateGivenSize(6, false);
-  sorter->sort(nullptr, v);
+  m_sorter->sort(nullptr, v);
 }
