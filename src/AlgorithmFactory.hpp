@@ -3,6 +3,7 @@
 
 #include "AlgorithmEnums.hpp"
 #include "SortAlgorithm.hpp"
+#include <memory>
 
 class SortAlgorithm;
 
