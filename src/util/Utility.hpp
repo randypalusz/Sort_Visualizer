@@ -4,6 +4,7 @@
 #include <algorithm>
 #include <vector>
 #include <string>
+#include <memory>
 
 #include <SFML/Graphics.hpp>
 #include <SFML/Window.hpp>
@@ -14,6 +15,11 @@ template <typename T>
 T normalize(const T& val, const T& min, const T& max, const T& newMin,
             const T& newMax) {
   return (newMax - newMin) * ((val - min) / (max - min)) + newMin;
+};
+
+template <typename T>
+std::shared_ptr<T> getShared() {
+  return std::make_shared<T>();
 };
 
 // TODO: make this not static so random_device can be reused
