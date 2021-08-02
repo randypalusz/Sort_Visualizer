@@ -5,11 +5,13 @@
 #include <vector>
 #include <string>
 #include <memory>
+#include <iostream>
 
 #include <SFML/Graphics.hpp>
 #include <SFML/Window.hpp>
 
 #include "AlgorithmEnums.hpp"
+#include "Command.hpp"
 
 template <typename T>
 T normalize(const T& val, const T& min, const T& max, const T& newMin,
@@ -18,8 +20,8 @@ T normalize(const T& val, const T& min, const T& max, const T& newMin,
 };
 
 template <typename T>
-std::shared_ptr<T> getShared() {
-  return std::make_shared<T>();
+T* getPointer() {
+  return new T();
 };
 
 // TODO: make this not static so random_device can be reused
@@ -30,11 +32,6 @@ class VectorGenerator {
 
  private:
   static std::vector<int> generateContinuousGivenSize(size_t size);
-};
-
-class WindowManager {
- public:
-  static WindowEvent pollForEvents(sf::RenderWindow& window);
 };
 
 #endif

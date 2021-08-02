@@ -7,18 +7,22 @@
 #include <thread>
 
 #include "util/Utility.hpp"
+#include "util/InputHandler.hpp"
 
 GraphDisplay::GraphDisplay(sf::RenderWindow& window, int waitTimeInMillis)
     : m_window(window), m_waitTimeInMillis(waitTimeInMillis) {
   // updating here as it should be a one-time update - SFML handles stretching
   m_size = window.getSize();
+  m_inputHandler = new InputHandler();
 }
+GraphDisplay::~GraphDisplay() { delete m_inputHandler; }
 
-bool GraphDisplay::update(const std::vector<int>& in) {
-  // TODO: replace with event handler
-  if (WindowManager::pollForEvents(m_window) == WindowEvent::CLOSE_WINDOW) {
-    m_window.close();
-    return false;
+bool GraphDisplay::update(std::vector<int>& in) {
+  std::shared_ptr<Command> cmd = m_inputHandler->pollForEvents(m_window);
+  if (cmd) {
+    if (!cmd->execute(m_window, nullptr, nullptr)) {
+      return false;
+    }
   }
 
   m_window.clear(sf::Color::Blue);

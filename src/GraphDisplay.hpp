@@ -4,8 +4,10 @@
 #include <vector>
 
 #include "SortAlgorithm.hpp"
+#include "util/Utility.hpp"
 
 class SortAlgorithm;
+class InputHandler;
 
 // will take in a sf::renderwindow and a vector
 class GraphDisplay {
@@ -14,13 +16,16 @@ class GraphDisplay {
 
  public:
   GraphDisplay(sf::RenderWindow& window, int waitTimeInMillis);
+  ~GraphDisplay();
 
  private:
-  bool update(const std::vector<int>& in);
+  bool update(std::vector<int>& in);
 
  private:
   // TODO: add EventHandler object here to handle events on update call
   sf::RenderWindow& m_window;
   sf::Vector2u m_size;
+  InputHandler* m_inputHandler;
+
   int m_waitTimeInMillis;
 };

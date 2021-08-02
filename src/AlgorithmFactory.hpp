@@ -4,12 +4,15 @@
 #include "AlgorithmEnums.hpp"
 #include "SortAlgorithm.hpp"
 #include <memory>
+#include <functional>
 
 class SortAlgorithm;
 
+using CreationFunction = std::function<SortAlgorithm*()>;
 class AlgorithmFactory {
  public:
-  static std::shared_ptr<SortAlgorithm> generateSorter(Algorithm a);
+  static void generateSorter(Algorithm a, SortAlgorithm** sorter);
+  static const std::unordered_map<Algorithm, CreationFunction> creators;
 };
 
 #endif

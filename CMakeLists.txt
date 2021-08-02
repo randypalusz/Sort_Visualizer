@@ -26,7 +26,8 @@ set(SOURCES
   ${SRC_DIR}/SortAlgorithm.cpp
   ${SRC_DIR}/GraphDisplay.cpp
   ${SRC_DIR}/util/VectorGenerator.cpp
-  ${SRC_DIR}/util/WindowManager.cpp
+  ${SRC_DIR}/util/InputHandler.cpp
+  ${SRC_DIR}/util/Command.cpp
 )
 
 

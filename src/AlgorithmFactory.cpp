@@ -7,37 +7,24 @@
 #include "SortAlgorithm.hpp"
 #include "util/Utility.hpp"
 
-std::shared_ptr<SortAlgorithm> AlgorithmFactory::generateSorter(Algorithm a) {
-  using CreationFunction = std::function<std::shared_ptr<SortAlgorithm>()>;
+const std::unordered_map<Algorithm, CreationFunction>
+    AlgorithmFactory::creators = {
+        {Algorithm::BOGO, &getPointer<BogoSort>},
+        {Algorithm::BUBBLE, &getPointer<BubbleSort>},
+        {Algorithm::QUICK, &getPointer<QuickSort>},
+        {Algorithm::QUICK_ITERATIVE, &getPointer<QuickSort_Iterative>},
+        {Algorithm::SELECTION, &getPointer<SelectionSort>}};
 
-  std::unordered_map<Algorithm, CreationFunction> creators{
-      {Algorithm::BOGO, &getShared<BogoSort>},
-      {Algorithm::BUBBLE, &getShared<BubbleSort>},
-      {Algorithm::QUICK, &getShared<QuickSort>},
-      {Algorithm::QUICK_ITERATIVE, &getShared<QuickSort_Iterative>},
-      {Algorithm::SELECTION, &getShared<SelectionSort>},
-  };
+void AlgorithmFactory::generateSorter(Algorithm a, SortAlgorithm** sorter) {
+  if (*sorter) delete *sorter;
 
   try {
     auto fn = creators.at(a);
-    return fn();
+    *sorter = fn();
+    return;
   } catch (const std::exception& e) {
     std::cerr
         << "Error - implement enum type in AlgorithmFactory::generateSorter"
         << std::endl;
   }
-
-  // switch (a) {
-  //   case Algorithm::BUBBLE:
-  //     return std::make_shared<BubbleSort>();
-  //   case Algorithm::BOGO:
-  //     return std::make_shared<BogoSort>();
-  //   case Algorithm::SELECTION:
-  //     return std::make_shared<SelectionSort>();
-  //   case Algorithm::QUICK:
-  //     return std::make_shared<QuickSort>();
-  //   case Algorithm::QUICK_ITERATIVE:
-  //     return std::make_shared<QuickSort_Iterative>();
-  // }
-  return nullptr;
 }

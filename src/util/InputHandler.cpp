@@ -1,27 +1,29 @@
-#include "Utility.hpp"
-#include "AlgorithmEnums.hpp"
+#include "InputHandler.hpp"
+#include <memory>
 
 // TODO: implement rest of events
-WindowEvent WindowManager::pollForEvents(sf::RenderWindow& window) {
+std::shared_ptr<Command> InputHandler::pollForEvents(sf::RenderWindow& window) {
   sf::Event event;
   while (window.pollEvent(event)) {
     // "close requested" event: we close the window
     if (event.type == sf::Event::KeyPressed) {
       switch (event.key.code) {
         case sf::Keyboard::Q:
-          return WindowEvent::CLOSE_WINDOW;
+          return buttonQ_;
         case sf::Keyboard::S:
-          return WindowEvent::NEXT_ALGORITHM;
+          return buttonS_;
         case sf::Keyboard::V:
-          return WindowEvent::REGENERATE_VECTOR;
+          return buttonV_;
         default:
           break;
       }
     }
     if (event.type == sf::Event::Closed) {
-      return WindowEvent::CLOSE_WINDOW;
+      // return Command::CLOSE_WINDOW;
+      return std::make_shared<CloseWindowCommand>();
     }
   }
   // no handled events found
-  return WindowEvent::NO_EVENT;
+  // return Command::NO_EVENT;
+  return nullptr;
 }
