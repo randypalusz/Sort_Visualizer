@@ -25,7 +25,6 @@ T* getPointer() {
   return new T();
 };
 
-// TODO: make this not static so random_device can be reused
 class VectorGenerator {
  public:
   static std::vector<int> loadFromFile(const std::string& fileName);

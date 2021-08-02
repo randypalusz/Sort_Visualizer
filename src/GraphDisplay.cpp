@@ -19,10 +19,8 @@ GraphDisplay::~GraphDisplay() { delete m_inputHandler; }
 
 bool GraphDisplay::update(std::vector<int>& in) {
   std::shared_ptr<Command> cmd = m_inputHandler->pollForEvents(m_window);
-  if (cmd) {
-    if (!cmd->execute(m_window, nullptr, nullptr)) {
-      return false;
-    }
+  if (!cmd->execute(m_window, nullptr, nullptr)) {
+    return false;
   }
 
   m_window.clear(sf::Color::Blue);

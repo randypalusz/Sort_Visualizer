@@ -1,7 +1,6 @@
 #include "InputHandler.hpp"
 #include <memory>
 
-// TODO: implement rest of events
 std::shared_ptr<Command> InputHandler::pollForEvents(sf::RenderWindow& window) {
   sf::Event event;
   while (window.pollEvent(event)) {
@@ -25,5 +24,5 @@ std::shared_ptr<Command> InputHandler::pollForEvents(sf::RenderWindow& window) {
   }
   // no handled events found
   // return Command::NO_EVENT;
-  return nullptr;
+  return std::make_shared<DoNothingCommand>();
 }

@@ -29,3 +29,8 @@ class ChooseNextAlgorithmCommand : public Command {
   bool execute(sf::RenderWindow& window, std::vector<int>* in,
                SortAlgorithm** sorter) override;
 };
+
+class DoNothingCommand : public Command {
+  bool execute(sf::RenderWindow& window, std::vector<int>* in,
+               SortAlgorithm** sorter) override;
+};

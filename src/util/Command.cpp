@@ -31,3 +31,8 @@ bool ChooseNextAlgorithmCommand::execute(sf::RenderWindow& window,
   }
   return true;
 }
+
+bool DoNothingCommand::execute(sf::RenderWindow& window, std::vector<int>* in,
+                               SortAlgorithm** sorter) {
+  return true;
+}
