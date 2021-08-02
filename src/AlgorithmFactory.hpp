@@ -7,6 +7,7 @@
 #include <functional>
 
 class SortAlgorithm;
+enum class Algorithm;
 
 using CreationFunction = std::function<SortAlgorithm*()>;
 class AlgorithmFactory {

@@ -13,6 +13,6 @@ void BogoSort::sort(GraphDisplay* display, std::vector<int>& in) {
   while (!std::is_sorted(in.begin(), in.end())) {
     std::shuffle(in.begin(), in.end(), g);
     if (!this->updateDisplay(display, in)) return;
-    this->print(in);
+    // this->print(in);
   }
 }
