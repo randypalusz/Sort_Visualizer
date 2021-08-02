@@ -32,8 +32,4 @@ void Application::run(int numElements) {
 
     m_sorter->sort(&g, m_vec);
   }
-
-  AlgorithmFactory::generateSorter(Algorithm::BOGO, &m_sorter);
-  std::vector<int> v = VectorGenerator::generateGivenSize(6, false);
-  m_sorter->sort(nullptr, v);
 }

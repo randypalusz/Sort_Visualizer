@@ -6,6 +6,9 @@
 #include <stdlib.h>
 #include <vector>
 
+std::random_device VectorGenerator::rd{};
+std::mt19937 VectorGenerator::g{rd()};
+
 std::vector<int> VectorGenerator::generateGivenSize(size_t size,
                                                     bool continuous) {
   if (continuous) {
@@ -17,6 +20,7 @@ std::vector<int> VectorGenerator::generateGivenSize(size_t size,
   for (int i = 0; i < size; i++) {
     out.push_back(rand() % max + min);
   }
+  std::shuffle(std::begin(out), std::end(out), g);
   return out;
 }
 
@@ -27,8 +31,6 @@ std::vector<int> VectorGenerator::generateContinuousGivenSize(size_t size) {
   for (int i = 0; i < size; i++) {
     out.push_back(i);
   }
-  std::random_device rd;
-  std::mt19937 g{rd()};
   std::shuffle(std::begin(out), std::end(out), g);
   return out;
 }

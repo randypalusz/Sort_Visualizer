@@ -6,6 +6,7 @@
 #include <string>
 #include <memory>
 #include <iostream>
+#include <random>
 
 #include <SFML/Graphics.hpp>
 #include <SFML/Window.hpp>
@@ -32,6 +33,8 @@ class VectorGenerator {
 
  private:
   static std::vector<int> generateContinuousGivenSize(size_t size);
+  static std::random_device rd;
+  static std::mt19937 g;
 };
 
 #endif
