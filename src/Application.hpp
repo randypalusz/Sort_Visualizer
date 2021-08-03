@@ -15,10 +15,9 @@ class Application {
  public:
   Application() {}
   void run(int numElements);
-  // HACK: public for now for InputHandler
+
+ private:
   sf::RenderWindow m_window;
   SortAlgorithm* m_sorter;
   std::vector<int> m_vec{};
-
- private:
 };
