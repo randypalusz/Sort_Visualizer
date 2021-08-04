@@ -12,7 +12,7 @@ void BogoSort::sort(GraphDisplay* display, std::vector<int>& in) {
   std::mt19937 g(rd());
   while (!std::is_sorted(in.begin(), in.end())) {
     std::shuffle(in.begin(), in.end(), g);
-    if (!this->updateDisplay(display, in)) return;
+    if (!this->updateDisplay(display, in, m_activeIndices)) return;
     // this->print(in);
   }
 }

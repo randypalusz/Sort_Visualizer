@@ -5,6 +5,7 @@
 #include <chrono>
 #include <iostream>
 #include <thread>
+#include <unordered_set>
 
 #include "util/Utility.hpp"
 #include "util/InputHandler.hpp"
@@ -17,7 +18,8 @@ GraphDisplay::GraphDisplay(sf::RenderWindow& window, int waitTimeInMillis)
 }
 GraphDisplay::~GraphDisplay() { delete m_inputHandler; }
 
-bool GraphDisplay::update(std::vector<int>& in) {
+bool GraphDisplay::update(std::vector<int>& in,
+                          const std::unordered_set<int>& activeIndices) {
   std::shared_ptr<Command> cmd = m_inputHandler->pollForEvents(m_window);
   if (!cmd->execute(m_window, nullptr, nullptr)) {
     return false;
@@ -41,6 +43,9 @@ bool GraphDisplay::update(std::vector<int>& in) {
         normalize((float)in.at(i), min, max, newMin, newMax);
     sf::RectangleShape bar = sf::RectangleShape(
         sf::Vector2f(widthPerBar - widthBuffer, normalizedHeight));
+    if (activeIndices.find(i) != activeIndices.end()) {
+      bar.setFillColor(sf::Color::Red);
+    }
     bar.setPosition(sf::Vector2f(
         currentBarX, (m_size.y - normalizedHeight) - topBottomBorder));
     m_window.draw(bar);

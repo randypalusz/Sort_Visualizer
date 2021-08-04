@@ -2,6 +2,7 @@
 
 #include <SFML/Graphics.hpp>
 #include <vector>
+#include <unordered_set>
 
 #include "SortAlgorithm.hpp"
 #include "util/Utility.hpp"
@@ -19,7 +20,8 @@ class GraphDisplay {
   ~GraphDisplay();
 
  private:
-  bool update(std::vector<int>& in);
+  bool update(std::vector<int>& in,
+              const std::unordered_set<int>& activeIndices);
 
  private:
   // TODO: add EventHandler object here to handle events on update call

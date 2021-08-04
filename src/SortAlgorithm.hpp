@@ -4,6 +4,7 @@
 #include "AlgorithmEnums.hpp"
 #include "GraphDisplay.hpp"
 #include <vector>
+#include <unordered_set>
 #include <iostream>
 
 class GraphDisplay;
@@ -20,19 +21,26 @@ class SortAlgorithm {
   // updates the display if display is not nullptr
   // returns false is update is interrupted by window close/keypress
   // returns true if display is nullptr or update is uninterrupted
-  bool updateDisplay(GraphDisplay* display, std::vector<int>& in);
+  bool updateDisplay(GraphDisplay* display, std::vector<int>& in,
+                     std::unordered_set<int>& activeIndices);
 };
 
 class BubbleSort : public SortAlgorithm {
  public:
   void sort(GraphDisplay* display, std::vector<int>& in) override;
   inline Algorithm getEnumType() { return Algorithm::BUBBLE; }
+
+ private:
+  std::unordered_set<int> m_activeIndices;
 };
 
 class BogoSort : public SortAlgorithm {
  public:
   void sort(GraphDisplay* display, std::vector<int>& in) override;
   inline Algorithm getEnumType() { return Algorithm::BOGO; }
+
+ private:
+  std::unordered_set<int> m_activeIndices;
 };
 
 class QuickSort : public SortAlgorithm {
@@ -43,18 +51,25 @@ class QuickSort : public SortAlgorithm {
  private:
   bool quicksort(GraphDisplay* display, std::vector<int>& in, int lo, int hi);
   int partition(GraphDisplay* display, std::vector<int>& in, int lo, int hi);
+  std::unordered_set<int> m_activeIndices;
 };
 
 class QuickSort_Iterative : public SortAlgorithm {
  public:
   void sort(GraphDisplay* display, std::vector<int>& in) override;
   inline Algorithm getEnumType() { return Algorithm::QUICK_ITERATIVE; }
+
+ private:
+  std::unordered_set<int> m_activeIndices;
 };
 
 class SelectionSort : public SortAlgorithm {
  public:
   void sort(GraphDisplay* display, std::vector<int>& in) override;
   inline Algorithm getEnumType() { return Algorithm::SELECTION; }
+
+ private:
+  std::unordered_set<int> m_activeIndices;
 };
 
 #endif

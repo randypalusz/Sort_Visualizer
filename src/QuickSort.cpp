@@ -19,17 +19,20 @@ void QuickSort_Iterative::sort(GraphDisplay* display, std::vector<int>& in) {
       while (L < R) {
         while (in.at(R) >= piv && L < R) R--;
         if (L < R) {
+          m_activeIndices.insert({L, R});
           in.at(L++) = in.at(R);
-          if (!this->updateDisplay(display, in)) return;
+          if (!this->updateDisplay(display, in, m_activeIndices)) return;
         }
         while (in.at(L) <= piv && L < R) L++;
         if (L < R) {
+          m_activeIndices.insert({L, R});
           in.at(R--) = in.at(L);
-          if (!this->updateDisplay(display, in)) return;
+          if (!this->updateDisplay(display, in, m_activeIndices)) return;
         }
       }
       in.at(L) = piv;
-      if (!this->updateDisplay(display, in)) return;
+      m_activeIndices.insert({L, R});
+      if (!this->updateDisplay(display, in, m_activeIndices)) return;
       beg[i + 1] = L + 1;
       end[i + 1] = end[i];
       end[i++] = L;
@@ -73,11 +76,13 @@ int QuickSort::partition(GraphDisplay* display, std::vector<int>& in, int lo,
   for (int rightPtr = lo; rightPtr <= hi; rightPtr++) {
     if (in.at(rightPtr) < pivot) {
       std::swap(in.at(leftPtr), in.at(rightPtr));
-      if (!this->updateDisplay(display, in)) return -1;
+      m_activeIndices.insert({leftPtr, rightPtr});
+      if (!this->updateDisplay(display, in, m_activeIndices)) return -1;
       leftPtr++;
     }
   }
   std::swap(in.at(leftPtr), in.at(hi));
-  if (!this->updateDisplay(display, in)) return -1;
+  m_activeIndices.insert({leftPtr, hi});
+  if (!this->updateDisplay(display, in, m_activeIndices)) return -1;
   return leftPtr;
 }

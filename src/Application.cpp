@@ -15,7 +15,7 @@
 
 void Application::run(int numElements) {
   m_window.create(sf::VideoMode(800, 600), "Sort Visualizer");
-  m_window.setFramerateLimit(500);
+  m_window.setFramerateLimit(60);
 
   AlgorithmFactory::generateSorter(Algorithm::SELECTION, &m_sorter);
   m_vec = VectorGenerator::generateGivenSize(numElements, true);

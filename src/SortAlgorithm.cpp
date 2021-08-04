@@ -1,6 +1,7 @@
 #include "SortAlgorithm.hpp"
 
 #include <vector>
+#include <unordered_set>
 
 void SortAlgorithm::print(const std::vector<int>& in) {
   bool first = true;
@@ -15,11 +16,13 @@ void SortAlgorithm::print(const std::vector<int>& in) {
   std::cout << "}" << std::endl;
 }
 
-bool SortAlgorithm::updateDisplay(GraphDisplay* display, std::vector<int>& in) {
+bool SortAlgorithm::updateDisplay(GraphDisplay* display, std::vector<int>& in,
+                                  std::unordered_set<int>& activeIndices) {
   if (display) {
-    if (!display->update(in)) {
+    if (!display->update(in, activeIndices)) {
       return false;
     }
   }
+  activeIndices.clear();
   return true;
 }
