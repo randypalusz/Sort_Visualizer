@@ -4,7 +4,7 @@
 #include <vector>
 
 void SelectionSort::sort(GraphDisplay* display, std::vector<int>& in) {
-  if (std::is_sorted(in.begin(), in.end())) {
+  if (!SortAlgorithm::checkPreSort(in)) {
     return;
   }
   int minIndex = 0;

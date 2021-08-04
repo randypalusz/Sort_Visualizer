@@ -19,9 +19,10 @@ GraphDisplay::GraphDisplay(sf::RenderWindow& window, int waitTimeInMillis)
 GraphDisplay::~GraphDisplay() { delete m_inputHandler; }
 
 bool GraphDisplay::update(std::vector<int>& in,
-                          const std::unordered_set<int>& activeIndices) {
+                          const std::unordered_set<int>& activeIndices,
+                          bool* paused) {
   std::shared_ptr<Command> cmd = m_inputHandler->pollForEvents(m_window);
-  if (!cmd->execute(m_window, nullptr, nullptr)) {
+  if (!cmd->execute(m_window, nullptr, nullptr, paused)) {
     return false;
   }
 

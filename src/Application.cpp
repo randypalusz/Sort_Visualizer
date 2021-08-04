@@ -26,7 +26,7 @@ void Application::run(int numElements) {
 
   while (m_window.isOpen()) {
     std::shared_ptr<Command> result = inputHandler.pollForEvents(m_window);
-    result->execute(m_window, &m_vec, &m_sorter);
+    result->execute(m_window, &m_vec, &m_sorter, &(m_sorter->m_paused));
     m_sorter->sort(&g, m_vec);
   }
 }

@@ -21,7 +21,7 @@ class GraphDisplay {
 
  private:
   bool update(std::vector<int>& in,
-              const std::unordered_set<int>& activeIndices);
+              const std::unordered_set<int>& activeIndices, bool* paused);
 
  private:
   // TODO: add EventHandler object here to handle events on update call

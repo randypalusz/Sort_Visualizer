@@ -16,6 +16,7 @@ class SortAlgorithm {
   virtual Algorithm getEnumType() = 0;
   // print for debugging purposes
   static void print(const std::vector<int>& in);
+  bool m_paused = false;
 
  protected:
   // updates the display if display is not nullptr
@@ -23,6 +24,8 @@ class SortAlgorithm {
   // returns true if display is nullptr or update is uninterrupted
   bool updateDisplay(GraphDisplay* display, std::vector<int>& in,
                      std::unordered_set<int>& activeIndices);
+  // returns whether sort should continue based on m_paused + std::is_sorted
+  bool checkPreSort(const std::vector<int>& in);
 };
 
 class BubbleSort : public SortAlgorithm {

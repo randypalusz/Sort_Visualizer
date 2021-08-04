@@ -13,6 +13,8 @@ std::shared_ptr<Command> InputHandler::pollForEvents(sf::RenderWindow& window) {
           return buttonS_;
         case sf::Keyboard::V:
           return buttonV_;
+        case sf::Keyboard::P:
+          return buttonP_;
         default:
           break;
       }

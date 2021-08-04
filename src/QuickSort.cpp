@@ -3,7 +3,7 @@
 
 void QuickSort_Iterative::sort(GraphDisplay* display, std::vector<int>& in) {
 #define MAX_LEVELS 300
-  if (std::is_sorted(in.begin(), in.end())) {
+  if (!SortAlgorithm::checkPreSort(in)) {
     return;
   }
 
@@ -51,9 +51,10 @@ void QuickSort_Iterative::sort(GraphDisplay* display, std::vector<int>& in) {
 }
 
 void QuickSort::sort(GraphDisplay* display, std::vector<int>& in) {
-  if (!std::is_sorted(in.begin(), in.end())) {
-    this->quicksort(display, in, 0, in.size() - 1);
+  if (!SortAlgorithm::checkPreSort(in)) {
+    return;
   }
+  this->quicksort(display, in, 0, in.size() - 1);
 }
 
 bool QuickSort::quicksort(GraphDisplay* display, std::vector<int>& in, int lo,
