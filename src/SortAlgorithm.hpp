@@ -1,11 +1,12 @@
 #ifndef SORT_ALGORITHM_HPP
 #define SORT_ALGORITHM_HPP
 
+#include <iostream>
+#include <unordered_set>
+#include <vector>
+
 #include "AlgorithmEnums.hpp"
 #include "GraphDisplay.hpp"
-#include <vector>
-#include <unordered_set>
-#include <iostream>
 
 class GraphDisplay;
 
@@ -13,6 +14,7 @@ class SortAlgorithm {
  public:
   // display is passed as a pointer to allow for no display update when nullptr
   virtual void sort(GraphDisplay* display, std::vector<int>& in) = 0;
+  virtual ~SortAlgorithm(){};
   virtual Algorithm getEnumType() = 0;
   // print for debugging purposes
   static void print(const std::vector<int>& in);
@@ -31,7 +33,7 @@ class SortAlgorithm {
 class BubbleSort : public SortAlgorithm {
  public:
   void sort(GraphDisplay* display, std::vector<int>& in) override;
-  inline Algorithm getEnumType() { return Algorithm::BUBBLE; }
+  inline Algorithm getEnumType() override { return Algorithm::BUBBLE; }
 
  private:
   std::unordered_set<int> m_activeIndices;
@@ -40,7 +42,7 @@ class BubbleSort : public SortAlgorithm {
 class BogoSort : public SortAlgorithm {
  public:
   void sort(GraphDisplay* display, std::vector<int>& in) override;
-  inline Algorithm getEnumType() { return Algorithm::BOGO; }
+  inline Algorithm getEnumType() override { return Algorithm::BOGO; }
 
  private:
   std::unordered_set<int> m_activeIndices;
@@ -49,7 +51,7 @@ class BogoSort : public SortAlgorithm {
 class QuickSort : public SortAlgorithm {
  public:
   void sort(GraphDisplay* display, std::vector<int>& in) override;
-  inline Algorithm getEnumType() { return Algorithm::QUICK; }
+  inline Algorithm getEnumType() override { return Algorithm::QUICK; }
 
  private:
   bool quicksort(GraphDisplay* display, std::vector<int>& in, int lo, int hi);
@@ -60,7 +62,7 @@ class QuickSort : public SortAlgorithm {
 class QuickSort_Iterative : public SortAlgorithm {
  public:
   void sort(GraphDisplay* display, std::vector<int>& in) override;
-  inline Algorithm getEnumType() { return Algorithm::QUICK_ITERATIVE; }
+  inline Algorithm getEnumType() override { return Algorithm::QUICK_ITERATIVE; }
 
  private:
   std::unordered_set<int> m_activeIndices;
@@ -69,7 +71,7 @@ class QuickSort_Iterative : public SortAlgorithm {
 class SelectionSort : public SortAlgorithm {
  public:
   void sort(GraphDisplay* display, std::vector<int>& in) override;
-  inline Algorithm getEnumType() { return Algorithm::SELECTION; }
+  inline Algorithm getEnumType() override { return Algorithm::SELECTION; }
 
  private:
   std::unordered_set<int> m_activeIndices;
