@@ -17,6 +17,6 @@ class Application {
   void run(int numElements);
 
  private:
-  SortAlgorithm* m_sorter;
+  SortAlgorithm* m_sorter = nullptr;
   std::vector<int> m_vec{};
 };

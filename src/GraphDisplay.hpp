@@ -21,11 +21,30 @@ class GraphDisplay {
  public:
   GraphDisplay(int waitTimeInMillis);
   ~GraphDisplay();
-  inline bool isOpen() { return m_window.isOpen(); }
+  inline void startDisplayThread(std::vector<int>& in,
+                                 const std::unordered_set<int>& activeIndices) {
+    m_stopThread = false;
+    // m_window.setActive(false);
+    m_displayThread = std::thread{&GraphDisplay::updateForThread, this,
+                                  std::ref(in), std::ref(activeIndices)};
+  }
+  inline void stopDisplayThread() {
+    m_stopThread = true;
+    // m_window.setActive(true);
+  }
+  inline bool isOpen() {
+    if (!m_windowInitialized) {
+      return true;
+    } else {
+      return m_window.isOpen();
+    }
+  }
 
  private:
   bool update(std::vector<int>& in,
               const std::unordered_set<int>& activeIndices, bool* paused);
+  void updateForThread(std::vector<int>& in,
+                       const std::unordered_set<int>& activeIndices);
   inline void threadTest(const std::string& in) {
     while (!m_stopThread) {
       std::cout << in << std::endl;
@@ -35,6 +54,7 @@ class GraphDisplay {
 
  private:
   sf::RenderWindow m_window;
+  bool m_windowInitialized = false;
   sf::Vector2u m_size;
   InputHandler* m_inputHandler;
   // TODO: pass update function + parameters to this instead of test print
