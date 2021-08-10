@@ -15,8 +15,13 @@ GraphDisplay::GraphDisplay(sf::RenderWindow& window, int waitTimeInMillis)
   // updating here as it should be a one-time update - SFML handles stretching
   m_size = window.getSize();
   m_inputHandler = new InputHandler();
+  m_displayThread = std::thread{&GraphDisplay::threadTest, this, "test"};
 }
-GraphDisplay::~GraphDisplay() { delete m_inputHandler; }
+GraphDisplay::~GraphDisplay() {
+  m_stopThread = true;
+  m_displayThread.join();
+  delete m_inputHandler;
+}
 
 bool GraphDisplay::update(std::vector<int>& in,
                           const std::unordered_set<int>& activeIndices,
