@@ -13,6 +13,12 @@ void SelectionSort::sort(GraphDisplay* display, std::vector<int>& in) {
   int minIndex = 0;
   for (int i = 0; i < (in.size() - 1); i++) {
     minIndex = in.at(i);
+    // TODO: move all these inserts/swaps to the display itself
+    //      maybe display should contain the vector
+    //      would just call display->mark(idx) / display->unmark(idx)
+    //      maye display->swap(idx1, idx2)
+    //      and display would hold list of elements to mark,
+    //      would also implement delay whenever an access is made
     m_activeIndices.insert({i, minIndex});
     for (int j = i + 1; j < in.size(); j++) {
       m_activeIndices.insert(j);
