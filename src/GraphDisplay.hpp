@@ -19,8 +19,9 @@ class GraphDisplay {
   friend class SortAlgorithm;
 
  public:
-  GraphDisplay(sf::RenderWindow& window, int waitTimeInMillis);
+  GraphDisplay(int waitTimeInMillis);
   ~GraphDisplay();
+  inline bool isOpen() { return m_window.isOpen(); }
 
  private:
   bool update(std::vector<int>& in,
@@ -33,7 +34,7 @@ class GraphDisplay {
   }
 
  private:
-  sf::RenderWindow& m_window;
+  sf::RenderWindow m_window;
   sf::Vector2u m_size;
   InputHandler* m_inputHandler;
   // TODO: pass update function + parameters to this instead of test print

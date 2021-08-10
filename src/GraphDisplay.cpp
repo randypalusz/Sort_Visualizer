@@ -10,10 +10,13 @@
 #include "util/Utility.hpp"
 #include "util/InputHandler.hpp"
 
-GraphDisplay::GraphDisplay(sf::RenderWindow& window, int waitTimeInMillis)
-    : m_window(window), m_waitTimeInMillis(waitTimeInMillis) {
+GraphDisplay::GraphDisplay(int waitTimeInMillis)
+    : m_waitTimeInMillis(waitTimeInMillis) {
   // updating here as it should be a one-time update - SFML handles stretching
-  m_size = window.getSize();
+  m_window.create(sf::VideoMode(800, 600), "Sort Visualizer");
+  m_window.setFramerateLimit(60);
+
+  m_size = m_window.getSize();
   m_inputHandler = new InputHandler();
   m_displayThread = std::thread{&GraphDisplay::threadTest, this, "test"};
 }

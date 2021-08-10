@@ -17,7 +17,6 @@ class Application {
   void run(int numElements);
 
  private:
-  sf::RenderWindow m_window;
   SortAlgorithm* m_sorter;
   std::vector<int> m_vec{};
 };
