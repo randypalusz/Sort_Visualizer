@@ -4,7 +4,7 @@
 #include "GraphDisplay.hpp"
 
 void BubbleSort::sort(GraphDisplay* display, std::vector<int>& in) {
-  if (!SortAlgorithm::checkPreSort(in)) {
+  if (!SortAlgorithm::sortShouldContinue(in)) {
     return;
   }
   bool swapOccurred = false;

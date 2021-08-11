@@ -5,7 +5,7 @@
 #include "GraphDisplay.hpp"
 
 void BogoSort::sort(GraphDisplay* display, std::vector<int>& in) {
-  if (!SortAlgorithm::checkPreSort(in)) {
+  if (!SortAlgorithm::sortShouldContinue(in)) {
     return;
   }
   std::random_device rd;

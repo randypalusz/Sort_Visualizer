@@ -19,6 +19,12 @@ class SortAlgorithm {
   virtual Algorithm getEnumType() = 0;
   // print for debugging purposes
   static void print(const std::vector<int>& in);
+  inline void waitForThreadToFinish() {
+    if (m_threadActive) {
+      m_thread.join();
+    }
+    return;
+  }
   bool m_paused = false;
 
  protected:
@@ -32,7 +38,7 @@ class SortAlgorithm {
   // TODO: make this pure virtual after ready to implement in all child classes
   virtual void internalSort(GraphDisplay* display, std::vector<int>& in){};
   // returns whether sort should continue based on m_paused + std::is_sorted
-  bool checkPreSort(const std::vector<int>& in);
+  bool sortShouldContinue(const std::vector<int>& in);
   bool m_threadActive = false;
   std::thread m_thread;
 };

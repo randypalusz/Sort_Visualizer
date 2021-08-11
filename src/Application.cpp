@@ -30,4 +30,9 @@ void Application::run(int numElements) {
     m_sorter->sort(&g, m_vec);
     g.update();
   }
+
+  // TODO: segmentation fault sometimes depending on when window is closed
+  //      need to terminate child sort thread before leaving main
+  //      just waiting for thread to end for now
+  m_sorter->waitForThreadToFinish();
 }

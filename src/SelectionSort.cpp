@@ -1,12 +1,12 @@
 #include "SortAlgorithm.hpp"
 #include "GraphDisplay.hpp"
 
-#include <chrono>
+#include <iostream>
 #include <vector>
 #include <thread>
 
 void SelectionSort::sort(GraphDisplay* display, std::vector<int>& in) {
-  if (!SortAlgorithm::checkPreSort(in)) {
+  if (!SortAlgorithm::sortShouldContinue(in)) {
     return;
   }
   m_threadActive = true;
@@ -14,6 +14,7 @@ void SelectionSort::sort(GraphDisplay* display, std::vector<int>& in) {
       std::thread(&SelectionSort::internalSort, this, display, std::ref(in));
 }
 
+// TODO: terminate if window destroyed
 void SelectionSort::internalSort(GraphDisplay* display, std::vector<int>& in) {
   int minIndex = 0;
   for (int i = 0; i < (in.size() - 1); i++) {
@@ -35,4 +36,5 @@ void SelectionSort::internalSort(GraphDisplay* display, std::vector<int>& in) {
     display->m_activeIndices.erase(i);
     display->m_activeIndices.erase(minIndex);
   }
+  m_threadActive = false;
 }

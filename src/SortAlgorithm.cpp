@@ -28,7 +28,7 @@ bool SortAlgorithm::updateDisplay(GraphDisplay* display, std::vector<int>& in,
   return true;
 }
 
-bool SortAlgorithm::checkPreSort(const std::vector<int>& in) {
+bool SortAlgorithm::sortShouldContinue(const std::vector<int>& in) {
   // m_paused - is_sorted
   // t - t -> false
   // t - f -> false
