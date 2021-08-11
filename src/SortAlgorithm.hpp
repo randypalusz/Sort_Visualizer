@@ -25,10 +25,11 @@ class SortAlgorithm {
   // updates the display if display is not nullptr
   // returns false is update is interrupted by window close/keypress
   // returns true if display is nullptr or update is uninterrupted
+  // TODO: remove this
   bool updateDisplay(GraphDisplay* display, std::vector<int>& in,
                      std::unordered_set<int>& activeIndices);
   // this will be the sort function that the top-level sort starts a thread on
-  // TODO: make this pure virtual
+  // TODO: make this pure virtual after ready to implement in all child classes
   virtual void internalSort(GraphDisplay* display, std::vector<int>& in){};
   // returns whether sort should continue based on m_paused + std::is_sorted
   bool checkPreSort(const std::vector<int>& in);
