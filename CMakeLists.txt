@@ -28,6 +28,7 @@ set(SOURCES
   ${SRC_DIR}/AlgorithmEnums.cpp
   ${SRC_DIR}/util/VectorGenerator.cpp
   ${SRC_DIR}/util/InputHandler.cpp
+  ${SRC_DIR}/util/Timing.cpp
   ${SRC_DIR}/util/Command.cpp
 )
 

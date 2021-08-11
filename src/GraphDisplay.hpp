@@ -16,16 +16,16 @@ class GraphDisplay {
   friend class SortAlgorithm;
 
  public:
-  GraphDisplay(sf::RenderWindow& window, int waitTimeInMillis);
+  GraphDisplay(sf::RenderWindow& window, std::vector<int>& in,
+               int waitTimeInMillis);
   ~GraphDisplay();
-
- private:
-  bool update(std::vector<int>& in,
-              const std::unordered_set<int>& activeIndices, bool* paused);
+  bool update();
+  std::unordered_set<int> m_activeIndices;
 
  private:
   // TODO: add EventHandler object here to handle events on update call
   sf::RenderWindow& m_window;
+  std::vector<int>& m_sortVector;
   sf::Vector2u m_size;
   InputHandler* m_inputHandler;
 

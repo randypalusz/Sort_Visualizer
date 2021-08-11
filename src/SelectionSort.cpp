@@ -1,29 +1,38 @@
 #include "SortAlgorithm.hpp"
 #include "GraphDisplay.hpp"
 
+#include <chrono>
 #include <vector>
+#include <thread>
 
 void SelectionSort::sort(GraphDisplay* display, std::vector<int>& in) {
   if (!SortAlgorithm::checkPreSort(in)) {
     return;
   }
+  m_threadActive = true;
+  m_thread =
+      std::thread(&SelectionSort::internalSort, this, display, std::ref(in));
+}
+
+void SelectionSort::internalSort(GraphDisplay* display, std::vector<int>& in) {
   int minIndex = 0;
   for (int i = 0; i < (in.size() - 1); i++) {
-    minIndex = in.at(i);
+    minIndex = i;
+    display->m_activeIndices.insert(i);
     for (int j = i + 1; j < in.size(); j++) {
+      display->m_activeIndices.insert(j);
+      Timing::preciseSleep(0.010);
       if (in.at(j) < in.at(minIndex)) {
+        if (minIndex != i) {
+          display->m_activeIndices.erase(minIndex);
+        }
         minIndex = j;
-      }
-      m_activeIndices.insert({i, j, minIndex});
-      // TODO: uncomment after implementing area looked at
-      if (!updateDisplay(display, in, m_activeIndices)) {
-        return;
+      } else {
+        display->m_activeIndices.erase(j);
       }
     }
     std::swap(in.at(i), in.at(minIndex));
-    m_activeIndices.insert({i, minIndex});
-    if (!updateDisplay(display, in, m_activeIndices)) {
-      return;
-    }
+    display->m_activeIndices.erase(i);
+    display->m_activeIndices.erase(minIndex);
   }
 }

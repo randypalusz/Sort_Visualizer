@@ -25,6 +25,11 @@ T* getPointer() {
   return new T();
 };
 
+class Timing {
+ public:
+  static void preciseSleep(double seconds);
+};
+
 class VectorGenerator {
  public:
   static std::vector<int> loadFromFile(const std::string& fileName);

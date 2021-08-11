@@ -4,6 +4,7 @@
 #include <iostream>
 #include <unordered_set>
 #include <vector>
+#include <thread>
 
 #include "AlgorithmEnums.hpp"
 #include "GraphDisplay.hpp"
@@ -26,8 +27,13 @@ class SortAlgorithm {
   // returns true if display is nullptr or update is uninterrupted
   bool updateDisplay(GraphDisplay* display, std::vector<int>& in,
                      std::unordered_set<int>& activeIndices);
+  // this will be the sort function that the top-level sort starts a thread on
+  // TODO: make this pure virtual
+  virtual void internalSort(GraphDisplay* display, std::vector<int>& in){};
   // returns whether sort should continue based on m_paused + std::is_sorted
   bool checkPreSort(const std::vector<int>& in);
+  bool m_threadActive = false;
+  std::thread m_thread;
 };
 
 class BubbleSort : public SortAlgorithm {
@@ -72,6 +78,9 @@ class SelectionSort : public SortAlgorithm {
  public:
   void sort(GraphDisplay* display, std::vector<int>& in) override;
   inline Algorithm getEnumType() override { return Algorithm::SELECTION; }
+
+ protected:
+  void internalSort(GraphDisplay* display, std::vector<int>& in) override;
 
  private:
   std::unordered_set<int> m_activeIndices;
