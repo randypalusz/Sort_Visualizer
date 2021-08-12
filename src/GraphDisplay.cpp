@@ -11,8 +11,8 @@
 #include "util/InputHandler.hpp"
 
 GraphDisplay::GraphDisplay(sf::RenderWindow& window, std::vector<int>& in,
-                           int waitTimeInMillis)
-    : m_window(window), m_sortVector(in), m_waitTimeInMillis(waitTimeInMillis) {
+                           double delayInSeconds)
+    : m_window(window), m_sortVector(in), m_delayInSeconds(delayInSeconds) {
   // updating here as it should be a one-time update - SFML handles stretching
   m_size = window.getSize();
   m_inputHandler = new InputHandler();
@@ -20,10 +20,6 @@ GraphDisplay::GraphDisplay(sf::RenderWindow& window, std::vector<int>& in,
 GraphDisplay::~GraphDisplay() { delete m_inputHandler; }
 
 bool GraphDisplay::update() {
-  // std::shared_ptr<Command> cmd = m_inputHandler->pollForEvents(m_window);
-  // if (!cmd->execute(m_window, nullptr, nullptr, nullptr)) {
-  //   return false;
-  // }
   m_window.clear(sf::Color::Blue);
   int numBars = m_sortVector.size();
   float widthPerBar = (float)m_size.x / (float)numBars;
@@ -53,3 +49,5 @@ bool GraphDisplay::update() {
   m_window.display();
   return true;
 }
+
+void GraphDisplay::onAccess() { Timing::preciseSleep(m_delayInSeconds); }

@@ -19,5 +19,6 @@ class Application {
  private:
   sf::RenderWindow m_window;
   SortAlgorithm* m_sorter = nullptr;
+  GraphDisplay* m_display = nullptr;
   std::vector<int> m_vec{};
 };

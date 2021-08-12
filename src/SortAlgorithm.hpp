@@ -1,6 +1,7 @@
 #ifndef SORT_ALGORITHM_HPP
 #define SORT_ALGORITHM_HPP
 
+#include <atomic>
 #include <iostream>
 #include <unordered_set>
 #include <vector>
@@ -20,6 +21,7 @@ class SortAlgorithm {
   // print for debugging purposes
   static void print(const std::vector<int>& in);
   inline void waitForThreadToFinish() {
+    m_threadShouldEnd = true;
     if (m_threadActive) {
       m_thread.join();
     }
@@ -31,7 +33,7 @@ class SortAlgorithm {
   // updates the display if display is not nullptr
   // returns false is update is interrupted by window close/keypress
   // returns true if display is nullptr or update is uninterrupted
-  // TODO: remove this
+  // TODO: remove this after internalSort implemented in child classes
   bool updateDisplay(GraphDisplay* display, std::vector<int>& in,
                      std::unordered_set<int>& activeIndices);
   // this will be the sort function that the top-level sort starts a thread on
@@ -39,6 +41,7 @@ class SortAlgorithm {
   virtual void internalSort(GraphDisplay* display, std::vector<int>& in){};
   // returns whether sort should continue based on m_paused + std::is_sorted
   bool sortShouldContinue(const std::vector<int>& in);
+  std::atomic<bool> m_threadShouldEnd = false;
   bool m_threadActive = false;
   std::thread m_thread;
 };

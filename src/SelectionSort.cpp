@@ -14,7 +14,6 @@ void SelectionSort::sort(GraphDisplay* display, std::vector<int>& in) {
       std::thread(&SelectionSort::internalSort, this, display, std::ref(in));
 }
 
-// TODO: terminate if window destroyed
 void SelectionSort::internalSort(GraphDisplay* display, std::vector<int>& in) {
   int minIndex = 0;
   for (int i = 0; i < (in.size() - 1); i++) {
@@ -22,7 +21,15 @@ void SelectionSort::internalSort(GraphDisplay* display, std::vector<int>& in) {
     display->m_activeIndices.insert(i);
     for (int j = i + 1; j < in.size(); j++) {
       display->m_activeIndices.insert(j);
-      Timing::preciseSleep(0.010);
+      // TODO: sleep at each access of vector in GraphDisplay
+      //       also ensure using sleep time passed into GraphDisplay
+      Timing::preciseSleep(0.002);
+      // TODO: checking for m_threadShouldEnd should be done at the spot most
+      //       often checked in sorting, maybe check this at each access too
+      if (m_threadShouldEnd) {
+        m_threadActive = false;
+        return;
+      }
       if (in.at(j) < in.at(minIndex)) {
         if (minIndex != i) {
           display->m_activeIndices.erase(minIndex);
