@@ -9,6 +9,10 @@ void SelectionSort::sort(GraphDisplay* display, std::vector<int>& in) {
   if (!SortAlgorithm::sortShouldContinue(in)) {
     return;
   }
+  if (m_thread.joinable()) {
+    m_thread.join();
+  }
+
   m_threadActive = true;
   m_thread =
       std::thread(&SelectionSort::internalSort, this, display, std::ref(in));
