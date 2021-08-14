@@ -22,6 +22,12 @@ class GraphDisplay {
   bool update();
   inline void mark(int idx) { m_activeIndices.insert(idx); }
   inline void unmark(int idx) { m_activeIndices.erase(idx); }
+  inline void markSwap(int toRemove, int replacement) {
+    m_activeIndices.erase(toRemove);
+    m_activeIndices.insert(replacement);
+  }
+  // TODO: implement watch() that will hold int* to an index and will update
+  // upon changing
   inline int getVecSize() { return m_sortVector.size(); }
 
  private:

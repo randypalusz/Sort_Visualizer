@@ -37,7 +37,7 @@ void SelectionSort::internalSort(GraphDisplay* display, std::vector<int>& in) {
       }
       if (in.at(j) < in.at(minIndex)) {
         if (minIndex != i) {
-          display->unmark(minIndex);
+          display->markSwap(minIndex, j);
         }
         minIndex = j;
       } else {
