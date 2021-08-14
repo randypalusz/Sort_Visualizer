@@ -14,7 +14,7 @@ class SortAlgorithm;
 class Application {
  public:
   Application() {}
-  void run(int numElements);
+  void run(int numElements, double delay);
 
  private:
   sf::RenderWindow m_window;

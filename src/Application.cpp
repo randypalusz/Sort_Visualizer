@@ -13,7 +13,7 @@
 #include "util/InputHandler.hpp"
 #include "util/Utility.hpp"
 
-void Application::run(int numElements) {
+void Application::run(int numElements, double delay) {
   m_window.create(sf::VideoMode(800, 600), "Sort Visualizer");
   m_window.setFramerateLimit(0);
 
@@ -22,7 +22,7 @@ void Application::run(int numElements) {
 
   InputHandler inputHandler{};
 
-  m_display = new GraphDisplay(m_window, m_vec, 0.001);
+  m_display = new GraphDisplay(m_window, m_vec, delay);
 
   while (m_window.isOpen()) {
     std::shared_ptr<Command> result = inputHandler.pollForEvents(m_window);

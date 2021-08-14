@@ -20,7 +20,7 @@ void SelectionSort::sort(GraphDisplay* display, std::vector<int>& in) {
 }
 
 void SelectionSort::internalSort(GraphDisplay* display, std::vector<int>& in) {
-  int minIndex = 0;
+  int minIndex;
   for (int i = 0; i < (display->getVecSize() - 1); i++) {
     minIndex = i;
     display->mark(i);
@@ -28,14 +28,14 @@ void SelectionSort::internalSort(GraphDisplay* display, std::vector<int>& in) {
       display->mark(j);
       // TODO: sleep at each access of vector in GraphDisplay
       //       also ensure using sleep time passed into GraphDisplay
-      Timing::preciseSleep(0.002);
+      // Timing::preciseSleep(1.0);
       // TODO: checking for m_threadShouldEnd should be done at the spot most
       //       often checked in sorting, maybe check this at each access too
       if (m_threadShouldEnd) {
         m_threadActive = false;
         return;
       }
-      if (in.at(j) < in.at(minIndex)) {
+      if (display->at(j) < display->at(minIndex)) {
         if (minIndex != i) {
           display->markSwap(minIndex, j);
         }
@@ -44,7 +44,7 @@ void SelectionSort::internalSort(GraphDisplay* display, std::vector<int>& in) {
         display->unmark(j);
       }
     }
-    std::swap(in.at(i), in.at(minIndex));
+    display->swap(i, minIndex);
     display->unmark(i);
     display->unmark(minIndex);
   }

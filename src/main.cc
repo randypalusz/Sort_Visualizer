@@ -4,6 +4,7 @@
 #include "Application.hpp"
 int main(int argc, char** argv) {
   const int numElements = atoi(argv[1]);
+  const double delay = atof(argv[2]);
   Application app{};
-  app.run(numElements);
+  app.run(numElements, delay);
 }
