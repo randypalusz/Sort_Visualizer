@@ -9,6 +9,7 @@ void SelectionSort::sort(GraphDisplay* display, std::vector<int>& in) {
   if (!SortAlgorithm::sortShouldContinue(in)) {
     return;
   }
+
   if (m_thread.joinable()) {
     m_thread.join();
   }
@@ -20,11 +21,11 @@ void SelectionSort::sort(GraphDisplay* display, std::vector<int>& in) {
 
 void SelectionSort::internalSort(GraphDisplay* display, std::vector<int>& in) {
   int minIndex = 0;
-  for (int i = 0; i < (in.size() - 1); i++) {
+  for (int i = 0; i < (display->getVecSize() - 1); i++) {
     minIndex = i;
-    display->m_activeIndices.insert(i);
-    for (int j = i + 1; j < in.size(); j++) {
-      display->m_activeIndices.insert(j);
+    display->mark(i);
+    for (int j = i + 1; j < display->getVecSize(); j++) {
+      display->mark(j);
       // TODO: sleep at each access of vector in GraphDisplay
       //       also ensure using sleep time passed into GraphDisplay
       Timing::preciseSleep(0.002);
@@ -36,16 +37,16 @@ void SelectionSort::internalSort(GraphDisplay* display, std::vector<int>& in) {
       }
       if (in.at(j) < in.at(minIndex)) {
         if (minIndex != i) {
-          display->m_activeIndices.erase(minIndex);
+          display->unmark(minIndex);
         }
         minIndex = j;
       } else {
-        display->m_activeIndices.erase(j);
+        display->unmark(j);
       }
     }
     std::swap(in.at(i), in.at(minIndex));
-    display->m_activeIndices.erase(i);
-    display->m_activeIndices.erase(minIndex);
+    display->unmark(i);
+    display->unmark(minIndex);
   }
   m_threadActive = false;
 }

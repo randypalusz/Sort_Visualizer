@@ -91,9 +91,6 @@ class SelectionSort : public SortAlgorithm {
 
  protected:
   void internalSort(GraphDisplay* display, std::vector<int>& in) override;
-
- private:
-  std::unordered_set<int> m_activeIndices;
 };
 
 #endif

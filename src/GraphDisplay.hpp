@@ -20,12 +20,15 @@ class GraphDisplay {
                double delayInSeconds);
   ~GraphDisplay();
   bool update();
-  std::unordered_set<int> m_activeIndices;
+  inline void mark(int idx) { m_activeIndices.insert(idx); }
+  inline void unmark(int idx) { m_activeIndices.erase(idx); }
+  inline int getVecSize() { return m_sortVector.size(); }
 
  private:
   void onAccess();
   sf::RenderWindow& m_window;
   std::vector<int>& m_sortVector;
+  std::unordered_set<int> m_activeIndices;
   sf::Vector2u m_size;
   InputHandler* m_inputHandler;
 
