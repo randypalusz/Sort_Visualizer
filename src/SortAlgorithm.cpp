@@ -37,3 +37,11 @@ bool SortAlgorithm::sortShouldContinue(const std::vector<int>& in) {
   // return !(m_paused || std::is_sorted(in.begin(), in.end()));
   return !(m_threadActive || std::is_sorted(in.begin(), in.end()));
 }
+
+bool SortAlgorithm::threadShouldStop() {
+  if (m_threadShouldEnd) {
+    m_threadActive = false;
+    return true;
+  }
+  return false;
+}

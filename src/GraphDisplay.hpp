@@ -37,6 +37,8 @@ class GraphDisplay {
   inline void swap(int idx1, int idx2) {
     std::swap(m_sortVector.at(idx1), m_sortVector.at(idx2));
   }
+  inline void watch(int* idxPointer) { m_watchedIndices.insert(idxPointer); }
+  inline void unwatchAll() { m_watchedIndices.clear(); }
   // TODO: implement watch() that will hold int* to an index and will update
   // upon changing
   inline int getVecSize() { return m_sortVector.size(); }
@@ -47,6 +49,7 @@ class GraphDisplay {
   sf::RenderWindow& m_window;
   std::vector<int>& m_sortVector;
   std::unordered_set<int> m_activeIndices;
+  std::unordered_set<int*> m_watchedIndices;
   sf::Vector2u m_size;
   InputHandler* m_inputHandler;
 

@@ -41,6 +41,11 @@ bool GraphDisplay::update() {
     if (m_activeIndices.find(i) != m_activeIndices.end()) {
       bar.setFillColor(sf::Color::Red);
     }
+    for (int* idxPointer : m_watchedIndices) {
+      if (*idxPointer == i) {
+        bar.setFillColor(sf::Color::Green);
+      }
+    }
     bar.setPosition(sf::Vector2f(
         currentBarX, (m_size.y - normalizedHeight) - topBottomBorder));
     m_window.draw(bar);

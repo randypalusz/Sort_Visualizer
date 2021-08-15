@@ -24,6 +24,7 @@ class SortAlgorithm {
     m_threadShouldEnd = true;
     if (m_threadActive) {
       m_thread.join();
+      m_threadActive = false;
     }
     return;
   }
@@ -41,6 +42,7 @@ class SortAlgorithm {
   virtual void internalSort(GraphDisplay* display, std::vector<int>& in){};
   // returns whether sort should continue based on m_paused + std::is_sorted
   bool sortShouldContinue(const std::vector<int>& in);
+  bool threadShouldStop();
   std::atomic<bool> m_threadShouldEnd = false;
   bool m_threadActive = false;
   std::thread m_thread;
