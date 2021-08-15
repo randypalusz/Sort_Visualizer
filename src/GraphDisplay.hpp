@@ -36,11 +36,11 @@ class GraphDisplay {
   }
   inline const int at(int idx) {
     auto&& lock = makeLock();
-    if (lastAccessedIdx != idx) {
+    if (m_lastAccessedIdx != idx) {
       // do delay if not a duplicate access
       this->onAccess();
     }
-    lastAccessedIdx = idx;
+    m_lastAccessedIdx = idx;
     return m_sortVector.at(idx);
   }
   inline void swap(int idx1, int idx2) {
@@ -55,11 +55,15 @@ class GraphDisplay {
     auto&& lock = makeLock();
     m_watchedIndices.clear();
   }
-  // TODO: implement watch() that will hold int* to an index and will update
-  // upon changing
   inline int getVecSize() {
     auto&& lock = makeLock();
     return m_sortVector.size();
+  }
+  inline void reset() {
+    auto&& lock = makeLock();
+    m_lastAccessedIdx = -1;
+    m_activeIndices.clear();
+    m_watchedIndices.clear();
   }
 
  private:
@@ -70,7 +74,7 @@ class GraphDisplay {
     return std::lock_guard<std::mutex>{m_setMutex};
   }
 
-  int lastAccessedIdx = -1;
+  int m_lastAccessedIdx = -1;
   sf::RenderWindow& m_window;
   std::vector<int>& m_sortVector;
   std::unordered_set<int> m_activeIndices;

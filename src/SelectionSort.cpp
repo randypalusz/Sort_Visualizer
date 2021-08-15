@@ -29,8 +29,8 @@ void SelectionSort::internalSort(GraphDisplay* display, std::vector<int>& in) {
     display->mark(i);
     for (int j = i + 1; j < display->getVecSize(); j++) {
       display->mark(j);
-      // TODO: checking for m_threadShouldEnd should be done at the spot most
-      //       often checked in sorting
+      // threadShouldStop() should be called where code will be run most
+      // frequently within internalSort
       if (threadShouldStop()) return;
       if (display->at(j) < display->at(minIndex)) {
         minIndex = j;
@@ -40,6 +40,6 @@ void SelectionSort::internalSort(GraphDisplay* display, std::vector<int>& in) {
     display->swap(i, minIndex);
     display->unmark(i);
   }
-  display->unwatchAll();
+  display->reset();
   m_threadActive = false;
 }
