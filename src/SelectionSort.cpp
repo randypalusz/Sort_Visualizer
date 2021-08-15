@@ -10,10 +10,11 @@ void SelectionSort::sort(GraphDisplay* display, std::vector<int>& in) {
     return;
   }
 
-  // if (m_thread.joinable()) {
-  //   m_thread.join();
-  //   return;
-  // }
+  if (m_thread.joinable()) {
+    m_thread.join();
+    std::cout << "calling m_thread.join()" << std::endl;
+    return;
+  }
 
   m_threadActive = true;
   m_thread =
