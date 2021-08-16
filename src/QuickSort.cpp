@@ -71,8 +71,11 @@ void QuickSort::startSortThread(GraphDisplay* display, std::vector<int>& in) {
   //   return;
   // }
   // this->quicksort(display, in, 0, in.size() - 1);
-  m_thread = std::thread(&QuickSort::quicksort, this, display, 0,
-                         display->getVecSize() - 1);
+  m_thread = std::thread(&QuickSort::sort, this, display);
+}
+
+void QuickSort::sort(GraphDisplay* display) {
+  quicksort(display, 0, display->getVecSize() - 1);
 }
 
 bool QuickSort::quicksort(GraphDisplay* display, int lo, int hi) {

@@ -49,7 +49,7 @@ class SortAlgorithm {
                      std::unordered_set<int>& activeIndices);
   // this will be the sort function that the top-level sort starts a thread on
   // TODO: make this pure virtual after ready to implement in all child classes
-  virtual void sort(GraphDisplay* display){};
+  virtual void sort(GraphDisplay* display) = 0;
   // returns whether sort should continue based on m_paused + std::is_sorted
   bool sortShouldContinue(const std::vector<int>& in);
   bool threadShouldStop();
@@ -67,7 +67,7 @@ class BubbleSort : public SortAlgorithm {
   inline Algorithm getEnumType() override { return Algorithm::BUBBLE; }
 
  private:
-  std::unordered_set<int> m_activeIndices;
+  void sort(GraphDisplay* display) override;
 };
 
 class BogoSort : public SortAlgorithm {
@@ -76,7 +76,7 @@ class BogoSort : public SortAlgorithm {
   inline Algorithm getEnumType() override { return Algorithm::BOGO; }
 
  private:
-  std::unordered_set<int> m_activeIndices;
+  void sort(GraphDisplay* display) override;
 };
 
 class QuickSort : public SortAlgorithm {
@@ -85,6 +85,7 @@ class QuickSort : public SortAlgorithm {
   inline Algorithm getEnumType() override { return Algorithm::QUICK; }
 
  private:
+  void sort(GraphDisplay* display) override;
   bool quicksort(GraphDisplay* display, int lo, int hi);
   int partition(GraphDisplay* display, int lo, int hi);
 };

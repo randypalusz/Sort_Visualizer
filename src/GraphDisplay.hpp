@@ -24,6 +24,10 @@ class GraphDisplay {
   bool update();
   inline void mark(int idx, sf::Color color = sf::Color::Red) {
     auto&& lock = makeLock();
+    if (m_activeIndices.find(idx) != m_activeIndices.end()) {
+      m_activeIndices.erase(idx);
+      std::cout << "erasing in map" << std::endl;
+    }
     m_activeIndices.insert({idx, color});
   }
   inline void unmark(int idx) {
@@ -47,6 +51,7 @@ class GraphDisplay {
   }
   inline void swap(int idx1, int idx2) {
     auto&& lock = makeLock();
+    this->onAccess();
     std::swap(m_sortVector.at(idx1), m_sortVector.at(idx2));
   }
   inline void watch(int* idxPointer, sf::Color color = sf::Color::Green) {
@@ -66,6 +71,13 @@ class GraphDisplay {
     m_lastAccessedIdx = -1;
     m_activeIndices.clear();
     m_watchedIndices.clear();
+  }
+  inline bool isSorted() {
+    return std::is_sorted(m_sortVector.begin(), m_sortVector.end());
+  }
+  inline void shuffleVector(std::mt19937& g) {
+    std::shuffle(m_sortVector.begin(), m_sortVector.end(), g);
+    this->onAccess();
   }
 
  private:
