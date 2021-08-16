@@ -4,6 +4,7 @@
 #include <mutex>
 #include <vector>
 #include <unordered_set>
+#include <unordered_map>
 
 #include "SortAlgorithm.hpp"
 #include "util/Utility.hpp"
@@ -21,18 +22,19 @@ class GraphDisplay {
                double delayInSeconds);
   ~GraphDisplay();
   bool update();
-  inline void mark(int idx) {
+  inline void mark(int idx, sf::Color color = sf::Color::Red) {
     auto&& lock = makeLock();
-    m_activeIndices.insert(idx);
+    m_activeIndices.insert({idx, color});
   }
   inline void unmark(int idx) {
     auto&& lock = makeLock();
     m_activeIndices.erase(idx);
   }
-  inline void markSwap(int toRemove, int replacement) {
+  inline void markSwap(int toRemove, int replacement,
+                       sf::Color color = sf::Color::Red) {
     auto&& lock = makeLock();
     m_activeIndices.erase(toRemove);
-    m_activeIndices.insert(replacement);
+    m_activeIndices.insert({replacement, color});
   }
   inline int& at(int idx) {
     auto&& lock = makeLock();
@@ -47,9 +49,9 @@ class GraphDisplay {
     auto&& lock = makeLock();
     std::swap(m_sortVector.at(idx1), m_sortVector.at(idx2));
   }
-  inline void watch(int* idxPointer) {
+  inline void watch(int* idxPointer, sf::Color color = sf::Color::Green) {
     auto&& lock = makeLock();
-    m_watchedIndices.insert(idxPointer);
+    m_watchedIndices.insert({idxPointer, color});
   }
   inline void unwatchAll() {
     auto&& lock = makeLock();
@@ -77,8 +79,8 @@ class GraphDisplay {
   int m_lastAccessedIdx = -1;
   sf::RenderWindow& m_window;
   std::vector<int>& m_sortVector;
-  std::unordered_set<int> m_activeIndices;
-  std::unordered_set<int*> m_watchedIndices;
+  std::unordered_map<int, sf::Color> m_activeIndices;
+  std::unordered_map<int*, sf::Color> m_watchedIndices;
   sf::Vector2u m_size;
   InputHandler* m_inputHandler;
   std::mutex m_setMutex;

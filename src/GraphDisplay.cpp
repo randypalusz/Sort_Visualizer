@@ -38,14 +38,21 @@ bool GraphDisplay::update() {
         normalize((float)m_sortVector.at(i), min, max, newMin, newMax);
     sf::RectangleShape bar = sf::RectangleShape(
         sf::Vector2f(widthPerBar - widthBuffer, normalizedHeight));
-    if (m_activeIndices.find(i) != m_activeIndices.end()) {
-      bar.setFillColor(sf::Color::Red);
+    auto element = m_activeIndices.find(i);
+    if (element != m_activeIndices.end()) {
+      bar.setFillColor(element->second);
     }
-    for (int* idxPointer : m_watchedIndices) {
-      if (*idxPointer == i) {
-        bar.setFillColor(sf::Color::Green);
+    for (auto it = m_watchedIndices.begin(); it != m_watchedIndices.end();
+         it++) {
+      if (*(it->first) == i) {
+        bar.setFillColor(it->second);
       }
     }
+    // for (int* idxPointer : m_watchedIndices) {
+    //   if (*idxPointer == i) {
+    //     bar.setFillColor(sf::Color::Green);
+    //   }
+    // }
     bar.setPosition(sf::Vector2f(
         currentBarX, (m_size.y - normalizedHeight) - topBottomBorder));
     m_window.draw(bar);

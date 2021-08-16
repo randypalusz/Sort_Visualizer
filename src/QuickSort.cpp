@@ -25,8 +25,8 @@ void QuickSort_Iterative::internalSort(GraphDisplay* display) {
   beg[0] = 0;
   end[0] = display->getVecSize();
   display->watch(&piv);
-  display->watch(&L);
-  display->watch(&R);
+  display->watch(&L, sf::Color::Red);
+  display->watch(&R, sf::Color::Red);
   while (i >= 0) {
     L = beg[i];
     R = end[i] - 1;
