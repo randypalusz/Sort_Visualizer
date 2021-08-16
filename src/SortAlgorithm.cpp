@@ -16,18 +16,6 @@ void SortAlgorithm::print(const std::vector<int>& in) {
   std::cout << "}" << std::endl;
 }
 
-bool SortAlgorithm::updateDisplay(GraphDisplay* display, std::vector<int>& in,
-                                  std::unordered_set<int>& activeIndices) {
-  // if (display) {
-  //   if (!display->update(in, activeIndices, &m_paused)) {
-  //     return false;
-  //   }
-  // }
-  // activeIndices.clear();
-  // return true;
-  return true;
-}
-
 bool SortAlgorithm::sortShouldContinue(const std::vector<int>& in) {
   // m_paused - is_sorted
   // t - t -> false
@@ -39,14 +27,7 @@ bool SortAlgorithm::sortShouldContinue(const std::vector<int>& in) {
          !m_sortTerminated;
 }
 
-bool SortAlgorithm::threadShouldStop() {
-  return m_threadShouldEnd;
-  // if (m_threadShouldEnd) {
-  //   m_threadActive = false;
-  //   return true;
-  // }
-  // return false;
-}
+bool SortAlgorithm::threadShouldStop() { return m_threadShouldEnd; }
 
 bool SortAlgorithm::preSortChecks(GraphDisplay* display, std::vector<int>& in) {
   if (!SortAlgorithm::sortShouldContinue(in)) {
