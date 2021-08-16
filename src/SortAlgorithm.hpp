@@ -85,9 +85,8 @@ class QuickSort : public SortAlgorithm {
   inline Algorithm getEnumType() override { return Algorithm::QUICK; }
 
  private:
-  bool quicksort(GraphDisplay* display, std::vector<int>& in, int lo, int hi);
-  int partition(GraphDisplay* display, std::vector<int>& in, int lo, int hi);
-  std::unordered_set<int> m_activeIndices;
+  bool quicksort(GraphDisplay* display, int lo, int hi);
+  int partition(GraphDisplay* display, int lo, int hi);
 };
 
 class QuickSort_Iterative : public SortAlgorithm {

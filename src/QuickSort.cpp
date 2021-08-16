@@ -67,39 +67,45 @@ void QuickSort_Iterative::sort(GraphDisplay* display) {
 }
 
 void QuickSort::startSortThread(GraphDisplay* display, std::vector<int>& in) {
-  if (!SortAlgorithm::sortShouldContinue(in)) {
-    return;
-  }
-  this->quicksort(display, in, 0, in.size() - 1);
+  // if (!SortAlgorithm::sortShouldContinue(in)) {
+  //   return;
+  // }
+  // this->quicksort(display, in, 0, in.size() - 1);
+  m_thread = std::thread(&QuickSort::quicksort, this, display, 0,
+                         display->getVecSize() - 1);
 }
 
-bool QuickSort::quicksort(GraphDisplay* display, std::vector<int>& in, int lo,
-                          int hi) {
+bool QuickSort::quicksort(GraphDisplay* display, int lo, int hi) {
   if (lo < hi) {
-    int partitionIndex = this->partition(display, in, lo, hi);
+    int partitionIndex = this->partition(display, lo, hi);
     // if updateDisplay returns false (close event found), keep returning false
     // up the tree until back in main
     if (partitionIndex == -1) return false;
-    if (!this->quicksort(display, in, lo, partitionIndex - 1)) return false;
-    if (!this->quicksort(display, in, partitionIndex + 1, hi)) return false;
+    if (!this->quicksort(display, lo, partitionIndex - 1)) return false;
+    if (!this->quicksort(display, partitionIndex + 1, hi)) return false;
   }
   return true;
 }
 
-int QuickSort::partition(GraphDisplay* display, std::vector<int>& in, int lo,
-                         int hi) {
-  int pivot = in.at(hi);
+int QuickSort::partition(GraphDisplay* display, int lo, int hi) {
+  int pivot = display->at(hi);
+  display->mark(pivot, sf::Color::Green);
   int leftPtr = lo;
-  for (int rightPtr = lo; rightPtr <= hi; rightPtr++) {
-    if (in.at(rightPtr) < pivot) {
-      std::swap(in.at(leftPtr), in.at(rightPtr));
-      m_activeIndices.insert({leftPtr, rightPtr});
-      if (!this->updateDisplay(display, in, m_activeIndices)) return -1;
+  int rightPtr = lo;
+  display->watch(&leftPtr, sf::Color::Red);
+  display->watch(&rightPtr, sf::Color::Red);
+  for (; rightPtr <= hi; rightPtr++) {
+    if (display->at(rightPtr) < pivot) {
+      display->swap(leftPtr, rightPtr);
+      if (threadShouldStop()) {
+        display->unwatchAll();
+        return -1;
+      }
       leftPtr++;
     }
   }
-  std::swap(in.at(leftPtr), in.at(hi));
-  m_activeIndices.insert({leftPtr, hi});
-  if (!this->updateDisplay(display, in, m_activeIndices)) return -1;
+  display->swap(leftPtr, hi);
+  display->unmark(pivot);
+  display->unwatchAll();
   return leftPtr;
 }
