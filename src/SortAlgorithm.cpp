@@ -47,3 +47,21 @@ bool SortAlgorithm::threadShouldStop() {
   // }
   // return false;
 }
+
+bool SortAlgorithm::preSortChecks(GraphDisplay* display, std::vector<int>& in) {
+  if (!SortAlgorithm::sortShouldContinue(in)) {
+    return false;
+  }
+
+  // covers case where vector is regenerated before sort completes
+  if (m_thread.joinable()) {
+    m_threadShouldEnd = false;
+    m_thread.join();
+    m_threadActive = false;
+  }
+
+  display->reset();
+
+  m_threadActive = true;
+  return true;
+}

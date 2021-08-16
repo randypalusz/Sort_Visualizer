@@ -9,6 +9,7 @@ bool CloseWindowCommand::execute(sf::RenderWindow& window, std::vector<int>* in,
   return false;
 }
 
+// TODO: make sure this also restarts the sorting algorithm
 bool RegenerateVectorCommand::execute(sf::RenderWindow& window,
                                       std::vector<int>* in,
                                       SortAlgorithm** sorter, bool* paused) {

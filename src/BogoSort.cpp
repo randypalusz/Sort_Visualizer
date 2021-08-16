@@ -4,7 +4,7 @@
 #include "SortAlgorithm.hpp"
 #include "GraphDisplay.hpp"
 
-void BogoSort::sort(GraphDisplay* display, std::vector<int>& in) {
+void BogoSort::startSortThread(GraphDisplay* display, std::vector<int>& in) {
   if (!SortAlgorithm::sortShouldContinue(in)) {
     return;
   }

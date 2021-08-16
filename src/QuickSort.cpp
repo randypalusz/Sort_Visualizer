@@ -1,24 +1,25 @@
 #include "SortAlgorithm.hpp"
 #include "GraphDisplay.hpp"
 
-void QuickSort_Iterative::sort(GraphDisplay* display, std::vector<int>& in) {
-  if (!SortAlgorithm::sortShouldContinue(in)) {
-    return;
-  }
+void QuickSort_Iterative::startSortThread(GraphDisplay* display,
+                                          std::vector<int>& in) {
+  // if (!SortAlgorithm::sortShouldContinue(in)) {
+  //   return;
+  // }
 
-  // covers case where vector is regenerated before sort completes
-  if (m_thread.joinable()) {
-    m_threadShouldEnd = false;
-    m_thread.join();
-    m_threadActive = false;
-  }
+  // // covers case where vector is regenerated before sort completes
+  // if (m_thread.joinable()) {
+  //   m_threadShouldEnd = false;
+  //   m_thread.join();
+  //   m_threadActive = false;
+  // }
 
-  display->reset();
-  m_threadActive = true;
-  m_thread = std::thread(&QuickSort_Iterative::internalSort, this, display);
+  // display->reset();
+  // m_threadActive = true;
+  m_thread = std::thread(&QuickSort_Iterative::sort, this, display);
 }
 
-void QuickSort_Iterative::internalSort(GraphDisplay* display) {
+void QuickSort_Iterative::sort(GraphDisplay* display) {
 #define MAX_LEVELS 300
   int piv, beg[MAX_LEVELS], end[MAX_LEVELS], i = 0, L, R, swap;
 
@@ -65,7 +66,7 @@ void QuickSort_Iterative::internalSort(GraphDisplay* display) {
   m_threadActive = false;
 }
 
-void QuickSort::sort(GraphDisplay* display, std::vector<int>& in) {
+void QuickSort::startSortThread(GraphDisplay* display, std::vector<int>& in) {
   if (!SortAlgorithm::sortShouldContinue(in)) {
     return;
   }

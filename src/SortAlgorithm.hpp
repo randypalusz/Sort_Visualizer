@@ -14,8 +14,14 @@ class GraphDisplay;
 
 class SortAlgorithm {
  public:
-  // display is passed as a pointer to allow for no display update when nullptr
-  virtual void sort(GraphDisplay* display, std::vector<int>& in) = 0;
+  // Template pattern - preSortChecks will determine whether the thread should
+  // run, and startSortThread must be overridden
+  inline void run(GraphDisplay* display, std::vector<int>& in) {
+    if (!preSortChecks(display, in)) {
+      return;
+    }
+    startSortThread(display, in);
+  }
   virtual ~SortAlgorithm(){};
   virtual Algorithm getEnumType() = 0;
   // print for debugging purposes
@@ -32,6 +38,9 @@ class SortAlgorithm {
   bool m_paused = false;
 
  protected:
+  // functional intent is to start the sort thread and assign it to m_thread
+  virtual void startSortThread(GraphDisplay* display, std::vector<int>& in) = 0;
+  [[nodiscard]] bool preSortChecks(GraphDisplay* display, std::vector<int>& in);
   // updates the display if display is not nullptr
   // returns false is update is interrupted by window close/keypress
   // returns true if display is nullptr or update is uninterrupted
@@ -40,7 +49,7 @@ class SortAlgorithm {
                      std::unordered_set<int>& activeIndices);
   // this will be the sort function that the top-level sort starts a thread on
   // TODO: make this pure virtual after ready to implement in all child classes
-  virtual void internalSort(GraphDisplay* display){};
+  virtual void sort(GraphDisplay* display){};
   // returns whether sort should continue based on m_paused + std::is_sorted
   bool sortShouldContinue(const std::vector<int>& in);
   bool threadShouldStop();
@@ -54,7 +63,7 @@ class SortAlgorithm {
 
 class BubbleSort : public SortAlgorithm {
  public:
-  void sort(GraphDisplay* display, std::vector<int>& in) override;
+  void startSortThread(GraphDisplay* display, std::vector<int>& in) override;
   inline Algorithm getEnumType() override { return Algorithm::BUBBLE; }
 
  private:
@@ -63,7 +72,7 @@ class BubbleSort : public SortAlgorithm {
 
 class BogoSort : public SortAlgorithm {
  public:
-  void sort(GraphDisplay* display, std::vector<int>& in) override;
+  void startSortThread(GraphDisplay* display, std::vector<int>& in) override;
   inline Algorithm getEnumType() override { return Algorithm::BOGO; }
 
  private:
@@ -72,7 +81,7 @@ class BogoSort : public SortAlgorithm {
 
 class QuickSort : public SortAlgorithm {
  public:
-  void sort(GraphDisplay* display, std::vector<int>& in) override;
+  void startSortThread(GraphDisplay* display, std::vector<int>& in) override;
   inline Algorithm getEnumType() override { return Algorithm::QUICK; }
 
  private:
@@ -83,20 +92,20 @@ class QuickSort : public SortAlgorithm {
 
 class QuickSort_Iterative : public SortAlgorithm {
  public:
-  void sort(GraphDisplay* display, std::vector<int>& in) override;
+  void startSortThread(GraphDisplay* display, std::vector<int>& in) override;
   inline Algorithm getEnumType() override { return Algorithm::QUICK_ITERATIVE; }
 
  private:
-  void internalSort(GraphDisplay* display) override;
+  void sort(GraphDisplay* display) override;
 };
 
 class SelectionSort : public SortAlgorithm {
  public:
-  void sort(GraphDisplay* display, std::vector<int>& in) override;
+  void startSortThread(GraphDisplay* display, std::vector<int>& in) override;
   inline Algorithm getEnumType() override { return Algorithm::SELECTION; }
 
  protected:
-  void internalSort(GraphDisplay* display) override;
+  void sort(GraphDisplay* display) override;
 };
 
 #endif

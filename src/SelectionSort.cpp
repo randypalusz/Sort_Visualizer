@@ -5,26 +5,12 @@
 #include <vector>
 #include <thread>
 
-void SelectionSort::sort(GraphDisplay* display, std::vector<int>& in) {
-  if (!SortAlgorithm::sortShouldContinue(in)) {
-    return;
-  }
-
-  // covers case where vector is regenerated before sort completes
-  if (m_thread.joinable()) {
-    m_threadShouldEnd = false;
-    m_thread.join();
-    m_threadActive = false;
-  }
-
-  display->reset();
-  std::cout << "here" << std::endl;
-
-  m_threadActive = true;
-  m_thread = std::thread(&SelectionSort::internalSort, this, display);
+void SelectionSort::startSortThread(GraphDisplay* display,
+                                    std::vector<int>& in) {
+  m_thread = std::thread(&SelectionSort::sort, this, display);
 }
 
-void SelectionSort::internalSort(GraphDisplay* display) {
+void SelectionSort::sort(GraphDisplay* display) {
   int minIndex;
   display->watch(&minIndex);
   for (int i = 0; i < (display->getVecSize() - 1); i++) {

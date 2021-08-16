@@ -3,7 +3,7 @@
 #include "SortAlgorithm.hpp"
 #include "GraphDisplay.hpp"
 
-void BubbleSort::sort(GraphDisplay* display, std::vector<int>& in) {
+void BubbleSort::startSortThread(GraphDisplay* display, std::vector<int>& in) {
   if (!SortAlgorithm::sortShouldContinue(in)) {
     return;
   }
