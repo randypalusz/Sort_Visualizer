@@ -27,7 +27,14 @@ bool ChooseNextAlgorithmCommand::execute(sf::RenderWindow& window,
   if (sorter) {
     Algorithm a = (*sorter)->getEnumType();
     a++;
+    (*sorter)->terminateSort();
     AlgorithmFactory::generateSorter(a, sorter);
+
+    // regenerate vector after sorter is generated
+    std::vector<int> temp =
+        VectorGenerator::generateGivenSize(in->size(), true);
+    in->clear();
+    in->insert(in->begin(), temp.begin(), temp.end());
   }
   return true;
 }

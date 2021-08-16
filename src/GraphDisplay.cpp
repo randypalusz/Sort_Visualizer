@@ -25,12 +25,12 @@ bool GraphDisplay::update() {
   float widthPerBar = (float)m_size.x / (float)numBars;
   float min = *(std::min_element(m_sortVector.begin(), m_sortVector.end()));
   float max = *(std::max_element(m_sortVector.begin(), m_sortVector.end()));
-  float topBottomBorder = 25.0f;
-  float widthBuffer = 1.0f;
+  constexpr float topBottomBorder = 25.0f;
+  constexpr float widthBuffer = 1.0f;
   // ensure the height of the bar doesn't reach the top of the window
   float newMax = m_size.y - (2.0f * topBottomBorder);
   // ensure the lowest value in the list is still visible
-  float newMin = 10.0f;
+  constexpr float newMin = 10.0f;
   // x coordinate of the current bar
   float currentBarX = 0.0f;
   for (int i = 0; i < numBars; i++) {

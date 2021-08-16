@@ -35,13 +35,15 @@ bool SortAlgorithm::sortShouldContinue(const std::vector<int>& in) {
   // f - t -> false
   // f - f -> true
   // return !(m_paused || std::is_sorted(in.begin(), in.end()));
-  return !(m_threadActive || std::is_sorted(in.begin(), in.end()));
+  return !(m_threadActive || std::is_sorted(in.begin(), in.end())) &&
+         !m_sortTerminated;
 }
 
 bool SortAlgorithm::threadShouldStop() {
-  if (m_threadShouldEnd) {
-    m_threadActive = false;
-    return true;
-  }
-  return false;
+  return m_threadShouldEnd;
+  // if (m_threadShouldEnd) {
+  //   m_threadActive = false;
+  //   return true;
+  // }
+  // return false;
 }

@@ -10,18 +10,21 @@ void SelectionSort::sort(GraphDisplay* display, std::vector<int>& in) {
     return;
   }
 
+  // covers case where vector is regenerated before sort completes
   if (m_thread.joinable()) {
+    m_threadShouldEnd = false;
     m_thread.join();
-    std::cout << "calling m_thread.join()" << std::endl;
-    return;
+    m_threadActive = false;
   }
 
+  display->reset();
+  std::cout << "here" << std::endl;
+
   m_threadActive = true;
-  m_thread =
-      std::thread(&SelectionSort::internalSort, this, display, std::ref(in));
+  m_thread = std::thread(&SelectionSort::internalSort, this, display);
 }
 
-void SelectionSort::internalSort(GraphDisplay* display, std::vector<int>& in) {
+void SelectionSort::internalSort(GraphDisplay* display) {
   int minIndex;
   display->watch(&minIndex);
   for (int i = 0; i < (display->getVecSize() - 1); i++) {

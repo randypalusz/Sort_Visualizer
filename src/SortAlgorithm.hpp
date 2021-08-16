@@ -20,9 +20,10 @@ class SortAlgorithm {
   virtual Algorithm getEnumType() = 0;
   // print for debugging purposes
   static void print(const std::vector<int>& in);
-  inline void waitForThreadToFinish() {
+  inline void terminateSort() {
     m_threadShouldEnd = true;
-    if (m_threadActive) {
+    m_sortTerminated = true;
+    if (m_thread.joinable()) {
       m_thread.join();
       m_threadActive = false;
     }
@@ -39,12 +40,15 @@ class SortAlgorithm {
                      std::unordered_set<int>& activeIndices);
   // this will be the sort function that the top-level sort starts a thread on
   // TODO: make this pure virtual after ready to implement in all child classes
-  virtual void internalSort(GraphDisplay* display, std::vector<int>& in){};
+  virtual void internalSort(GraphDisplay* display){};
   // returns whether sort should continue based on m_paused + std::is_sorted
   bool sortShouldContinue(const std::vector<int>& in);
   bool threadShouldStop();
   std::atomic<bool> m_threadShouldEnd = false;
   bool m_threadActive = false;
+  // variable that prevents the SortAlgorithm instance from running
+  // when set to true
+  bool m_sortTerminated = false;
   std::thread m_thread;
 };
 
@@ -83,7 +87,7 @@ class QuickSort_Iterative : public SortAlgorithm {
   inline Algorithm getEnumType() override { return Algorithm::QUICK_ITERATIVE; }
 
  private:
-  std::unordered_set<int> m_activeIndices;
+  void internalSort(GraphDisplay* display) override;
 };
 
 class SelectionSort : public SortAlgorithm {
@@ -92,7 +96,7 @@ class SelectionSort : public SortAlgorithm {
   inline Algorithm getEnumType() override { return Algorithm::SELECTION; }
 
  protected:
-  void internalSort(GraphDisplay* display, std::vector<int>& in) override;
+  void internalSort(GraphDisplay* display) override;
 };
 
 #endif

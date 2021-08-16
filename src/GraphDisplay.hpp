@@ -34,7 +34,7 @@ class GraphDisplay {
     m_activeIndices.erase(toRemove);
     m_activeIndices.insert(replacement);
   }
-  inline const int at(int idx) {
+  inline int& at(int idx) {
     auto&& lock = makeLock();
     if (m_lastAccessedIdx != idx) {
       // do delay if not a duplicate access
