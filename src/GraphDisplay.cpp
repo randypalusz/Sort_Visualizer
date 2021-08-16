@@ -48,11 +48,6 @@ bool GraphDisplay::update() {
         bar.setFillColor(it->second);
       }
     }
-    // for (int* idxPointer : m_watchedIndices) {
-    //   if (*idxPointer == i) {
-    //     bar.setFillColor(sf::Color::Green);
-    //   }
-    // }
     bar.setPosition(sf::Vector2f(
         currentBarX, (m_size.y - normalizedHeight) - topBottomBorder));
     m_window.draw(bar);
