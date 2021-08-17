@@ -41,7 +41,7 @@ bool SortAlgorithm::preSortChecks(GraphDisplay* display, std::vector<int>& in) {
 
   // covers case where vector is regenerated before sort completes
   if (m_thread.joinable()) {
-    m_threadShouldEnd = false;
+    m_threadShouldEnd.store(false);
     m_thread.join();
     m_threadActive = false;
   }
