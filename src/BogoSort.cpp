@@ -15,4 +15,6 @@ void BogoSort::sort(GraphDisplay* display) {
     display->shuffleVector(g);
     if (handleAtomics(display)) return;
   }
+  display->reset();
+  m_threadActive = false;
 }

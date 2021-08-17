@@ -59,6 +59,7 @@ void QuickSort::startSortThread(GraphDisplay* display, std::vector<int>& in) {
 
 void QuickSort::sort(GraphDisplay* display) {
   quicksort(display, 0, display->getVecSize() - 1);
+  display->reset();
   m_threadActive = false;
 }
 
@@ -91,7 +92,6 @@ int QuickSort::partition(GraphDisplay* display, int lo, int hi) {
     }
   }
   display->swap(leftPtr, hi);
-  display->unmark(pivot);
-  display->unwatchAll();
+  display->reset();
   return leftPtr;
 }
