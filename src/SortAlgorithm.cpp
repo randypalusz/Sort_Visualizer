@@ -28,10 +28,10 @@ bool SortAlgorithm::sortShouldContinue(const std::vector<int>& in) {
 }
 
 bool SortAlgorithm::threadShouldStop(GraphDisplay* display) {
-  if (m_threadShouldEnd) {
+  if (m_threadShouldEnd.load()) {
     display->reset();
   }
-  return m_threadShouldEnd;
+  return m_threadShouldEnd.load();
 }
 
 bool SortAlgorithm::preSortChecks(GraphDisplay* display, std::vector<int>& in) {

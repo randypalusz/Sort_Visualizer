@@ -27,8 +27,10 @@ class SortAlgorithm {
   // print for debugging purposes
   static void print(const std::vector<int>& in);
   inline bool isRunning() { return m_threadActive; }
+  inline void setPaused(bool newVal) { m_paused.store(newVal); }
+  inline const bool getPaused() const { m_paused.load(); }
   inline void terminateSort() {
-    m_threadShouldEnd = true;
+    m_threadShouldEnd.store(true);
     m_sortTerminated = true;
     if (m_thread.joinable()) {
       m_thread.join();
@@ -36,7 +38,6 @@ class SortAlgorithm {
     }
     return;
   }
-  bool m_paused = false;
 
  protected:
   // functional intent is to start the sort thread and assign it to m_thread
@@ -48,6 +49,7 @@ class SortAlgorithm {
   bool sortShouldContinue(const std::vector<int>& in);
   bool threadShouldStop(GraphDisplay* display);
   std::atomic<bool> m_threadShouldEnd = false;
+  std::atomic<bool> m_paused = false;
   bool m_threadActive = false;
   // variable that prevents the SortAlgorithm instance from running
   // when set to true

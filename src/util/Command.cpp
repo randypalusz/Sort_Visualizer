@@ -4,7 +4,7 @@
 #include <iostream>
 
 bool CloseWindowCommand::execute(sf::RenderWindow& window, std::vector<int>* in,
-                                 SortAlgorithm** sorter, bool* paused) {
+                                 SortAlgorithm** sorter) {
   window.close();
   return false;
 }
@@ -12,7 +12,7 @@ bool CloseWindowCommand::execute(sf::RenderWindow& window, std::vector<int>* in,
 // TODO: make sure this also restarts the sorting algorithm
 bool RegenerateVectorCommand::execute(sf::RenderWindow& window,
                                       std::vector<int>* in,
-                                      SortAlgorithm** sorter, bool* paused) {
+                                      SortAlgorithm** sorter) {
   if (in) {
     if ((*sorter)->isRunning()) {
       return true;
@@ -27,7 +27,7 @@ bool RegenerateVectorCommand::execute(sf::RenderWindow& window,
 
 bool ChooseNextAlgorithmCommand::execute(sf::RenderWindow& window,
                                          std::vector<int>* in,
-                                         SortAlgorithm** sorter, bool* paused) {
+                                         SortAlgorithm** sorter) {
   if (sorter) {
     Algorithm a = (*sorter)->getEnumType();
     a++;
@@ -44,14 +44,12 @@ bool ChooseNextAlgorithmCommand::execute(sf::RenderWindow& window,
 }
 
 bool PauseCommand::execute(sf::RenderWindow& window, std::vector<int>* in,
-                           SortAlgorithm** sorter, bool* paused) {
-  if (paused) {
-    *paused = !(*paused);
-  }
+                           SortAlgorithm** sorter) {
+  (*sorter)->setPaused(!(*sorter)->getPaused());
   return false;
 }
 
 bool DoNothingCommand::execute(sf::RenderWindow& window, std::vector<int>* in,
-                               SortAlgorithm** sorter, bool* paused) {
+                               SortAlgorithm** sorter) {
   return true;
 }
