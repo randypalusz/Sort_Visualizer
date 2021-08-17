@@ -20,7 +20,7 @@ void SelectionSort::sort(GraphDisplay* display) {
       display->mark(j);
       // threadShouldStop() should be called where code will be run most
       // frequently within internalSort
-      if (threadShouldStop()) return;
+      if (threadShouldStop(display)) return;
       if (display->at(j) < display->at(minIndex)) {
         minIndex = j;
       }

@@ -27,7 +27,12 @@ bool SortAlgorithm::sortShouldContinue(const std::vector<int>& in) {
          !m_sortTerminated;
 }
 
-bool SortAlgorithm::threadShouldStop() { return m_threadShouldEnd; }
+bool SortAlgorithm::threadShouldStop(GraphDisplay* display) {
+  if (m_threadShouldEnd) {
+    display->reset();
+  }
+  return m_threadShouldEnd;
+}
 
 bool SortAlgorithm::preSortChecks(GraphDisplay* display, std::vector<int>& in) {
   if (!SortAlgorithm::sortShouldContinue(in)) {

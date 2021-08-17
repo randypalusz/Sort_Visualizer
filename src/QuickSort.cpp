@@ -3,19 +3,6 @@
 
 void QuickSort_Iterative::startSortThread(GraphDisplay* display,
                                           std::vector<int>& in) {
-  // if (!SortAlgorithm::sortShouldContinue(in)) {
-  //   return;
-  // }
-
-  // // covers case where vector is regenerated before sort completes
-  // if (m_thread.joinable()) {
-  //   m_threadShouldEnd = false;
-  //   m_thread.join();
-  //   m_threadActive = false;
-  // }
-
-  // display->reset();
-  // m_threadActive = true;
   m_thread = std::thread(&QuickSort_Iterative::sort, this, display);
 }
 
@@ -37,16 +24,16 @@ void QuickSort_Iterative::sort(GraphDisplay* display) {
         while (display->at(R) >= piv && L < R) R--;
         if (L < R) {
           display->swap(L++, R);
-          if (threadShouldStop()) return;
+          if (threadShouldStop(display)) return;
         }
         while (display->at(L) <= piv && L < R) L++;
         if (L < R) {
           display->swap(R--, L);
-          if (threadShouldStop()) return;
+          if (threadShouldStop(display)) return;
         }
       }
       display->at(L) = piv;
-      if (threadShouldStop()) return;
+      if (threadShouldStop(display)) return;
       beg[i + 1] = L + 1;
       end[i + 1] = end[i];
       end[i++] = L;
@@ -67,15 +54,12 @@ void QuickSort_Iterative::sort(GraphDisplay* display) {
 }
 
 void QuickSort::startSortThread(GraphDisplay* display, std::vector<int>& in) {
-  // if (!SortAlgorithm::sortShouldContinue(in)) {
-  //   return;
-  // }
-  // this->quicksort(display, in, 0, in.size() - 1);
   m_thread = std::thread(&QuickSort::sort, this, display);
 }
 
 void QuickSort::sort(GraphDisplay* display) {
   quicksort(display, 0, display->getVecSize() - 1);
+  m_threadActive = false;
 }
 
 bool QuickSort::quicksort(GraphDisplay* display, int lo, int hi) {
@@ -100,8 +84,7 @@ int QuickSort::partition(GraphDisplay* display, int lo, int hi) {
   for (; rightPtr <= hi; rightPtr++) {
     if (display->at(rightPtr) < pivot) {
       display->swap(leftPtr, rightPtr);
-      if (threadShouldStop()) {
-        display->unwatchAll();
+      if (threadShouldStop(display)) {
         return -1;
       }
       leftPtr++;

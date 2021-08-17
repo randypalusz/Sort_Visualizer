@@ -38,9 +38,12 @@ bool GraphDisplay::update() {
         normalize((float)m_sortVector.at(i), min, max, newMin, newMax);
     sf::RectangleShape bar = sf::RectangleShape(
         sf::Vector2f(widthPerBar - widthBuffer, normalizedHeight));
-    auto element = m_activeIndices.find(i);
-    if (element != m_activeIndices.end()) {
-      bar.setFillColor(element->second);
+    // using range-based for loop here instead of find - with std::find,
+    // value could've been erased from map between find and access
+    for (auto it = m_activeIndices.begin(); it != m_activeIndices.end(); it++) {
+      if (it->first == i) {
+        bar.setFillColor(it->second);
+      }
     }
     for (auto it = m_watchedIndices.begin(); it != m_watchedIndices.end();
          it++) {

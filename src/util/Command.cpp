@@ -14,6 +14,9 @@ bool RegenerateVectorCommand::execute(sf::RenderWindow& window,
                                       std::vector<int>* in,
                                       SortAlgorithm** sorter, bool* paused) {
   if (in) {
+    if ((*sorter)->isRunning()) {
+      return true;
+    }
     std::vector<int> temp =
         VectorGenerator::generateGivenSize(in->size(), true);
     in->clear();
