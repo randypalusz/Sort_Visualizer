@@ -14,4 +14,5 @@ class InputHandler {
       std::make_shared<ChooseNextAlgorithmCommand>();
   std::shared_ptr<Command> buttonQ_ = std::make_shared<EndApplicationCommand>();
   std::shared_ptr<Command> buttonP_ = std::make_shared<PauseCommand>();
+  std::shared_ptr<Command> buttonRtArrow_ = std::make_shared<SendStepCommand>();
 };

@@ -54,6 +54,11 @@ bool PauseCommand::execute(sf::RenderWindow& window, std::vector<int>* in,
   return false;
 }
 
+bool SendStepCommand::execute(sf::RenderWindow& window, std::vector<int>* in,
+                              SortAlgorithm** sorter) {
+  (*sorter)->setStep();
+}
+
 bool DoNothingCommand::execute(sf::RenderWindow& window, std::vector<int>* in,
                                SortAlgorithm** sorter) {
   return true;

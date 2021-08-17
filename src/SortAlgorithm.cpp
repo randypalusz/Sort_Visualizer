@@ -28,6 +28,7 @@ bool SortAlgorithm::sortShouldContinue(const std::vector<int>& in) {
          !m_sortTerminated;
 }
 
+// TODO: call this more often to mark pause points
 bool SortAlgorithm::handleAtomics(GraphDisplay* display) {
   if (m_threadShouldEnd.load()) {
     display->reset();
@@ -42,7 +43,11 @@ bool SortAlgorithm::handleAtomics(GraphDisplay* display) {
   // TODO: think about this class keeping a pointer/ref to the GraphDisplay to
   //       do the reset in the terminateSort() function
   while (m_paused.load()) {
-    ;
+    if (m_step.load()) {
+      m_step.store(false);
+      break;
+    }
+    // ;
   }
   return false;
 }

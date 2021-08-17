@@ -28,6 +28,7 @@ class SortAlgorithm {
   static void print(const std::vector<int>& in);
   inline bool isThreadActive() { return m_threadActive; }
   inline void setPaused(bool newVal) { m_paused.store(newVal); }
+  inline void setStep() { m_step.store(true); }
   inline const bool getPaused() const { return m_paused.load(); }
   inline void terminateSort() {
     m_threadShouldEnd.store(true);
@@ -52,6 +53,7 @@ class SortAlgorithm {
   bool handleAtomics(GraphDisplay* display);
   std::atomic<bool> m_threadShouldEnd = false;
   std::atomic<bool> m_paused = false;
+  std::atomic<bool> m_step = false;
   bool m_threadActive = false;
   // variable that prevents the SortAlgorithm instance from running
   // when set to true
