@@ -51,7 +51,7 @@ class SortAlgorithm {
   // returns whether thread should end/resets display if it should
   bool handleAtomics(GraphDisplay* display);
   std::atomic<bool> m_threadShouldEnd = false;
-  volatile std::atomic<bool> m_paused = false;
+  std::atomic<bool> m_paused = false;
   bool m_threadActive = false;
   // variable that prevents the SortAlgorithm instance from running
   // when set to true
