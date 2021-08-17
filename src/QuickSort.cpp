@@ -24,16 +24,16 @@ void QuickSort_Iterative::sort(GraphDisplay* display) {
         while (display->at(R) >= piv && L < R) R--;
         if (L < R) {
           display->swap(L++, R);
-          if (threadShouldStop(display)) return;
+          if (handleAtomics(display)) return;
         }
         while (display->at(L) <= piv && L < R) L++;
         if (L < R) {
           display->swap(R--, L);
-          if (threadShouldStop(display)) return;
+          if (handleAtomics(display)) return;
         }
       }
       display->at(L) = piv;
-      if (threadShouldStop(display)) return;
+      if (handleAtomics(display)) return;
       beg[i + 1] = L + 1;
       end[i + 1] = end[i];
       end[i++] = L;
@@ -84,7 +84,7 @@ int QuickSort::partition(GraphDisplay* display, int lo, int hi) {
   for (; rightPtr <= hi; rightPtr++) {
     if (display->at(rightPtr) < pivot) {
       display->swap(leftPtr, rightPtr);
-      if (threadShouldStop(display)) {
+      if (handleAtomics(display)) {
         return -1;
       }
       leftPtr++;

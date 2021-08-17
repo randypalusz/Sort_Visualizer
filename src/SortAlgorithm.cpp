@@ -1,5 +1,6 @@
 #include "SortAlgorithm.hpp"
 
+#include <iostream>
 #include <vector>
 #include <unordered_set>
 
@@ -27,11 +28,15 @@ bool SortAlgorithm::sortShouldContinue(const std::vector<int>& in) {
          !m_sortTerminated;
 }
 
-bool SortAlgorithm::threadShouldStop(GraphDisplay* display) {
+bool SortAlgorithm::handleAtomics(GraphDisplay* display) {
   if (m_threadShouldEnd.load()) {
     display->reset();
+    return true;
   }
-  return m_threadShouldEnd.load();
+  while (m_paused.load()) {
+    ;
+  }
+  return false;
 }
 
 bool SortAlgorithm::preSortChecks(GraphDisplay* display, std::vector<int>& in) {

@@ -18,9 +18,9 @@ void SelectionSort::sort(GraphDisplay* display) {
     display->mark(i);
     for (int j = i + 1; j < display->getVecSize(); j++) {
       display->mark(j);
-      // threadShouldStop() should be called where code will be run most
+      // handleAtomics() should be called where code will be run most
       // frequently within internalSort
-      if (threadShouldStop(display)) return;
+      if (handleAtomics(display)) return;
       if (display->at(j) < display->at(minIndex)) {
         minIndex = j;
       }

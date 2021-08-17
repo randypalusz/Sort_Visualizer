@@ -31,5 +31,5 @@ void Application::run(int numElements, double delay) {
     m_display->update();
   }
 
-  m_sorter->terminateSort();
+  // m_sorter->terminateSort();
 }

@@ -13,6 +13,6 @@ void BogoSort::sort(GraphDisplay* display) {
   std::mt19937 g(rd());
   while (!display->isSorted()) {
     display->shuffleVector(g);
-    if (threadShouldStop(display)) return;
+    if (handleAtomics(display)) return;
   }
 }

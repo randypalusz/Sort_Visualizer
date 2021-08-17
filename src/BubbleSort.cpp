@@ -17,7 +17,7 @@ void BubbleSort::sort(GraphDisplay* display) {
       if (display->at(i + 1) < display->at(i)) {
         display->mark(i + 1, sf::Color::Green);
         display->swap(i, i + 1);
-        if (threadShouldStop(display)) {
+        if (handleAtomics(display)) {
           return;
         }
         swapOccurred = true;

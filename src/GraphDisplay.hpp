@@ -26,7 +26,6 @@ class GraphDisplay {
     auto&& lock = makeLock();
     if (m_activeIndices.find(idx) != m_activeIndices.end()) {
       m_activeIndices.erase(idx);
-      std::cout << "erasing in map" << std::endl;
     }
     m_activeIndices.insert({idx, color});
   }

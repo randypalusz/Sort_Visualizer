@@ -26,11 +26,12 @@ class SortAlgorithm {
   virtual Algorithm getEnumType() = 0;
   // print for debugging purposes
   static void print(const std::vector<int>& in);
-  inline bool isRunning() { return m_threadActive; }
+  inline bool isThreadActive() { return m_threadActive; }
   inline void setPaused(bool newVal) { m_paused.store(newVal); }
-  inline const bool getPaused() const { m_paused.load(); }
+  inline const bool getPaused() const { return m_paused.load(); }
   inline void terminateSort() {
     m_threadShouldEnd.store(true);
+    setPaused(false);
     m_sortTerminated = true;
     if (m_thread.joinable()) {
       m_thread.join();
@@ -47,9 +48,10 @@ class SortAlgorithm {
   virtual void sort(GraphDisplay* display) = 0;
   // returns whether sort should continue based on m_paused + std::is_sorted
   bool sortShouldContinue(const std::vector<int>& in);
-  bool threadShouldStop(GraphDisplay* display);
+  // returns whether thread should end/resets display if it should
+  bool handleAtomics(GraphDisplay* display);
   std::atomic<bool> m_threadShouldEnd = false;
-  std::atomic<bool> m_paused = false;
+  volatile std::atomic<bool> m_paused = false;
   bool m_threadActive = false;
   // variable that prevents the SortAlgorithm instance from running
   // when set to true

@@ -47,6 +47,10 @@ bool GraphDisplay::update() {
     }
     for (auto it = m_watchedIndices.begin(); it != m_watchedIndices.end();
          it++) {
+      // *(it->first);
+      // if (&*(it->first) == nullptr) {
+      //   continue;
+      // }
       if (*(it->first) == i) {
         bar.setFillColor(it->second);
       }

@@ -6,6 +6,9 @@
 bool CloseWindowCommand::execute(sf::RenderWindow& window, std::vector<int>* in,
                                  SortAlgorithm** sorter) {
   window.close();
+  // cleaning up paused variable to true so the sort thread can end!
+  // ... will hang in the handleAtomics() fn within the sorter class
+  (*sorter)->terminateSort();
   return false;
 }
 
@@ -14,7 +17,7 @@ bool RegenerateVectorCommand::execute(sf::RenderWindow& window,
                                       std::vector<int>* in,
                                       SortAlgorithm** sorter) {
   if (in) {
-    if ((*sorter)->isRunning()) {
+    if ((*sorter)->isThreadActive()) {
       return true;
     }
     std::vector<int> temp =
@@ -45,7 +48,8 @@ bool ChooseNextAlgorithmCommand::execute(sf::RenderWindow& window,
 
 bool PauseCommand::execute(sf::RenderWindow& window, std::vector<int>* in,
                            SortAlgorithm** sorter) {
-  (*sorter)->setPaused(!(*sorter)->getPaused());
+  bool paused = (*sorter)->getPaused();
+  (*sorter)->setPaused(!paused);
   return false;
 }
 
