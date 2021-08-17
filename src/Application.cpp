@@ -30,6 +30,4 @@ void Application::run(int numElements, double delay) {
     m_sorter->run(m_display, m_vec);
     m_display->update();
   }
-
-  // m_sorter->terminateSort();
 }

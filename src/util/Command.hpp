@@ -15,7 +15,7 @@ class Command {
                        SortAlgorithm** sorter) = 0;
 };
 
-class CloseWindowCommand : public Command {
+class EndApplicationCommand : public Command {
   bool execute(sf::RenderWindow& window, std::vector<int>* in,
                SortAlgorithm** sorter) override;
 };

@@ -33,6 +33,14 @@ bool SortAlgorithm::handleAtomics(GraphDisplay* display) {
     display->reset();
     return true;
   }
+  // intentionally not returning m_threadShouldEnd - in the case where
+  // terminateSort() is called, m_threadShouldEnd := true and
+  // m_paused := false. If final return statement here returns
+  // m_threadShouldEnd.load(), would bypass display->reset() from being called,
+  // causing seg fault when display->update() accesses the watchedIndices map of
+  // int* because the thread ends, and those values pointed to go out of scope
+  // TODO: think about this class keeping a pointer/ref to the GraphDisplay to
+  //       do the reset in the terminateSort() function
   while (m_paused.load()) {
     ;
   }

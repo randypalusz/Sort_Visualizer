@@ -3,8 +3,9 @@
 
 #include <iostream>
 
-bool CloseWindowCommand::execute(sf::RenderWindow& window, std::vector<int>* in,
-                                 SortAlgorithm** sorter) {
+bool EndApplicationCommand::execute(sf::RenderWindow& window,
+                                    std::vector<int>* in,
+                                    SortAlgorithm** sorter) {
   window.close();
   // cleaning up paused variable to true so the sort thread can end!
   // ... will hang in the handleAtomics() fn within the sorter class

@@ -12,6 +12,6 @@ class InputHandler {
       std::make_shared<RegenerateVectorCommand>();
   std::shared_ptr<Command> buttonS_ =
       std::make_shared<ChooseNextAlgorithmCommand>();
-  std::shared_ptr<Command> buttonQ_ = std::make_shared<CloseWindowCommand>();
+  std::shared_ptr<Command> buttonQ_ = std::make_shared<EndApplicationCommand>();
   std::shared_ptr<Command> buttonP_ = std::make_shared<PauseCommand>();
 };
