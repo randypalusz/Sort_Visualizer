@@ -83,11 +83,10 @@ int QuickSort::partition(GraphDisplay* display, int lo, int hi) {
   display->watch(&leftPtr, sf::Color::Red);
   display->watch(&rightPtr, sf::Color::Red);
   for (; rightPtr <= hi; rightPtr++) {
+    if (handleAtomics(display)) return -1;
     if (display->at(rightPtr) < pivot) {
       display->swap(leftPtr, rightPtr);
-      if (handleAtomics(display)) {
-        return -1;
-      }
+      if (handleAtomics(display)) return -1;
       leftPtr++;
     }
   }
