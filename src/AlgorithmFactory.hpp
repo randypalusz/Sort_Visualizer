@@ -11,10 +11,10 @@
 class SortAlgorithm;
 enum class Algorithm;
 
-using CreationFunction = std::function<SortAlgorithm*()>;
+using CreationFunction = std::function<std::unique_ptr<SortAlgorithm>()>;
 class AlgorithmFactory {
  public:
-  static void generateSorter(Algorithm a, SortAlgorithm** sorter);
+  static std::unique_ptr<SortAlgorithm> generateSorter(Algorithm a);
   static const std::unordered_map<Algorithm, CreationFunction> creators;
 };
 

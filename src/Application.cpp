@@ -17,7 +17,7 @@ void Application::run(int numElements, double delay) {
   m_window.create(sf::VideoMode(800, 600), "Sort Visualizer");
   m_window.setFramerateLimit(0);
 
-  AlgorithmFactory::generateSorter(Algorithm::SELECTION, &m_sorter);
+  m_sorter = AlgorithmFactory::generateSorter(Algorithm::SELECTION);
   m_vec = VectorGenerator::generateGivenSize(numElements, true);
 
   InputHandler inputHandler{};
@@ -26,7 +26,7 @@ void Application::run(int numElements, double delay) {
 
   while (m_window.isOpen()) {
     std::shared_ptr<Command> result = inputHandler.pollForEvents(m_window);
-    result->execute(m_window, &m_vec, &m_sorter);
+    result->execute(m_window, &m_vec, std::ref(m_sorter));
     m_sorter->run(m_display, m_vec);
     m_display->update();
   }

@@ -25,6 +25,11 @@ T* getPointer() {
   return new T();
 };
 
+template <typename T>
+std::unique_ptr<T> getUniquePointer() {
+  return std::make_unique<T>();
+};
+
 class Timing {
  public:
   static void preciseSleep(double seconds);

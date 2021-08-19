@@ -5,20 +5,20 @@
 
 bool EndApplicationCommand::execute(sf::RenderWindow& window,
                                     std::vector<int>* in,
-                                    SortAlgorithm** sorter) {
+                                    std::unique_ptr<SortAlgorithm>& sorter) {
   window.close();
   // cleaning up paused variable to true so the sort thread can end!
   // ... will hang in the handleAtomics() fn within the sorter class
-  (*sorter)->terminateSort();
+  sorter->terminateSort();
   return false;
 }
 
 // TODO: make sure this also restarts the sorting algorithm
 bool RegenerateVectorCommand::execute(sf::RenderWindow& window,
                                       std::vector<int>* in,
-                                      SortAlgorithm** sorter) {
+                                      std::unique_ptr<SortAlgorithm>& sorter) {
   if (in) {
-    if ((*sorter)->isThreadActive()) {
+    if (sorter->isThreadActive()) {
       return true;
     }
     std::vector<int> temp =
@@ -29,14 +29,14 @@ bool RegenerateVectorCommand::execute(sf::RenderWindow& window,
   return true;
 }
 
-bool ChooseNextAlgorithmCommand::execute(sf::RenderWindow& window,
-                                         std::vector<int>* in,
-                                         SortAlgorithm** sorter) {
+bool ChooseNextAlgorithmCommand::execute(
+    sf::RenderWindow& window, std::vector<int>* in,
+    std::unique_ptr<SortAlgorithm>& sorter) {
   if (sorter) {
-    Algorithm a = (*sorter)->getEnumType();
+    Algorithm a = sorter->getEnumType();
     a++;
-    (*sorter)->terminateSort();
-    AlgorithmFactory::generateSorter(a, sorter);
+    sorter->terminateSort();
+    sorter = std::move(AlgorithmFactory::generateSorter(a));
 
     // regenerate vector after sorter is generated
     std::vector<int> temp =
@@ -48,18 +48,18 @@ bool ChooseNextAlgorithmCommand::execute(sf::RenderWindow& window,
 }
 
 bool PauseCommand::execute(sf::RenderWindow& window, std::vector<int>* in,
-                           SortAlgorithm** sorter) {
-  bool paused = (*sorter)->getPaused();
-  (*sorter)->setPaused(!paused);
+                           std::unique_ptr<SortAlgorithm>& sorter) {
+  bool paused = sorter->getPaused();
+  sorter->setPaused(!paused);
   return false;
 }
 
 bool SendStepCommand::execute(sf::RenderWindow& window, std::vector<int>* in,
-                              SortAlgorithm** sorter) {
-  (*sorter)->setStep();
+                              std::unique_ptr<SortAlgorithm>& sorter) {
+  sorter->setStep();
 }
 
 bool DoNothingCommand::execute(sf::RenderWindow& window, std::vector<int>* in,
-                               SortAlgorithm** sorter) {
+                               std::unique_ptr<SortAlgorithm>& sorter) {
   return true;
 }

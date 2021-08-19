@@ -2,6 +2,7 @@
 
 #include <functional>
 #include <unordered_map>
+#include <memory>
 
 #include "AlgorithmEnums.hpp"
 #include "SortAlgorithm.hpp"
@@ -9,22 +10,24 @@
 
 const std::unordered_map<Algorithm, CreationFunction>
     AlgorithmFactory::creators = {
-        {Algorithm::BOGO, &getPointer<BogoSort>},
-        {Algorithm::BUBBLE, &getPointer<BubbleSort>},
-        {Algorithm::QUICK, &getPointer<QuickSort>},
-        {Algorithm::QUICK_ITERATIVE, &getPointer<QuickSort_Iterative>},
-        {Algorithm::SELECTION, &getPointer<SelectionSort>}};
+        {Algorithm::BOGO, &getUniquePointer<BogoSort>},
+        {Algorithm::BUBBLE, &getUniquePointer<BubbleSort>},
+        {Algorithm::QUICK, &getUniquePointer<QuickSort>},
+        {Algorithm::QUICK_ITERATIVE, &getUniquePointer<QuickSort_Iterative>},
+        {Algorithm::SELECTION, &getUniquePointer<SelectionSort>}};
 
-void AlgorithmFactory::generateSorter(Algorithm a, SortAlgorithm** sorter) {
-  if (*sorter) delete *sorter;
+std::unique_ptr<SortAlgorithm> AlgorithmFactory::generateSorter(Algorithm a) {
+  // if (*sorter) delete *sorter;
+  std::unique_ptr<SortAlgorithm> sorter;
 
   try {
     auto fn = creators.at(a);
-    *sorter = fn();
-    return;
+    sorter = fn();
+    return sorter;
   } catch (const std::exception& e) {
     std::cerr
         << "Error - implement enum type in AlgorithmFactory::generateSorter"
         << std::endl;
   }
+  return nullptr;
 }
