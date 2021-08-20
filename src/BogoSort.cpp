@@ -16,5 +16,6 @@ void BogoSort::sort(GraphDisplay* display) {
     if (handleAtomics(display)) return;
   }
   display->reset();
-  m_threadActive = false;
+  // m_threadActive = false;
+  m_state.store(AlgorithmState::INACTIVE);
 }

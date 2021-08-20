@@ -50,7 +50,7 @@ void QuickSort_Iterative::sort(GraphDisplay* display) {
     }
   }
   display->reset();
-  m_threadActive = false;
+  m_state.store(AlgorithmState::INACTIVE);
 }
 
 void QuickSort::startSortThread(GraphDisplay* display, std::vector<int>& in) {
@@ -60,7 +60,7 @@ void QuickSort::startSortThread(GraphDisplay* display, std::vector<int>& in) {
 void QuickSort::sort(GraphDisplay* display) {
   quicksort(display, 0, display->getVecSize() - 1);
   display->reset();
-  m_threadActive = false;
+  m_state.store(AlgorithmState::INACTIVE);
 }
 
 bool QuickSort::quicksort(GraphDisplay* display, int lo, int hi) {

@@ -23,14 +23,18 @@ bool SortAlgorithm::sortShouldContinue(const std::vector<int>& in) {
   // t - f -> false
   // f - t -> false
   // f - f -> true
-  // return !(m_paused || std::is_sorted(in.begin(), in.end()));
-  return !(m_threadActive || std::is_sorted(in.begin(), in.end())) &&
-         !m_sortTerminated;
+  return m_state.load() == AlgorithmState::INACTIVE &&
+         !std::is_sorted(in.begin(), in.end());
+  //  m_state.load() != AlgorithmState::KILLED;
 }
 
 // TODO: call this more often to mark pause points
 bool SortAlgorithm::handleAtomics(GraphDisplay* display) {
-  if (m_threadShouldEnd.load()) {
+  // if (m_threadShouldEnd.load()) {
+  //   display->reset();
+  //   return true;
+  // }
+  if (m_state.load() == AlgorithmState::SHOULD_END) {
     display->reset();
     return true;
   }
@@ -42,7 +46,7 @@ bool SortAlgorithm::handleAtomics(GraphDisplay* display) {
   // int* because the thread ends, and those values pointed to go out of scope
   // TODO: think about this class keeping a pointer/ref to the GraphDisplay to
   //       do the reset in the terminateSort() function
-  while (m_paused.load()) {
+  while (m_state.load() == AlgorithmState::PAUSED) {
     if (m_step.load()) {
       m_step.store(false);
       break;
@@ -59,13 +63,16 @@ bool SortAlgorithm::preSortChecks(GraphDisplay* display, std::vector<int>& in) {
 
   // covers case where vector is regenerated before sort completes
   if (m_thread.joinable()) {
-    m_threadShouldEnd.store(false);
+    // m_threadShouldEnd.store(false);
+    m_state.store(AlgorithmState::SHOULD_END);
     m_thread.join();
-    m_threadActive = false;
+    m_state.store(AlgorithmState::INACTIVE);
+    // m_threadActive = false;
   }
 
   display->reset();
 
-  m_threadActive = true;
+  // m_threadActive = true;
+  m_state = AlgorithmState::RUNNING;
   return true;
 }

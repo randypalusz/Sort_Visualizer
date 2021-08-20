@@ -49,8 +49,9 @@ bool ChooseNextAlgorithmCommand::execute(
 
 bool PauseCommand::execute(sf::RenderWindow& window, std::vector<int>* in,
                            std::unique_ptr<SortAlgorithm>& sorter) {
-  bool paused = sorter->getPaused();
-  sorter->setPaused(!paused);
+  // bool paused = sorter->getPaused();
+  // sorter->setPaused(!paused);
+  sorter->togglePaused();
   return false;
 }
 
