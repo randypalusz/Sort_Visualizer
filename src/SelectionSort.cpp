@@ -30,5 +30,5 @@ void SelectionSort::sort(GraphDisplay* display) {
     display->unmark(i);
   }
   display->reset();
-  m_state.store(AlgorithmState::INACTIVE);
+  setState(AlgorithmState::INACTIVE);
 }

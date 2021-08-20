@@ -28,5 +28,5 @@ void BubbleSort::sort(GraphDisplay* display) {
     maxIndex--;
   } while (swapOccurred);
   display->reset();
-  m_state.store(AlgorithmState::INACTIVE);
+  setState(AlgorithmState::INACTIVE);
 }

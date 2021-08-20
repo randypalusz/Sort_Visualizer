@@ -26,36 +26,28 @@ class SortAlgorithm {
   virtual Algorithm getEnumType() = 0;
   // print for debugging purposes
   static void print(const std::vector<int>& in);
-  inline bool isThreadActive() {
-    // return m_threadActive;
-    return m_state == AlgorithmState::RUNNING;
-  }
-  // inline void setPaused(/*bool newVal*/) {
-  //   // m_paused.store(newVal);
-  //   if (m_state.load() == AlgorithmState::RUNNING)
-  //     m_state.store(AlgorithmState::PAUSED);
-  // }
+  inline bool isThreadActive() { return m_state == AlgorithmState::RUNNING; }
   inline void togglePaused() {
     switch (m_state.load()) {
       case AlgorithmState::RUNNING:
-        m_state.store(AlgorithmState::PAUSED);
+        setState(AlgorithmState::PAUSED);
         return;
       case AlgorithmState::PAUSED:
-        m_state.store(AlgorithmState::RUNNING);
+        setState(AlgorithmState::RUNNING);
         return;
       default:
         break;
     }
   }
-  // TODO: setState(AlgorithmState state){}
+  inline void setState(AlgorithmState state) { m_state.store(state); }
   inline void setStep() { m_step.store(true); }
   inline void terminateSort() {
-    m_state.store(AlgorithmState::SHOULD_END);
+    setState(AlgorithmState::SHOULD_END);
     if (m_thread.joinable()) {
       m_thread.join();
-      m_state.store(AlgorithmState::INACTIVE);
+      setState(AlgorithmState::INACTIVE);
     }
-    m_state.store(AlgorithmState::KILLED);
+    setState(AlgorithmState::KILLED);
     return;
   }
 
@@ -69,14 +61,8 @@ class SortAlgorithm {
   bool sortShouldContinue(const std::vector<int>& in);
   // returns whether thread should end/resets display if it should
   bool handleAtomics(GraphDisplay* display);
-  // std::atomic<bool> m_threadShouldEnd = false;
-  // std::atomic<bool> m_paused = false;
   std::atomic<AlgorithmState> m_state = AlgorithmState::INACTIVE;
   std::atomic<bool> m_step = false;
-  // bool m_threadActive = false;
-  // variable that prevents the SortAlgorithm instance from running
-  // when set to true
-  // bool m_sortTerminated = false;
   std::thread m_thread;
 };
 
