@@ -13,7 +13,6 @@ bool EndApplicationCommand::execute(sf::RenderWindow& window,
   return false;
 }
 
-// TODO: make sure this also restarts the sorting algorithm
 bool RegenerateVectorCommand::execute(sf::RenderWindow& window,
                                       std::vector<int>* in,
                                       std::unique_ptr<SortAlgorithm>& sorter) {
@@ -49,8 +48,6 @@ bool ChooseNextAlgorithmCommand::execute(
 
 bool PauseCommand::execute(sf::RenderWindow& window, std::vector<int>* in,
                            std::unique_ptr<SortAlgorithm>& sorter) {
-  // bool paused = sorter->getPaused();
-  // sorter->setPaused(!paused);
   sorter->togglePaused();
   return false;
 }

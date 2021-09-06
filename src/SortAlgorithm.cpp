@@ -18,22 +18,12 @@ void SortAlgorithm::print(const std::vector<int>& in) {
 }
 
 bool SortAlgorithm::sortShouldContinue(const std::vector<int>& in) {
-  // m_paused - is_sorted
-  // t - t -> false
-  // t - f -> false
-  // f - t -> false
-  // f - f -> true
   return m_state.load() == AlgorithmState::INACTIVE &&
          !std::is_sorted(in.begin(), in.end());
-  //  m_state.load() != AlgorithmState::KILLED;
 }
 
 // TODO: call this more often to mark pause points
 bool SortAlgorithm::handleAtomics(GraphDisplay* display) {
-  // if (m_threadShouldEnd.load()) {
-  //   display->reset();
-  //   return true;
-  // }
   if (m_state.load() == AlgorithmState::SHOULD_END) {
     display->reset();
     return true;
@@ -51,7 +41,6 @@ bool SortAlgorithm::handleAtomics(GraphDisplay* display) {
       m_step.store(false);
       break;
     }
-    // ;
   }
   return false;
 }
@@ -61,7 +50,8 @@ bool SortAlgorithm::preSortChecks(GraphDisplay* display, std::vector<int>& in) {
     return false;
   }
 
-  // covers case where vector is regenerated before sort completes
+  // covers case where vector is regenerated before sort completes, although
+  // RegenerateVectorCommand prevents this from being caught
   if (m_thread.joinable()) {
     setState(AlgorithmState::SHOULD_END);
     m_thread.join();
@@ -70,7 +60,6 @@ bool SortAlgorithm::preSortChecks(GraphDisplay* display, std::vector<int>& in) {
 
   display->reset();
 
-  // m_threadActive = true;
   m_state = AlgorithmState::RUNNING;
   return true;
 }

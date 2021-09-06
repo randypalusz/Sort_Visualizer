@@ -6,6 +6,7 @@
 #include <stdlib.h>
 #include <vector>
 
+// initializing static members
 std::random_device VectorGenerator::rd{};
 std::mt19937 VectorGenerator::g{rd()};
 
