@@ -93,7 +93,6 @@ class GraphDisplay {
   std::unordered_map<int, sf::Color> m_activeIndices;
   std::unordered_map<int*, sf::Color> m_watchedIndices;
   sf::Vector2u m_size;
-  InputHandler* m_inputHandler;
   std::mutex m_setMutex;
   double m_delayInSeconds;
 };

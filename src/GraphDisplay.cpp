@@ -8,16 +8,14 @@
 #include <unordered_set>
 
 #include "util/Utility.hpp"
-#include "util/InputHandler.hpp"
 
 GraphDisplay::GraphDisplay(sf::RenderWindow& window, std::vector<int>& in,
                            double delayInSeconds)
     : m_window(window), m_sortVector(in), m_delayInSeconds(delayInSeconds) {
   // updating here as it should be a one-time update - SFML handles stretching
   m_size = window.getSize();
-  m_inputHandler = new InputHandler();
 }
-GraphDisplay::~GraphDisplay() { delete m_inputHandler; }
+GraphDisplay::~GraphDisplay() {}
 
 bool GraphDisplay::update() {
   m_window.clear(sf::Color::Blue);
