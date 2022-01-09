@@ -1,10 +1,10 @@
 #include "Command.hpp"
-#include "AlgorithmFactory.hpp"
 
 #include <iostream>
 
-bool EndApplicationCommand::execute(sf::RenderWindow& window,
-                                    std::vector<int>* in,
+#include "AlgorithmFactory.hpp"
+
+bool EndApplicationCommand::execute(sf::RenderWindow& window, std::vector<int>* in,
                                     std::unique_ptr<SortAlgorithm>& sorter) {
   window.close();
   // cleaning up paused variable to true so the sort thread can end!
@@ -13,24 +13,21 @@ bool EndApplicationCommand::execute(sf::RenderWindow& window,
   return false;
 }
 
-bool RegenerateVectorCommand::execute(sf::RenderWindow& window,
-                                      std::vector<int>* in,
+bool RegenerateVectorCommand::execute(sf::RenderWindow& window, std::vector<int>* in,
                                       std::unique_ptr<SortAlgorithm>& sorter) {
   if (in) {
     if (sorter->isThreadActive()) {
       return true;
     }
-    std::vector<int> temp =
-        VectorGenerator::generateGivenSize(in->size(), true);
+    std::vector<int> temp = VectorGenerator::generateGivenSize(in->size(), true);
     in->clear();
     in->insert(in->begin(), temp.begin(), temp.end());
   }
   return true;
 }
 
-bool ChooseNextAlgorithmCommand::execute(
-    sf::RenderWindow& window, std::vector<int>* in,
-    std::unique_ptr<SortAlgorithm>& sorter) {
+bool ChooseNextAlgorithmCommand::execute(sf::RenderWindow& window, std::vector<int>* in,
+                                         std::unique_ptr<SortAlgorithm>& sorter) {
   if (sorter) {
     Algorithm a = sorter->getEnumType();
     a++;
@@ -38,8 +35,7 @@ bool ChooseNextAlgorithmCommand::execute(
     sorter = std::move(AlgorithmFactory::generateSorter(a));
 
     // regenerate vector after sorter is generated
-    std::vector<int> temp =
-        VectorGenerator::generateGivenSize(in->size(), true);
+    std::vector<int> temp = VectorGenerator::generateGivenSize(in->size(), true);
     in->clear();
     in->insert(in->begin(), temp.begin(), temp.end());
   }
@@ -55,6 +51,7 @@ bool PauseCommand::execute(sf::RenderWindow& window, std::vector<int>* in,
 bool SendStepCommand::execute(sf::RenderWindow& window, std::vector<int>* in,
                               std::unique_ptr<SortAlgorithm>& sorter) {
   sorter->setStep();
+  return true;
 }
 
 bool DoNothingCommand::execute(sf::RenderWindow& window, std::vector<int>* in,
