@@ -22,6 +22,7 @@ set(SOURCES
   ${SRC_DIR}/QuickSort.cpp
   ${SRC_DIR}/BogoSort.cpp
   ${SRC_DIR}/SelectionSort.cpp
+  ${SRC_DIR}/CocktailSort.cpp
   ${SRC_DIR}/AlgorithmFactory.cpp
   ${SRC_DIR}/SortAlgorithm.cpp
   ${SRC_DIR}/GraphDisplay.cpp

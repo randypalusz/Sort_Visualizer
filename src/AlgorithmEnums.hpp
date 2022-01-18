@@ -3,7 +3,7 @@
 #include <algorithm>
 #include <vector>
 
-enum class Algorithm { BUBBLE, SELECTION, QUICK_ITERATIVE, BOGO, QUICK };
+enum class Algorithm { BUBBLE, SELECTION, QUICK_ITERATIVE, BOGO, QUICK, COCKTAIL };
 enum class AlgorithmState {
   SHOULD_END,  // used as a flag from the caller that the sort should end
   INACTIVE,    // state reserved for before the sorting occurs, or when the

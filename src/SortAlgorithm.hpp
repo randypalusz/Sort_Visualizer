@@ -3,9 +3,9 @@
 
 #include <atomic>
 #include <iostream>
+#include <thread>
 #include <unordered_set>
 #include <vector>
-#include <thread>
 
 #include "AlgorithmEnums.hpp"
 #include "GraphDisplay.hpp"
@@ -108,6 +108,15 @@ class SelectionSort : public SortAlgorithm {
  public:
   void startSortThread(GraphDisplay* display, std::vector<int>& in) override;
   inline Algorithm getEnumType() override { return Algorithm::SELECTION; }
+
+ protected:
+  void sort(GraphDisplay* display) override;
+};
+
+class CocktailSort : public SortAlgorithm {
+ public:
+  void startSortThread(GraphDisplay* display, std::vector<int>& in) override;
+  inline Algorithm getEnumType() override { return Algorithm::COCKTAIL; }
 
  protected:
   void sort(GraphDisplay* display) override;
