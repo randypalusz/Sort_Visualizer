@@ -48,7 +48,8 @@ class GraphDisplay {
     // TODO: performance shouldn't really be impacted with this, but eval later
     // update all watched indices with default color
     for (auto& entry : m_watchedIndices) {
-      entry.second = m_watchResetColor;
+      sf::Color resetColor = m_watchedIndicesResetColor.at(entry.first);
+      entry.second = resetColor;
     }
     m_lastAccessedIdx = idx;
     return m_sortVector.at(idx);
@@ -96,12 +97,13 @@ class GraphDisplay {
   }
   inline void watch(int* idxPointer, sf::Color color = sf::Color::Green) {
     auto&& lock = makeLock();
-    m_watchResetColor = color;
     m_watchedIndices.insert({idxPointer, color});
+    m_watchedIndicesResetColor.insert({idxPointer, color});
   }
   inline void unwatchAll() {
     auto&& lock = makeLock();
     m_watchedIndices.clear();
+    m_watchedIndicesResetColor.clear();
   }
   inline int getVecSize() {
     auto&& lock = makeLock();
@@ -112,6 +114,7 @@ class GraphDisplay {
     m_lastAccessedIdx = -1;
     m_activeIndices.clear();
     m_watchedIndices.clear();
+    m_watchedIndicesResetColor.clear();
   }
   inline bool isSorted() {
     return std::is_sorted(m_sortVector.begin(), m_sortVector.end());
@@ -134,6 +137,7 @@ class GraphDisplay {
   std::vector<int>& m_sortVector;
   std::unordered_map<int, sf::Color> m_activeIndices;
   std::unordered_map<int*, sf::Color> m_watchedIndices;
+  std::unordered_map<int*, sf::Color> m_watchedIndicesResetColor;
   sf::Vector2u m_size;
   std::mutex m_setMutex;
   sf::Color m_watchResetColor;

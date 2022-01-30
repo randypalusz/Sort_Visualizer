@@ -14,10 +14,12 @@ void CocktailSort::sort(GraphDisplay* display) {
   // TODO: basic case done, but use two pointers to keep shortening the area
   // traversed
   bool swapped = false;
+  int lowerBound = 0;
+  int upperBound = display->getVecSize() - 2;
   do {
     swapped = false;
     int i;
-    for (i = 0; i < display->getVecSize() - 2; i++) {
+    for (i = lowerBound; i < upperBound; i++) {
       display->watch(&i, sf::Color::Red);
       if (display->at(i) > display->at(i + 1)) {
         display->mark(i + 1, sf::Color::Green);
@@ -35,7 +37,7 @@ void CocktailSort::sort(GraphDisplay* display) {
     if (!swapped) {
       break;
     }
-    for (i = display->getVecSize() - 2; i >= 0; i--) {
+    for (i = upperBound; i >= lowerBound; i--) {
       if (display->at(i) > display->at(i + 1)) {
         display->mark(i + 1, sf::Color::Green);
         if (handleAtomics(display)) {
@@ -49,6 +51,8 @@ void CocktailSort::sort(GraphDisplay* display) {
       }
       display->unmark(i + 1);
     }
+    lowerBound++;
+    upperBound--;
   } while (swapped);
   display->unwatchAll();
   return;

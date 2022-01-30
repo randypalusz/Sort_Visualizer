@@ -12,7 +12,7 @@ void QuickSort_Iterative::sort(GraphDisplay* display) {
 
   beg[0] = 0;
   end[0] = display->getVecSize();
-  display->watch(&piv);
+  display->watch(&piv, sf::Color::Green);
   display->watch(&L, sf::Color::Red);
   display->watch(&R, sf::Color::Red);
   while (i >= 0) {
