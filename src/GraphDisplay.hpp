@@ -45,6 +45,11 @@ class GraphDisplay {
       // do delay if not a duplicate access
       this->onAccess();
     }
+    // TODO: performance shouldn't really be impacted with this, but eval later
+    // update all watched indices with default color
+    for (auto& entry : m_watchedIndices) {
+      entry.second = m_watchResetColor;
+    }
     m_lastAccessedIdx = idx;
     return m_sortVector.at(idx);
   }
@@ -53,8 +58,45 @@ class GraphDisplay {
     this->onAccess();
     std::swap(m_sortVector.at(idx1), m_sortVector.at(idx2));
   }
+  // TODO: test if this really works as intended...
+  inline void swap(int idx1, int idx2, bool swapColor) {
+    if (swapColor) {
+      auto&& lock = makeLock();
+      sf::Color* colorPtrOne = nullptr;
+      sf::Color* colorPtrTwo = nullptr;
+      this->onAccess();
+      std::swap(m_sortVector.at(idx1), m_sortVector.at(idx2));
+      for (auto& entry : m_watchedIndices) {
+        int currentIdx = *(entry.first);
+        if ((currentIdx == idx1) || (currentIdx == idx2)) {
+          if (colorPtrOne == nullptr) {
+            colorPtrOne = &entry.second;
+          } else {
+            colorPtrTwo = &entry.second;
+          }
+        }
+      }
+      for (auto& entry : m_activeIndices) {
+        int currentIdx = entry.first;
+        if ((currentIdx == idx1) || (currentIdx == idx2)) {
+          if (colorPtrOne == nullptr) {
+            colorPtrOne = &entry.second;
+          } else {
+            colorPtrTwo = &entry.second;
+          }
+        }
+      }
+      sf::Color temp = *colorPtrOne;
+      *colorPtrOne = *colorPtrTwo;
+      *colorPtrTwo = temp;
+
+    } else {
+      this->swap(idx1, idx2);
+    }
+  }
   inline void watch(int* idxPointer, sf::Color color = sf::Color::Green) {
     auto&& lock = makeLock();
+    m_watchResetColor = color;
     m_watchedIndices.insert({idxPointer, color});
   }
   inline void unwatchAll() {
@@ -94,5 +136,6 @@ class GraphDisplay {
   std::unordered_map<int*, sf::Color> m_watchedIndices;
   sf::Vector2u m_size;
   std::mutex m_setMutex;
+  sf::Color m_watchResetColor;
   double m_delayInSeconds;
 };
