@@ -1,3 +1,3 @@
 # Sort Visualizer
 
-Using SFML to visualize different list sorting algorithms
+A multithreaded application that uses SFML to visualize a collection of sorting algorithms
