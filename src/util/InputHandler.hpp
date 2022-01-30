@@ -3,6 +3,7 @@
 #include "Command.hpp"
 #include <memory>
 
+// TODO: add command for increasing/decreasing delay;
 class InputHandler {
  public:
   std::shared_ptr<Command> pollForEvents(sf::RenderWindow& window);
