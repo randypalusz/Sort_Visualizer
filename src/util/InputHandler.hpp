@@ -19,4 +19,8 @@ class InputHandler {
   std::shared_ptr<Command> buttonQ_ = std::make_shared<EndApplicationCommand>();
   std::shared_ptr<Command> buttonP_ = std::make_shared<PauseCommand>();
   std::shared_ptr<Command> buttonRtArrow_ = std::make_shared<SendStepCommand>();
+  std::shared_ptr<Command> buttonUpArrow_ =
+      std::make_shared<ChangeDelayCommand>(false);
+  std::shared_ptr<Command> buttonDnArrow_ =
+      std::make_shared<ChangeDelayCommand>(true);
 };

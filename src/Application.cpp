@@ -18,7 +18,7 @@ void Application::run(int numElements, double delay) {
 
   while (m_window.isOpen()) {
     std::shared_ptr<Command> result = m_inputHandler->pollForEvents(m_window);
-    result->execute(m_window, &m_vec, std::ref(m_sorter));
+    result->execute(m_display, std::ref(m_sorter), &m_vec);
     m_sorter->run(m_display, m_vec);
     m_display->update();
   }

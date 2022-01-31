@@ -123,6 +123,11 @@ class GraphDisplay {
     std::shuffle(m_sortVector.begin(), m_sortVector.end(), g);
     this->onAccess();
   }
+  inline void closeWindow() { return m_window.close(); }
+  inline void changeDelay(double modification) {
+    m_delayInSeconds += modification;
+    m_delayInSeconds = std::clamp(m_delayInSeconds, 0.0001, 1.0);
+  }
 
  private:
   void onAccess();
