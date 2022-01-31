@@ -11,8 +11,6 @@ void CocktailSort::startSortThread(GraphDisplay* display,
 }
 
 void CocktailSort::sort(GraphDisplay* display) {
-  // TODO: basic case done, but use two pointers to keep shortening the area
-  // traversed
   bool swapped = false;
   int lowerBound = 0;
   int upperBound = display->getVecSize() - 2;

@@ -4,6 +4,9 @@
 #include <memory>
 
 // TODO: add command for increasing/decreasing delay;
+//       need to add reference to GraphDisplay as input parameter
+//       can possibly remove window and input vector as parameters
+//       and replace with above
 class InputHandler {
  public:
   std::shared_ptr<Command> pollForEvents(sf::RenderWindow& window);
