@@ -8,16 +8,17 @@
 
 #include "SortAlgorithm.hpp"
 #include "util/Command.hpp"
+#include "ApplicationProperties.hpp"
 
 class SortAlgorithm;
 
 class Application {
  public:
   Application() {}
-  void run(int numElements, double delay);
+  void run();
 
  private:
-  void init(int numElements, double delay);
+  void init();
   sf::RenderWindow m_window;
   std::unique_ptr<SortAlgorithm> m_sorter = nullptr;
   GraphDisplay* m_display = nullptr;

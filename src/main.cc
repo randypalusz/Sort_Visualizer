@@ -5,8 +5,10 @@
 #include "ApplicationProperties.hpp"
 
 int main(int argc, char** argv) {
-  const int numElements = atoi(argv[1]);
-  const double delay = atof(argv[2]);
+  if (argc > 1) {
+    ApplicationProperties::numElements = atoi(argv[1]);
+    ApplicationProperties::delay = atof(argv[2]);
+  }
   Application app{};
-  app.run(numElements, delay);
+  app.run();
 }
