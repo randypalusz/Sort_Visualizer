@@ -52,17 +52,13 @@ class GraphDisplay {
     m_lastAccessedIdx = idx;
     return m_sortVector.at(idx);
   }
-  inline void swap(int idx1, int idx2) {
+  inline void swap(int idx1, int idx2, bool swapColor = false) {
     auto&& lock = makeLock();
     this->onAccess();
     std::swap(m_sortVector.at(idx1), m_sortVector.at(idx2));
-  }
-  inline void swap(int idx1, int idx2, bool swapColor) {
+
     if (swapColor) {
-      auto&& lock = makeLock();
       std::vector<sf::Color*> colorPtrs = {};
-      this->onAccess();
-      std::swap(m_sortVector.at(idx1), m_sortVector.at(idx2));
 
       auto it1 = std::find_if(
           m_watchedIndices.begin(), m_watchedIndices.end(),
@@ -77,12 +73,12 @@ class GraphDisplay {
       if (it3 != m_activeIndices.end()) colorPtrs.push_back(&(it3->second));
       if (it4 != m_activeIndices.end()) colorPtrs.push_back(&(it4->second));
 
+      if (colorPtrs.size() != 2) {
+        return;
+      }
       sf::Color temp = *colorPtrs.at(0);
       *colorPtrs.at(0) = *colorPtrs.at(1);
       *colorPtrs.at(1) = temp;
-
-    } else {
-      this->swap(idx1, idx2);
     }
   }
   inline void watch(int* idxPointer, sf::Color color = sf::Color::Green) {
