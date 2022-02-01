@@ -1,6 +1,7 @@
 #ifndef APPLICATION_PROPERTIES_HPP
 #define APPLICATION_PROPERTIES_HPP
 
+// TODO: add json parsing utility to get these at runtime via a txt file
 class ApplicationProperties {
  public:
   inline static bool vectorRegenRestartsSort = true;
