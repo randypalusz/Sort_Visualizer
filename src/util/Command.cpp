@@ -3,6 +3,7 @@
 #include <iostream>
 
 #include "AlgorithmFactory.hpp"
+#include "ApplicationProperties.hpp"
 
 bool EndApplicationCommand::execute(GraphDisplay* display,
                                     std::unique_ptr<SortAlgorithm>& sorter,
@@ -19,11 +20,15 @@ bool RegenerateVectorCommand::execute(GraphDisplay* display,
                                       std::unique_ptr<SortAlgorithm>& sorter,
                                       std::vector<int>* in) {
   if (in) {
-    if (sorter->isThreadActive()) {
-      return true;
+    // if sort is running (not paused or killed or otherwise), do not regenerate and do
+    // not restart the sort algorithm
+    // if (sorter->isThreadActive()) {
+    //   return true;
+    // }
+    if (ApplicationProperties::vectorRegenRestartsSort) {
+      sorter->terminateSort(false);
     }
-    std::vector<int> temp =
-        VectorGenerator::generateGivenSize(in->size(), true);
+    std::vector<int> temp = VectorGenerator::generateGivenSize(in->size(), true);
     in->clear();
     in->insert(in->begin(), temp.begin(), temp.end());
   }
@@ -40,16 +45,14 @@ bool ChooseNextAlgorithmCommand::execute(GraphDisplay* display,
     sorter = std::move(AlgorithmFactory::generateSorter(a));
 
     // regenerate vector after sorter is generated
-    std::vector<int> temp =
-        VectorGenerator::generateGivenSize(in->size(), true);
+    std::vector<int> temp = VectorGenerator::generateGivenSize(in->size(), true);
     in->clear();
     in->insert(in->begin(), temp.begin(), temp.end());
   }
   return true;
 }
 
-bool PauseCommand::execute(GraphDisplay* display,
-                           std::unique_ptr<SortAlgorithm>& sorter,
+bool PauseCommand::execute(GraphDisplay* display, std::unique_ptr<SortAlgorithm>& sorter,
                            std::vector<int>* in) {
   sorter->togglePaused();
   return false;

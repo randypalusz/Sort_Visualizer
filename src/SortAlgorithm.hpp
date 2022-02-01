@@ -17,7 +17,7 @@ class SortAlgorithm {
   // Template pattern - preSortChecks will determine whether the thread should
   // run, and startSortThread must be overridden
   inline void run(GraphDisplay* display, std::vector<int>& in) {
-    if (!preSortChecks(display, in)) {
+    if (!init(display, in)) {
       return;
     }
     startSortThread(display, in);
@@ -41,20 +41,20 @@ class SortAlgorithm {
   }
   inline void setState(AlgorithmState state) { m_state.store(state); }
   inline void setStep() { m_step.store(true); }
-  inline void terminateSort() {
+  inline void terminateSort(bool preventRestart = true) {
     setState(AlgorithmState::SHOULD_END);
     if (m_thread.joinable()) {
       m_thread.join();
       setState(AlgorithmState::INACTIVE);
     }
-    setState(AlgorithmState::KILLED);
+    if (preventRestart) setState(AlgorithmState::KILLED);
     return;
   }
 
  protected:
   // functional intent is to start the sort thread and assign it to m_thread
   virtual void startSortThread(GraphDisplay* display, std::vector<int>& in) = 0;
-  [[nodiscard]] bool preSortChecks(GraphDisplay* display, std::vector<int>& in);
+  [[nodiscard]] bool init(GraphDisplay* display, std::vector<int>& in);
   // this will be the sort function that the top-level sort starts a thread on
   virtual void sort(GraphDisplay* display) = 0;
   // returns whether sort should continue based on m_paused + std::is_sorted

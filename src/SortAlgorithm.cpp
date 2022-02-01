@@ -45,21 +45,15 @@ bool SortAlgorithm::handleAtomics(GraphDisplay* display) {
   return false;
 }
 
-bool SortAlgorithm::preSortChecks(GraphDisplay* display, std::vector<int>& in) {
+// init returns false if the sort is already running, or if the vector is already sorted
+// return true and resets the display parameters/sets state to RUNNING otherwise
+bool SortAlgorithm::init(GraphDisplay* display, std::vector<int>& in) {
   if (!SortAlgorithm::sortShouldContinue(in)) {
     return false;
   }
 
-  // covers case where vector is regenerated before sort completes, although
-  // RegenerateVectorCommand prevents this from being caught
-  if (m_thread.joinable()) {
-    setState(AlgorithmState::SHOULD_END);
-    m_thread.join();
-    setState(AlgorithmState::INACTIVE);
-  }
-
   display->reset();
-
   m_state = AlgorithmState::RUNNING;
+
   return true;
 }
