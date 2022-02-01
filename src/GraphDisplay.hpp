@@ -18,8 +18,7 @@ class GraphDisplay {
   friend class SortAlgorithm;
 
  public:
-  GraphDisplay(sf::RenderWindow& window, std::vector<int>& in,
-               double delayInSeconds);
+  GraphDisplay(sf::RenderWindow& window, std::vector<int>& in, double delayInSeconds);
   ~GraphDisplay();
   bool update();
   inline void mark(int idx, sf::Color color = sf::Color::Red) {
@@ -33,8 +32,7 @@ class GraphDisplay {
     auto&& lock = makeLock();
     m_activeIndices.erase(idx);
   }
-  inline void markSwap(int toRemove, int replacement,
-                       sf::Color color = sf::Color::Red) {
+  inline void markSwap(int toRemove, int replacement, sf::Color color = sf::Color::Red) {
     auto&& lock = makeLock();
     m_activeIndices.erase(toRemove);
     m_activeIndices.insert({replacement, color});
@@ -59,37 +57,29 @@ class GraphDisplay {
     this->onAccess();
     std::swap(m_sortVector.at(idx1), m_sortVector.at(idx2));
   }
-  // TODO: test if this really works as intended...
   inline void swap(int idx1, int idx2, bool swapColor) {
     if (swapColor) {
       auto&& lock = makeLock();
-      sf::Color* colorPtrOne = nullptr;
-      sf::Color* colorPtrTwo = nullptr;
+      std::vector<sf::Color*> colorPtrs = {};
       this->onAccess();
       std::swap(m_sortVector.at(idx1), m_sortVector.at(idx2));
-      for (auto& entry : m_watchedIndices) {
-        int currentIdx = *(entry.first);
-        if ((currentIdx == idx1) || (currentIdx == idx2)) {
-          if (colorPtrOne == nullptr) {
-            colorPtrOne = &entry.second;
-          } else {
-            colorPtrTwo = &entry.second;
-          }
-        }
-      }
-      for (auto& entry : m_activeIndices) {
-        int currentIdx = entry.first;
-        if ((currentIdx == idx1) || (currentIdx == idx2)) {
-          if (colorPtrOne == nullptr) {
-            colorPtrOne = &entry.second;
-          } else {
-            colorPtrTwo = &entry.second;
-          }
-        }
-      }
-      sf::Color temp = *colorPtrOne;
-      *colorPtrOne = *colorPtrTwo;
-      *colorPtrTwo = temp;
+
+      auto it1 = std::find_if(
+          m_watchedIndices.begin(), m_watchedIndices.end(),
+          [&](const std::pair<int*, sf::Color> in) { return (*(in.first) == idx1); });
+      auto it2 = std::find_if(
+          m_watchedIndices.begin(), m_watchedIndices.end(),
+          [&](const std::pair<int*, sf::Color> in) { return (*(in.first) == idx2); });
+      auto it3 = m_activeIndices.find(idx1);
+      auto it4 = m_activeIndices.find(idx2);
+      if (it1 != m_watchedIndices.end()) colorPtrs.push_back(&(it1->second));
+      if (it2 != m_watchedIndices.end()) colorPtrs.push_back(&(it2->second));
+      if (it3 != m_activeIndices.end()) colorPtrs.push_back(&(it3->second));
+      if (it4 != m_activeIndices.end()) colorPtrs.push_back(&(it4->second));
+
+      sf::Color temp = *colorPtrs.at(0);
+      *colorPtrs.at(0) = *colorPtrs.at(1);
+      *colorPtrs.at(1) = temp;
 
     } else {
       this->swap(idx1, idx2);
