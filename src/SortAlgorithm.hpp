@@ -10,6 +10,13 @@
 #include "AlgorithmEnums.hpp"
 #include "GraphDisplay.hpp"
 
+// TODO: use try...catch in sort functions to replicate this #define functionality
+//    will need to throw an exception in handleAtomics, then wrap
+//    sort code in try...catch to leave when condition is met
+
+// #define pausePoint(display) \
+//   if (handleAtomics(display)) return;
+
 class GraphDisplay;
 
 class SortAlgorithm {

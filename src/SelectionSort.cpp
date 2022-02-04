@@ -5,8 +5,7 @@
 #include <vector>
 #include <thread>
 
-void SelectionSort::startSortThread(GraphDisplay* display,
-                                    std::vector<int>& in) {
+void SelectionSort::startSortThread(GraphDisplay* display, std::vector<int>& in) {
   m_thread = std::thread(&SelectionSort::sort, this, display);
 }
 
