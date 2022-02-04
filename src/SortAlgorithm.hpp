@@ -10,13 +10,6 @@
 #include "AlgorithmEnums.hpp"
 #include "GraphDisplay.hpp"
 
-// TODO: use try...catch in sort functions to replicate this #define functionality
-//    will need to throw an exception in handleAtomics, then wrap
-//    sort code in try...catch to leave when condition is met
-
-// #define pausePoint(display) \
-//   if (handleAtomics(display)) return;
-
 class GraphDisplay;
 
 class SortAlgorithm {
@@ -67,7 +60,7 @@ class SortAlgorithm {
   // returns whether sort should continue based on m_paused + std::is_sorted
   bool sortShouldContinue(const std::vector<int>& in);
   // returns whether thread should end/resets display if it should
-  bool handleAtomics(GraphDisplay* display);
+  void handleAtomics(GraphDisplay* display);
   std::atomic<AlgorithmState> m_state = AlgorithmState::INACTIVE;
   std::atomic<bool> m_step = false;
   std::thread m_thread;

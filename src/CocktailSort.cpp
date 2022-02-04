@@ -5,53 +5,49 @@
 #include "GraphDisplay.hpp"
 #include "SortAlgorithm.hpp"
 
-void CocktailSort::startSortThread(GraphDisplay* display,
-                                   std::vector<int>& in) {
+void CocktailSort::startSortThread(GraphDisplay* display, std::vector<int>& in) {
   m_thread = std::thread(&CocktailSort::sort, this, display);
 }
 
 void CocktailSort::sort(GraphDisplay* display) {
-  bool swapped = false;
-  int lowerBound = 0;
-  int upperBound = display->getVecSize() - 2;
-  do {
-    swapped = false;
-    int i;
-    for (i = lowerBound; i < upperBound; i++) {
-      display->watch(&i, sf::Color::Red);
-      if (display->at(i) > display->at(i + 1)) {
-        display->mark(i + 1, sf::Color::Green);
-        if (handleAtomics(display)) {
-          return;
+  try {
+    bool swapped = false;
+    int lowerBound = 0;
+    int upperBound = display->getVecSize() - 2;
+    do {
+      swapped = false;
+      int i;
+      for (i = lowerBound; i < upperBound; i++) {
+        display->watch(&i, sf::Color::Red);
+        if (display->at(i) > display->at(i + 1)) {
+          display->mark(i + 1, sf::Color::Green);
+          handleAtomics(display);
+          display->swap(i, i + 1, true);
+          swapped = true;
         }
-        display->swap(i, i + 1, true);
-        swapped = true;
+        handleAtomics(display);
+        display->unmark(i + 1);
       }
-      if (handleAtomics(display)) {
-        return;
+      if (!swapped) {
+        break;
       }
-      display->unmark(i + 1);
-    }
-    if (!swapped) {
-      break;
-    }
-    for (i = upperBound; i >= lowerBound; i--) {
-      if (display->at(i) > display->at(i + 1)) {
-        display->mark(i + 1, sf::Color::Green);
-        if (handleAtomics(display)) {
-          return;
+      for (i = upperBound; i >= lowerBound; i--) {
+        if (display->at(i) > display->at(i + 1)) {
+          display->mark(i + 1, sf::Color::Green);
+          handleAtomics(display);
+          display->swap(i, i + 1, true);
+          swapped = true;
         }
-        display->swap(i, i + 1, true);
-        swapped = true;
+        handleAtomics(display);
+        display->unmark(i + 1);
       }
-      if (handleAtomics(display)) {
-        return;
-      }
-      display->unmark(i + 1);
-    }
-    lowerBound++;
-    upperBound--;
-  } while (swapped);
-  display->unwatchAll();
-  return;
+      lowerBound++;
+      upperBound--;
+    } while (swapped);
+    display->reset();
+    setState(AlgorithmState::INACTIVE);
+    return;
+  } catch (AlgorithmException) {
+    return;
+  }
 }

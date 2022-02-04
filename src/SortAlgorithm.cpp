@@ -23,10 +23,11 @@ bool SortAlgorithm::sortShouldContinue(const std::vector<int>& in) {
 }
 
 // TODO: call this more often to mark pause points
-bool SortAlgorithm::handleAtomics(GraphDisplay* display) {
+void SortAlgorithm::handleAtomics(GraphDisplay* display) {
   if (m_state.load() == AlgorithmState::SHOULD_END) {
     display->reset();
-    return true;
+    // return true;
+    throw AlgorithmException::END_SORT;
   }
   // intentionally not returning m_threadShouldEnd - in the case where
   // terminateSort() is called, m_threadShouldEnd := true and
@@ -42,7 +43,7 @@ bool SortAlgorithm::handleAtomics(GraphDisplay* display) {
       break;
     }
   }
-  return false;
+  // return false;
 }
 
 // init returns false if the sort is already running, or if the vector is already sorted

@@ -10,24 +10,28 @@ void SelectionSort::startSortThread(GraphDisplay* display, std::vector<int>& in)
 }
 
 void SelectionSort::sort(GraphDisplay* display) {
-  int minIndex;
-  display->watch(&minIndex);
-  for (int i = 0; i < (display->getVecSize() - 1); i++) {
-    minIndex = i;
-    display->mark(i);
-    for (int j = i + 1; j < display->getVecSize(); j++) {
-      display->mark(j);
-      // handleAtomics() should be called where code will be run most
-      // frequently within internalSort
-      if (handleAtomics(display)) return;
-      if (display->at(j) < display->at(minIndex)) {
-        minIndex = j;
+  try {
+    int minIndex;
+    display->watch(&minIndex);
+    for (int i = 0; i < (display->getVecSize() - 1); i++) {
+      minIndex = i;
+      display->mark(i);
+      for (int j = i + 1; j < display->getVecSize(); j++) {
+        display->mark(j);
+        // handleAtomics() should be called where code will be run most
+        // frequently within internalSort
+        handleAtomics(display);
+        if (display->at(j) < display->at(minIndex)) {
+          minIndex = j;
+        }
+        display->unmark(j);
       }
-      display->unmark(j);
+      display->swap(i, minIndex);
+      display->unmark(i);
     }
-    display->swap(i, minIndex);
-    display->unmark(i);
+    display->reset();
+    setState(AlgorithmState::INACTIVE);
+  } catch (AlgorithmException) {
+    return;
   }
-  display->reset();
-  setState(AlgorithmState::INACTIVE);
 }

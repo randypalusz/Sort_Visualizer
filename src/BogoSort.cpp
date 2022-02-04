@@ -9,12 +9,16 @@ void BogoSort::startSortThread(GraphDisplay* display, std::vector<int>& in) {
 }
 
 void BogoSort::sort(GraphDisplay* display) {
-  std::random_device rd;
-  std::mt19937 g(rd());
-  while (!display->isSorted()) {
-    display->shuffleVector(g);
-    if (handleAtomics(display)) return;
+  try {
+    std::random_device rd;
+    std::mt19937 g(rd());
+    while (!display->isSorted()) {
+      display->shuffleVector(g);
+      handleAtomics(display);
+    }
+    display->reset();
+    setState(AlgorithmState::INACTIVE);
+  } catch (AlgorithmException) {
+    return;
   }
-  display->reset();
-  setState(AlgorithmState::INACTIVE);
 }

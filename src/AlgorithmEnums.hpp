@@ -15,3 +15,5 @@ enum class AlgorithmState {
 };
 
 Algorithm& operator++(Algorithm&, int);
+
+enum class AlgorithmException { END_SORT };
