@@ -1,7 +1,7 @@
 #include "SortAlgorithm.hpp"
 #include "GraphDisplay.hpp"
 
-void QuickSort_Iterative::startSortThread(GraphDisplay* display, std::vector<int>& in) {
+void QuickSort_Iterative::startSortThread(GraphDisplay* display) {
   m_thread = std::thread(&QuickSort_Iterative::sort, this, display);
 }
 
@@ -55,7 +55,7 @@ void QuickSort_Iterative::sort(GraphDisplay* display) {
   }
 }
 
-void QuickSort::startSortThread(GraphDisplay* display, std::vector<int>& in) {
+void QuickSort::startSortThread(GraphDisplay* display) {
   m_thread = std::thread(&QuickSort::sort, this, display);
 }
 

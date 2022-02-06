@@ -3,7 +3,7 @@
 #include "SortAlgorithm.hpp"
 #include "GraphDisplay.hpp"
 
-void BubbleSort::startSortThread(GraphDisplay* display, std::vector<int>& in) {
+void BubbleSort::startSortThread(GraphDisplay* display) {
   m_thread = std::thread(&BubbleSort::sort, this, display);
 }
 

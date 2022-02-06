@@ -20,7 +20,7 @@ class SortAlgorithm {
     if (!init(display, in)) {
       return;
     }
-    startSortThread(display, in);
+    startSortThread(display);
   }
   virtual ~SortAlgorithm(){};
   virtual Algorithm getEnumType() = 0;
@@ -54,7 +54,7 @@ class SortAlgorithm {
  protected:
   void tearDown(GraphDisplay* display);
   // functional intent is to start the sort thread and assign it to m_thread
-  virtual void startSortThread(GraphDisplay* display, std::vector<int>& in) = 0;
+  virtual void startSortThread(GraphDisplay* display) = 0;
   [[nodiscard]] bool init(GraphDisplay* display, std::vector<int>& in);
   // this will be the sort function that the top-level sort starts a thread on
   virtual void sort(GraphDisplay* display) = 0;
@@ -69,7 +69,7 @@ class SortAlgorithm {
 
 class BubbleSort : public SortAlgorithm {
  public:
-  void startSortThread(GraphDisplay* display, std::vector<int>& in) override;
+  void startSortThread(GraphDisplay* display) override;
   inline Algorithm getEnumType() override { return Algorithm::BUBBLE; }
 
  protected:
@@ -78,7 +78,7 @@ class BubbleSort : public SortAlgorithm {
 
 class BogoSort : public SortAlgorithm {
  public:
-  void startSortThread(GraphDisplay* display, std::vector<int>& in) override;
+  void startSortThread(GraphDisplay* display) override;
   inline Algorithm getEnumType() override { return Algorithm::BOGO; }
 
  protected:
@@ -87,7 +87,7 @@ class BogoSort : public SortAlgorithm {
 
 class QuickSort : public SortAlgorithm {
  public:
-  void startSortThread(GraphDisplay* display, std::vector<int>& in) override;
+  void startSortThread(GraphDisplay* display) override;
   inline Algorithm getEnumType() override { return Algorithm::QUICK; }
 
  protected:
@@ -98,7 +98,7 @@ class QuickSort : public SortAlgorithm {
 
 class QuickSort_Iterative : public SortAlgorithm {
  public:
-  void startSortThread(GraphDisplay* display, std::vector<int>& in) override;
+  void startSortThread(GraphDisplay* display) override;
   inline Algorithm getEnumType() override { return Algorithm::QUICK_ITERATIVE; }
 
  protected:
@@ -107,7 +107,7 @@ class QuickSort_Iterative : public SortAlgorithm {
 
 class SelectionSort : public SortAlgorithm {
  public:
-  void startSortThread(GraphDisplay* display, std::vector<int>& in) override;
+  void startSortThread(GraphDisplay* display) override;
   inline Algorithm getEnumType() override { return Algorithm::SELECTION; }
 
  protected:
@@ -116,7 +116,7 @@ class SelectionSort : public SortAlgorithm {
 
 class CocktailSort : public SortAlgorithm {
  public:
-  void startSortThread(GraphDisplay* display, std::vector<int>& in) override;
+  void startSortThread(GraphDisplay* display) override;
   inline Algorithm getEnumType() override { return Algorithm::COCKTAIL; }
 
  protected:

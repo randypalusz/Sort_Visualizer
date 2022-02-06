@@ -4,7 +4,7 @@
 #include "SortAlgorithm.hpp"
 #include "GraphDisplay.hpp"
 
-void BogoSort::startSortThread(GraphDisplay* display, std::vector<int>& in) {
+void BogoSort::startSortThread(GraphDisplay* display) {
   m_thread = std::thread(&BogoSort::sort, this, display);
 }
 

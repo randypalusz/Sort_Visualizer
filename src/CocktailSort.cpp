@@ -5,7 +5,7 @@
 #include "GraphDisplay.hpp"
 #include "SortAlgorithm.hpp"
 
-void CocktailSort::startSortThread(GraphDisplay* display, std::vector<int>& in) {
+void CocktailSort::startSortThread(GraphDisplay* display) {
   m_thread = std::thread(&CocktailSort::sort, this, display);
 }
 
