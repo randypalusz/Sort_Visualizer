@@ -26,7 +26,6 @@ bool SortAlgorithm::sortShouldContinue(const std::vector<int>& in) {
 void SortAlgorithm::handleAtomics(GraphDisplay* display) {
   if (m_state.load() == AlgorithmState::SHOULD_END) {
     display->reset();
-    // return true;
     throw AlgorithmException::END_SORT;
   }
   // intentionally not returning m_threadShouldEnd - in the case where
@@ -43,7 +42,6 @@ void SortAlgorithm::handleAtomics(GraphDisplay* display) {
       break;
     }
   }
-  // return false;
 }
 
 // init returns false if the sort is already running, or if the vector is already sorted

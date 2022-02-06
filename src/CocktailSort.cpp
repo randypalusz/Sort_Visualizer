@@ -14,9 +14,9 @@ void CocktailSort::sort(GraphDisplay* display) {
     bool swapped = false;
     int lowerBound = 0;
     int upperBound = display->getVecSize() - 2;
+    int i;
     do {
       swapped = false;
-      int i;
       for (i = lowerBound; i < upperBound; i++) {
         display->watch(&i, sf::Color::Red);
         if (display->at(i) > display->at(i + 1)) {
