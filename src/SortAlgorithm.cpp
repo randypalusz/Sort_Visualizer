@@ -58,3 +58,8 @@ bool SortAlgorithm::init(GraphDisplay* display, std::vector<int>& in) {
 
   return true;
 }
+
+void SortAlgorithm::tearDown(GraphDisplay* display) {
+  display->reset();
+  setState(AlgorithmState::INACTIVE);
+}

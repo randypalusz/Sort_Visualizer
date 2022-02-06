@@ -29,8 +29,7 @@ void SelectionSort::sort(GraphDisplay* display) {
       display->swap(i, minIndex);
       display->unmark(i);
     }
-    display->reset();
-    setState(AlgorithmState::INACTIVE);
+    tearDown(display);
   } catch (AlgorithmException) {
     return;
   }

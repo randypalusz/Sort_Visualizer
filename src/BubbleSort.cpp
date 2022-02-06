@@ -27,8 +27,7 @@ void BubbleSort::sort(GraphDisplay* display) {
       }
       maxIndex--;
     } while (swapOccurred);
-    display->reset();
-    setState(AlgorithmState::INACTIVE);
+    tearDown(display);
   } catch (AlgorithmException) {
     return;
   }

@@ -44,9 +44,7 @@ void CocktailSort::sort(GraphDisplay* display) {
       lowerBound++;
       upperBound--;
     } while (swapped);
-    display->reset();
-    setState(AlgorithmState::INACTIVE);
-    return;
+    tearDown(display);
   } catch (AlgorithmException) {
     return;
   }

@@ -16,8 +16,7 @@ void BogoSort::sort(GraphDisplay* display) {
       display->shuffleVector(g);
       handleAtomics(display);
     }
-    display->reset();
-    setState(AlgorithmState::INACTIVE);
+    tearDown(display);
   } catch (AlgorithmException) {
     return;
   }

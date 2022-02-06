@@ -52,6 +52,7 @@ class SortAlgorithm {
   }
 
  protected:
+  void tearDown(GraphDisplay* display);
   // functional intent is to start the sort thread and assign it to m_thread
   virtual void startSortThread(GraphDisplay* display, std::vector<int>& in) = 0;
   [[nodiscard]] bool init(GraphDisplay* display, std::vector<int>& in);
