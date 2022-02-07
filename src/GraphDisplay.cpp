@@ -13,29 +13,22 @@ GraphDisplay::GraphDisplay(sf::RenderWindow& window, std::vector<int>& in,
                            double delayInSeconds)
     : m_window(window), m_sortVector(in), m_delayInSeconds(delayInSeconds) {
   // updating here as it should be a one-time update - SFML handles stretching
-  m_size = window.getSize();
+  m_windowSize = window.getSize();
+  // ensure the height of the bar doesn't reach the top of the window
+  m_adjustedMax = m_windowSize.y - (2.0f * m_topBottomBorder);
+  regenerateDisplayValues();
 }
 GraphDisplay::~GraphDisplay() {}
 
 bool GraphDisplay::update() {
   m_window.clear(sf::Color::Blue);
-  int numBars = m_sortVector.size();
-  float widthPerBar = (float)m_size.x / (float)numBars;
-  float min = *(std::min_element(m_sortVector.begin(), m_sortVector.end()));
-  float max = *(std::max_element(m_sortVector.begin(), m_sortVector.end()));
-  constexpr float topBottomBorder = 25.0f;
-  constexpr float widthBuffer = 1.0f;
-  // ensure the height of the bar doesn't reach the top of the window
-  float newMax = m_size.y - (2.0f * topBottomBorder);
-  // ensure the lowest value in the list is still visible
-  constexpr float newMin = 10.0f;
   // x coordinate of the current bar
   float currentBarX = 0.0f;
-  for (int i = 0; i < numBars; i++) {
-    float normalizedHeight =
-        normalize((float)m_sortVector.at(i), min, max, newMin, newMax);
-    sf::RectangleShape bar = sf::RectangleShape(
-        sf::Vector2f(widthPerBar - widthBuffer, normalizedHeight));
+  for (int i = 0; i < m_numBars; i++) {
+    float normalizedHeight = normalize((float)m_sortVector.at(i), m_currentMinValue,
+                                       m_currentMaxValue, m_adjustedMin, m_adjustedMax);
+    sf::RectangleShape bar =
+        sf::RectangleShape(sf::Vector2f(m_widthPerBar - m_widthBuffer, normalizedHeight));
     // using range-based for loop here instead of find - with std::find,
     // value could've been erased from map between find and access
     for (auto it = m_activeIndices.begin(); it != m_activeIndices.end(); it++) {
@@ -43,19 +36,25 @@ bool GraphDisplay::update() {
         bar.setFillColor(it->second);
       }
     }
-    for (auto it = m_watchedIndices.begin(); it != m_watchedIndices.end();
-         it++) {
+    for (auto it = m_watchedIndices.begin(); it != m_watchedIndices.end(); it++) {
       if (*(it->first) == i) {
         bar.setFillColor(it->second);
       }
     }
     bar.setPosition(sf::Vector2f(
-        currentBarX, (m_size.y - normalizedHeight) - topBottomBorder));
+        currentBarX, (m_windowSize.y - normalizedHeight) - m_topBottomBorder));
     m_window.draw(bar);
-    currentBarX += widthPerBar;
+    currentBarX += m_widthPerBar;
   }
   m_window.display();
   return true;
+}
+
+void GraphDisplay::regenerateDisplayValues() {
+  m_numBars = m_sortVector.size();
+  m_widthPerBar = (float)m_windowSize.x / (float)m_numBars;
+  m_currentMinValue = *(std::min_element(m_sortVector.begin(), m_sortVector.end()));
+  m_currentMaxValue = *(std::max_element(m_sortVector.begin(), m_sortVector.end()));
 }
 
 void GraphDisplay::onAccess() { Timing::preciseSleep(m_delayInSeconds); }

@@ -22,15 +22,13 @@ bool RegenerateVectorCommand::execute(GraphDisplay* display,
   if (in) {
     // if sort is running (not paused or killed or otherwise), do not regenerate and do
     // not restart the sort algorithm
-    // if (sorter->isThreadActive()) {
-    //   return true;
-    // }
     if (ApplicationProperties::vectorRegenRestartsSort) {
       sorter->terminateSort(false);
     }
     std::vector<int> temp = VectorGenerator::generateGivenSize(in->size(), true);
     in->clear();
     in->insert(in->begin(), temp.begin(), temp.end());
+    display->regenerateDisplayValues();
   }
   return true;
 }
@@ -49,6 +47,7 @@ bool ChooseNextAlgorithmCommand::execute(GraphDisplay* display,
     std::vector<int> temp = VectorGenerator::generateGivenSize(in->size(), true);
     in->clear();
     in->insert(in->begin(), temp.begin(), temp.end());
+    display->regenerateDisplayValues();
   }
   return true;
 }

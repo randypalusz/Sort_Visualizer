@@ -21,6 +21,7 @@ class GraphDisplay {
   GraphDisplay(sf::RenderWindow& window, std::vector<int>& in, double delayInSeconds);
   ~GraphDisplay();
   bool update();
+  void regenerateDisplayValues();
   inline void mark(int idx, sf::Color color = sf::Color::Red) {
     auto&& lock = makeLock();
     if (m_activeIndices.find(idx) != m_activeIndices.end()) {
@@ -132,8 +133,17 @@ class GraphDisplay {
   std::unordered_map<int, sf::Color> m_activeIndices;
   std::unordered_map<int*, sf::Color> m_watchedIndices;
   std::unordered_map<int*, sf::Color> m_watchedIndicesResetColor;
-  sf::Vector2u m_size;
+  sf::Vector2u m_windowSize;
   std::mutex m_setMutex;
   sf::Color m_watchResetColor;
   double m_delayInSeconds;
+
+  int m_numBars;
+  float m_widthPerBar;
+  float m_currentMinValue;
+  float m_currentMaxValue;
+  float m_adjustedMax;
+  const float m_topBottomBorder = 25.0f;
+  const float m_widthBuffer = 1.0f;
+  const float m_adjustedMin = 10.0f;
 };
