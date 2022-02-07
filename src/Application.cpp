@@ -35,4 +35,6 @@ void Application::init() {
   m_vec = VectorGenerator::generateGivenSize(ApplicationProperties::numElements, true);
   m_display = new GraphDisplay(m_window, m_vec, ApplicationProperties::delay);
   m_inputHandler = new InputHandler();
+
+  m_display->setTitle(m_sorter->getName());
 }

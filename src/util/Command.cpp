@@ -43,6 +43,7 @@ bool ChooseNextAlgorithmCommand::execute(GraphDisplay* display,
     a++;
     sorter->terminateSort();
     sorter = std::move(AlgorithmFactory::generateSorter(a));
+    display->setTitle(sorter->getName());
 
     // regenerate vector after sorter is generated
     std::vector<int> temp = VectorGenerator::generateGivenSize(in->size(), true);

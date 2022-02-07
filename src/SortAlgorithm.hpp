@@ -24,6 +24,7 @@ class SortAlgorithm {
   }
   virtual ~SortAlgorithm(){};
   virtual Algorithm getEnumType() = 0;
+  virtual const std::string getName() = 0;
   // print for debugging purposes
   static void print(const std::vector<int>& in);
   inline bool isThreadActive() { return m_state == AlgorithmState::RUNNING; }
@@ -71,6 +72,7 @@ class BubbleSort : public SortAlgorithm {
  public:
   void startSortThread(GraphDisplay* display) override;
   inline Algorithm getEnumType() override { return Algorithm::BUBBLE; }
+  inline const std::string getName() override { return "BubbleSort"; }
 
  protected:
   void sort(GraphDisplay* display) override;
@@ -80,6 +82,7 @@ class BogoSort : public SortAlgorithm {
  public:
   void startSortThread(GraphDisplay* display) override;
   inline Algorithm getEnumType() override { return Algorithm::BOGO; }
+  inline const std::string getName() override { return "BogoSort"; }
 
  protected:
   void sort(GraphDisplay* display) override;
@@ -89,6 +92,7 @@ class QuickSort : public SortAlgorithm {
  public:
   void startSortThread(GraphDisplay* display) override;
   inline Algorithm getEnumType() override { return Algorithm::QUICK; }
+  inline const std::string getName() override { return "QuickSort"; }
 
  protected:
   void sort(GraphDisplay* display) override;
@@ -100,6 +104,7 @@ class QuickSort_Iterative : public SortAlgorithm {
  public:
   void startSortThread(GraphDisplay* display) override;
   inline Algorithm getEnumType() override { return Algorithm::QUICK_ITERATIVE; }
+  inline const std::string getName() override { return "QuickSort_Iterative"; }
 
  protected:
   void sort(GraphDisplay* display) override;
@@ -109,6 +114,7 @@ class SelectionSort : public SortAlgorithm {
  public:
   void startSortThread(GraphDisplay* display) override;
   inline Algorithm getEnumType() override { return Algorithm::SELECTION; }
+  inline const std::string getName() override { return "SelectionSort"; }
 
  protected:
   void sort(GraphDisplay* display) override;
@@ -118,6 +124,7 @@ class CocktailSort : public SortAlgorithm {
  public:
   void startSortThread(GraphDisplay* display) override;
   inline Algorithm getEnumType() override { return Algorithm::COCKTAIL; }
+  inline const std::string getName() override { return "CocktailSort"; }
 
  protected:
   void sort(GraphDisplay* display) override;

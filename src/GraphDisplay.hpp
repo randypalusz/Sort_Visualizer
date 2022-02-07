@@ -110,6 +110,9 @@ class GraphDisplay {
     this->onAccess();
   }
   inline void closeWindow() { return m_window.close(); }
+  inline void setTitle(const std::string& newTitle) {
+    return m_window.setTitle(newTitle);
+  }
   inline void changeDelay(double modification) {
     m_delayInSeconds += modification;
     m_delayInSeconds = std::clamp(m_delayInSeconds, 0.0001, 1.0);
