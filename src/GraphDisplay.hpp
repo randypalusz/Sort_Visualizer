@@ -145,5 +145,6 @@ class GraphDisplay {
   float m_adjustedMax;
   const float m_topBottomBorder = 25.0f;
   const float m_widthBuffer = 1.0f;
+  // ensure the lowest value in the list is still visible
   const float m_adjustedMin = 10.0f;
 };
