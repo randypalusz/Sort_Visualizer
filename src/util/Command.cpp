@@ -40,6 +40,7 @@ bool ChooseNextAlgorithmCommand::execute(GraphDisplay* display,
     Algorithm a = sorter->getEnumType();
     a++;
     sorter->terminateSort();
+    // TODO: calling std::move seems unnecessary here
     sorter = std::move(AlgorithmFactory::generateSorter(a));
     display->setTitle(sorter->getName());
 

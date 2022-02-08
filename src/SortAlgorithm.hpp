@@ -23,8 +23,8 @@ class SortAlgorithm {
     startSortThread(display);
   }
   virtual ~SortAlgorithm(){};
-  virtual Algorithm getEnumType() = 0;
-  virtual const std::string getName() = 0;
+  inline const Algorithm getEnumType() { return m_enumType; }
+  inline const std::string getName() { return m_name; }
   // print for debugging purposes
   static void print(const std::vector<int>& in);
   inline bool isThreadActive() { return m_state == AlgorithmState::RUNNING; }
@@ -53,6 +53,9 @@ class SortAlgorithm {
   }
 
  protected:
+  // Having a constructor here forces the subclasses to implement
+  SortAlgorithm(const std::string& name, const Algorithm& algorithm)
+      : m_name(name), m_enumType(algorithm) {}
   void tearDown(GraphDisplay* display);
   // functional intent is to start the sort thread and assign it to m_thread
   virtual void startSortThread(GraphDisplay* display) = 0;
@@ -66,13 +69,14 @@ class SortAlgorithm {
   std::atomic<AlgorithmState> m_state = AlgorithmState::INACTIVE;
   std::atomic<bool> m_step = false;
   std::thread m_thread;
+  std::string m_name;
+  Algorithm m_enumType;
 };
 
 class BubbleSort : public SortAlgorithm {
  public:
+  BubbleSort() : SortAlgorithm("BubbleSort", Algorithm::BUBBLE) {}
   void startSortThread(GraphDisplay* display) override;
-  inline Algorithm getEnumType() override { return Algorithm::BUBBLE; }
-  inline const std::string getName() override { return "BubbleSort"; }
 
  protected:
   void sort(GraphDisplay* display) override;
@@ -80,9 +84,8 @@ class BubbleSort : public SortAlgorithm {
 
 class BogoSort : public SortAlgorithm {
  public:
+  BogoSort() : SortAlgorithm("BogoSort", Algorithm::BOGO) {}
   void startSortThread(GraphDisplay* display) override;
-  inline Algorithm getEnumType() override { return Algorithm::BOGO; }
-  inline const std::string getName() override { return "BogoSort"; }
 
  protected:
   void sort(GraphDisplay* display) override;
@@ -90,9 +93,8 @@ class BogoSort : public SortAlgorithm {
 
 class QuickSort : public SortAlgorithm {
  public:
+  QuickSort() : SortAlgorithm("QuickSort", Algorithm::QUICK) {}
   void startSortThread(GraphDisplay* display) override;
-  inline Algorithm getEnumType() override { return Algorithm::QUICK; }
-  inline const std::string getName() override { return "QuickSort"; }
 
  protected:
   void sort(GraphDisplay* display) override;
@@ -102,9 +104,9 @@ class QuickSort : public SortAlgorithm {
 
 class QuickSort_Iterative : public SortAlgorithm {
  public:
+  QuickSort_Iterative()
+      : SortAlgorithm("QuickSort_Iterative", Algorithm::QUICK_ITERATIVE) {}
   void startSortThread(GraphDisplay* display) override;
-  inline Algorithm getEnumType() override { return Algorithm::QUICK_ITERATIVE; }
-  inline const std::string getName() override { return "QuickSort_Iterative"; }
 
  protected:
   void sort(GraphDisplay* display) override;
@@ -112,9 +114,8 @@ class QuickSort_Iterative : public SortAlgorithm {
 
 class SelectionSort : public SortAlgorithm {
  public:
+  SelectionSort() : SortAlgorithm("SelectionSort", Algorithm::SELECTION) {}
   void startSortThread(GraphDisplay* display) override;
-  inline Algorithm getEnumType() override { return Algorithm::SELECTION; }
-  inline const std::string getName() override { return "SelectionSort"; }
 
  protected:
   void sort(GraphDisplay* display) override;
@@ -122,9 +123,8 @@ class SelectionSort : public SortAlgorithm {
 
 class CocktailSort : public SortAlgorithm {
  public:
+  CocktailSort() : SortAlgorithm("CocktailSort", Algorithm::COCKTAIL) {}
   void startSortThread(GraphDisplay* display) override;
-  inline Algorithm getEnumType() override { return Algorithm::COCKTAIL; }
-  inline const std::string getName() override { return "CocktailSort"; }
 
  protected:
   void sort(GraphDisplay* display) override;
