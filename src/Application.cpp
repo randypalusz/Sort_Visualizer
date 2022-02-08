@@ -31,7 +31,7 @@ void Application::init() {
   m_window.create(sf::VideoMode(vm.width / 2.0f, vm.height / 2.0f), "Sort Visualizer");
   m_window.setFramerateLimit(0);
 
-  m_sorter = AlgorithmFactory::generateSorter(Algorithm::SELECTION);
+  m_sorter = AlgorithmFactory::generateSorter();
   m_vec = VectorGenerator::generateGivenSize(ApplicationProperties::numElements, true);
   m_display = new GraphDisplay(m_window, m_vec, ApplicationProperties::delay);
   m_inputHandler = new InputHandler();

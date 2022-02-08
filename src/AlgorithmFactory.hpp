@@ -14,7 +14,8 @@ enum class Algorithm;
 using CreationFunction = std::function<std::unique_ptr<SortAlgorithm>()>;
 class AlgorithmFactory {
  public:
-  static std::unique_ptr<SortAlgorithm> generateSorter(Algorithm a);
+  static std::unique_ptr<SortAlgorithm> generateSorter(
+      Algorithm a = Algorithm::SELECTION);
   static const std::unordered_map<Algorithm, CreationFunction> creators;
 };
 
