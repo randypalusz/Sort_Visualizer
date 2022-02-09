@@ -28,13 +28,7 @@ class SortAlgorithm {
   // print for debugging purposes
   static void print(const std::vector<int>& in);
   inline bool isThreadActive() { return m_state == AlgorithmState::RUNNING; }
-  inline void togglePaused() {
-    if (m_paused.load()) {
-      m_paused = false;
-      return;
-    }
-    m_paused = true;
-  }
+  inline void togglePaused() { m_paused.store(!m_paused.load()); }
   inline AlgorithmState getState() const { return m_state.load(); }
   inline bool isPaused() const { return m_paused.load(); }
   inline void setPaused(bool val) { m_paused.store(val); }
