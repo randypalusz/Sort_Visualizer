@@ -8,10 +8,7 @@
 bool EndApplicationCommand::execute(GraphDisplay* display,
                                     std::unique_ptr<SortAlgorithm>& sorter,
                                     std::vector<int>* in) {
-  // window.close();
   display->closeWindow();
-  // cleaning up paused variable to true so the sort thread can end!
-  // ... will hang in the handleAtomics() fn within the sorter class
   sorter->terminateSort();
   return false;
 }

@@ -26,11 +26,9 @@ std::shared_ptr<Command> InputHandler::pollForEvents(sf::RenderWindow& window) {
       }
     }
     if (event.type == sf::Event::Closed) {
-      // return Command::CLOSE_WINDOW;
       return std::make_shared<EndApplicationCommand>();
     }
   }
   // no handled events found
-  // return Command::NO_EVENT;
   return std::make_shared<DoNothingCommand>();
 }

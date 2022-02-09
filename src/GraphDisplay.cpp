@@ -10,8 +10,8 @@
 #include "util/Utility.hpp"
 
 GraphDisplay::GraphDisplay(sf::RenderWindow& window, std::vector<int>& in,
-                           double delayInSeconds)
-    : m_window(window), m_sortVector(in), m_delayInSeconds(delayInSeconds) {
+                           double startingDelayInSeconds)
+    : m_window(window), m_sortVector(in), m_delayInSeconds(startingDelayInSeconds) {
   // updating here as it should be a one-time update - SFML handles stretching
   m_windowSize = window.getSize();
   // ensure the height of the bar doesn't reach the top of the window

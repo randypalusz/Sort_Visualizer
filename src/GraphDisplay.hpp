@@ -18,28 +18,23 @@ class GraphDisplay {
   friend class SortAlgorithm;
 
  public:
-  GraphDisplay(sf::RenderWindow& window, std::vector<int>& in, double delayInSeconds);
+  GraphDisplay(sf::RenderWindow& window, std::vector<int>& in,
+               double startingDelayInSeconds);
   ~GraphDisplay();
   bool update();
   void regenerateDisplayValues();
   inline void mark(int idx, sf::Color color = sf::Color::Red) {
-    auto&& lock = makeLock();
     if (m_activeIndices.find(idx) != m_activeIndices.end()) {
       m_activeIndices.erase(idx);
     }
     m_activeIndices.insert({idx, color});
   }
-  inline void unmark(int idx) {
-    auto&& lock = makeLock();
-    m_activeIndices.erase(idx);
-  }
+  inline void unmark(int idx) { m_activeIndices.erase(idx); }
   inline void markSwap(int toRemove, int replacement, sf::Color color = sf::Color::Red) {
-    auto&& lock = makeLock();
     m_activeIndices.erase(toRemove);
     m_activeIndices.insert({replacement, color});
   }
   inline int& at(int idx) {
-    auto&& lock = makeLock();
     if (m_lastAccessedIdx != idx) {
       // do delay if not a duplicate access
       this->onAccess();
@@ -54,7 +49,6 @@ class GraphDisplay {
     return m_sortVector.at(idx);
   }
   inline void swap(int idx1, int idx2, bool swapColor = false) {
-    auto&& lock = makeLock();
     this->onAccess();
     std::swap(m_sortVector.at(idx1), m_sortVector.at(idx2));
 
@@ -83,21 +77,15 @@ class GraphDisplay {
     }
   }
   inline void watch(int* idxPointer, sf::Color color = sf::Color::Green) {
-    auto&& lock = makeLock();
     m_watchedIndices.insert({idxPointer, color});
     m_watchedIndicesResetColor.insert({idxPointer, color});
   }
   inline void unwatchAll() {
-    auto&& lock = makeLock();
     m_watchedIndices.clear();
     m_watchedIndicesResetColor.clear();
   }
-  inline int getVecSize() {
-    auto&& lock = makeLock();
-    return m_sortVector.size();
-  }
+  inline int getVecSize() { return m_sortVector.size(); }
   inline void reset() {
-    auto&& lock = makeLock();
     m_lastAccessedIdx = -1;
     m_activeIndices.clear();
     m_watchedIndices.clear();
@@ -112,7 +100,7 @@ class GraphDisplay {
   }
   inline void closeWindow() { return m_window.close(); }
   inline void setTitle(const std::string& newTitle) {
-    return m_window.setTitle(newTitle);
+    return m_window.setTitle("Sort Visualizer - " + newTitle);
   }
   inline void changeDelay(double modification) {
     m_delayInSeconds += modification;
@@ -123,9 +111,9 @@ class GraphDisplay {
   void onAccess();
   // Creates lock that is held by a move-constructed auto&&
   // seems to fix segmentation fault at high rate of accesses
-  inline const std::lock_guard<std::mutex> makeLock() {
-    return std::lock_guard<std::mutex>{m_setMutex};
-  }
+  // inline const std::lock_guard<std::mutex> makeLock() {
+  //   return std::lock_guard<std::mutex>{m_setMutex};
+  // }
 
   int m_lastAccessedIdx = -1;
   sf::RenderWindow& m_window;
