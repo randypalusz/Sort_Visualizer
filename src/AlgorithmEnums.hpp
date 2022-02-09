@@ -10,7 +10,6 @@ enum class AlgorithmState {
                // algorithm completes
   KILLED,      // occurs after SHOULD_END, when the current sort has been
                // terminated preemptively
-  PAUSED,      // set when pause command is called
   RUNNING      // set when sort thread is running
 };
 

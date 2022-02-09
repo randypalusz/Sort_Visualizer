@@ -22,6 +22,9 @@ bool RegenerateVectorCommand::execute(GraphDisplay* display,
     if (ApplicationProperties::vectorRegenRestartsSort) {
       sorter->terminateSort(false);
     }
+    if (!ApplicationProperties::maintainPausedState) {
+      sorter->setPaused(true);
+    }
     std::vector<int> temp = VectorGenerator::generateGivenSize(in->size(), true);
     in->clear();
     in->insert(in->begin(), temp.begin(), temp.end());
@@ -35,10 +38,14 @@ bool ChooseNextAlgorithmCommand::execute(GraphDisplay* display,
                                          std::vector<int>* in) {
   if (sorter) {
     Algorithm a = sorter->getEnumType();
+    bool wasPaused = sorter->isPaused();
     a++;
     sorter->terminateSort();
     // TODO: calling std::move seems unnecessary here
     sorter = std::move(AlgorithmFactory::generateSorter(a));
+    if (ApplicationProperties::maintainPausedState) {
+      sorter->setPaused(wasPaused);
+    }
     display->setTitle(sorter->getName());
 
     // regenerate vector after sorter is generated

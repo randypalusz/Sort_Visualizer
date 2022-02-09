@@ -29,17 +29,15 @@ class SortAlgorithm {
   static void print(const std::vector<int>& in);
   inline bool isThreadActive() { return m_state == AlgorithmState::RUNNING; }
   inline void togglePaused() {
-    switch (m_state.load()) {
-      case AlgorithmState::RUNNING:
-        setState(AlgorithmState::PAUSED);
-        return;
-      case AlgorithmState::PAUSED:
-        setState(AlgorithmState::RUNNING);
-        return;
-      default:
-        break;
+    if (m_paused.load()) {
+      m_paused = false;
+      return;
     }
+    m_paused = true;
   }
+  inline AlgorithmState getState() const { return m_state.load(); }
+  inline bool isPaused() const { return m_paused.load(); }
+  inline void setPaused(bool val) { m_paused.store(val); }
   inline void setState(AlgorithmState state) { m_state.store(state); }
   inline void setStep() { m_step.store(true); }
   inline void terminateSort(bool preventRestart = true) {
@@ -67,6 +65,7 @@ class SortAlgorithm {
   // returns whether thread should end/resets display if it should
   void handleAtomics(GraphDisplay* display);
   std::atomic<AlgorithmState> m_state = AlgorithmState::INACTIVE;
+  std::atomic<bool> m_paused = false;
   std::atomic<bool> m_step = false;
   std::thread m_thread;
   std::string m_name;

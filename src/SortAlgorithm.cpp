@@ -18,7 +18,7 @@ void SortAlgorithm::print(const std::vector<int>& in) {
 }
 
 bool SortAlgorithm::sortShouldContinue(const std::vector<int>& in) {
-  return m_state.load() == AlgorithmState::INACTIVE &&
+  return (m_state.load() == AlgorithmState::INACTIVE) &&
          !std::is_sorted(in.begin(), in.end());
 }
 
@@ -28,15 +28,17 @@ void SortAlgorithm::handleAtomics(GraphDisplay* display) {
     display->reset();
     throw AlgorithmException::END_SORT;
   }
-  // intentionally not returning m_threadShouldEnd - in the case where
-  // terminateSort() is called, m_threadShouldEnd := true and
-  // m_paused := false. If final return statement here returns
-  // m_threadShouldEnd.load(), would bypass display->reset() from being called,
-  // causing seg fault when display->update() accesses the watchedIndices map of
-  // int* because the thread ends, and those values pointed to go out of scope
+
+  // need to call display->reset() here so that no seg fault
+  // when display->update() accesses the watchedIndices<int*, sf::Color> map of
+  // because the thread ends, and those values pointed to go out of scope
   // TODO: think about this class keeping a pointer/ref to the GraphDisplay to
   //       do the reset in the terminateSort() function
-  while (m_state.load() == AlgorithmState::PAUSED) {
+  while (m_paused.load()) {
+    if (m_state.load() == AlgorithmState::SHOULD_END) {
+      display->reset();
+      throw AlgorithmException::END_SORT;
+    }
     if (m_step.load()) {
       m_step.store(false);
       break;

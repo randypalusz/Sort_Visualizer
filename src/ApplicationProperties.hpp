@@ -5,6 +5,7 @@
 class ApplicationProperties {
  public:
   inline static bool vectorRegenRestartsSort = true;
+  inline static bool maintainPausedState = true;
   inline static int numElements = 100;
   inline static double delay = 0.01;
 
